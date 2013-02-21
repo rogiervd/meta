@@ -1,0 +1,8 @@
+project /meta ;
+
+# Declare target /meta//meta as a header-only library.
+alias meta : : : :
+    <include>include
+    <cxxflags>"-std=c++0x"
+    ;
+
