@@ -27,8 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
-namespace meta
-{
+namespace meta {
 
     /**
     Apply Function to each element of the Sequence and use its result type
@@ -52,7 +51,8 @@ namespace meta
     template <typename Function, typename State, typename Range>
         struct fold <Function, State, Range,
             typename boost::disable_if <is_direction <Function> >::type>
-    : fold <typename default_direction <Range>::type, Function, State, Range> {};
+    : fold <typename default_direction <Range>::type, Function, State, Range>
+    {};
 
     // Without State: use the first element as state.
     template <typename Direction, typename Function, typename Range>
@@ -63,23 +63,20 @@ namespace meta
         typename drop <Direction, Range>::type
     > {};
 
-    namespace operation
-    {
+    namespace operation {
         /**
         Default implementation: uses first and drop.
         */
         template <typename Tag, typename Direction> struct fold
         {
-            template <typename Function, typename State,
-                typename Range, bool empty = meta::empty <Direction, Range>::value>
+            template <typename Function, typename State, typename Range,
+                bool empty = meta::empty <Direction, Range>::value>
             struct apply;
 
             template <typename Function, typename State,
                 typename Range>
             struct apply <Function, State, Range, true>
-            {
-                typedef State type;
-            };
+            { typedef State type; };
 
             template <typename Function, typename State,
                 typename Range>
@@ -90,10 +87,9 @@ namespace meta
                 typename meta::drop <Direction, Range>::type
             > {};
         };
-    }   // namespace operation
+    } // namespace operation
 
-}   // namespace meta
-
+} // namespace meta
 
 #endif  // META_FOLD_HPP_INCLUDED
 

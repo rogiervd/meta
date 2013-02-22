@@ -22,8 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "meta/range.hpp"
 
-namespace meta
-{
+namespace meta {
 
     template <typename Direction, typename Predicate, typename Range /*= void*/>
         struct find;
@@ -32,12 +31,10 @@ namespace meta
         struct find <Predicate, Range>
     : find <typename default_direction <Range>::type, Predicate, Range> {};
 
-    namespace operation
-    {
+    namespace operation {
 
         // Default implementation
-        template <typename RangeTag, typename Direction>
-            struct find
+        template <typename RangeTag, typename Direction> struct find
         {
             template <typename Predicate, typename Range,
                 bool empty = meta::empty <Direction, Range>::value>
@@ -60,14 +57,14 @@ namespace meta
             > {};
         };
 
-    }   // namespace operation
+    } // namespace operation
 
     template <typename Direction, typename Predicate, typename Range>
         struct find
     : operation::find <typename range_tag <Range>::type, Direction>::
         template apply <Predicate, Range>::type {};
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_FIND_HPP_INCLUDED
 

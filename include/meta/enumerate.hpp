@@ -29,23 +29,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/range.hpp"
 #include "meta/scan.hpp"
 
-namespace meta
-{
+namespace meta {
+
     template <typename Direction, typename Range /*=void*/> struct enumerate;
 
     template <typename Range> struct enumerate <Range>
     : enumerate <typename default_direction <Range>::type, Range> {};
 
-    template <typename Direction, typename Range>
-        struct enumerate
-    {
+    template <typename Direction, typename Range> struct enumerate {
         // Initialise with the before-the-begin element (-1, void).
         typedef mpl::pair <mpl::size_t <-1>, void> before_begin;
-        //typedef mpl::pair <mpl::next <mpl::first <mpl::_1> >, mpl::_2> function;
 
         // Implementation without lambdas is faster.
-        struct function
-        {
+        struct function {
             template <typename Previous, typename Type> struct apply
             {
                 typedef typename mpl::next <typename Previous::first>::type
@@ -60,7 +56,7 @@ namespace meta
         typedef typename drop <Direction, elements>::type type;
     };
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_ENUMERATE_HPP_INCLUDED
 

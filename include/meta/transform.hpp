@@ -26,8 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
 
-namespace meta
-{
+namespace meta {
+
     template <typename Direction, typename Function, typename Range /*= void*/>
         struct transform;
 
@@ -35,9 +35,7 @@ namespace meta
         struct transform <Function, Range>
     : transform <typename default_direction <Range>::type, Function, Range> {};
 
-    namespace operation
-    {
-
+    namespace operation {
         // Generic implementation
         template <typename Tag, typename Direction> struct transform
         {
@@ -62,15 +60,14 @@ namespace meta
                     typename meta::drop <Direction, Range>::type>::type
             > {};
         };
-
-    }   // namespace detail
+    } // namespace detail
 
     template <typename Direction, typename Function, typename Range>
         struct transform
     : operation::transform <typename range_tag <Range>::type, Direction>
         ::template apply <Function, Range> {};
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_TRANSFORM_HPP_INCLUDED
 

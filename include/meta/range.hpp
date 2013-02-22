@@ -31,20 +31,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/fwd.hpp"
 #include "direction/tag.hpp"
 
-namespace meta
-{
+namespace meta {
+
     template <typename Range> struct range_tag
     : operation::range_tag_back_off <Range> {};
 
-    namespace operation
-    {
+    namespace operation {
+
         struct undefined {};
 
         // By default this does not contain a type "type".
         template <typename Range, typename Enable /*= void*/>
             struct range_tag_back_off
         : undefined {};
-    }
+
+    } // namespace operation
 
     template <typename Range> struct is_range
     : mpl::not_ <std::is_base_of <operation::undefined, range_tag <Range> > >
@@ -61,13 +62,6 @@ namespace meta
         template apply <Range> {};
 
     /* Operations */
-    /*BOOST_MPL_HAS_XXX_TEMPLATE_DEF(apply)
-
-    namespace operation
-    {
-        template <typename Operation> struct is_implemented
-        : has_apply <Operation> {};
-    }*/
 
     /**
     \return true_ iff the Range is empty.
@@ -135,7 +129,8 @@ namespace meta
     template <typename Range>
         struct drop <Range,
             typename boost::enable_if <is_range <Range> >::type>
-    : drop <typename default_direction <Range>::type, mpl::size_t <1>, Range> {};
+    : drop <typename default_direction <Range>::type, mpl::size_t <1>, Range>
+    {};
 
     template <typename Direction, typename Range>
         struct drop <Direction, Range,
@@ -158,7 +153,8 @@ namespace meta
     /**
     Return the range with an extra element added at the end.
     */
-    template <typename Direction, typename NewElement, typename Range /*= void*/>
+    template <typename Direction, typename NewElement, typename Range
+            /*= void*/>
         struct push;
 
     template <typename NewElement, typename Range>
@@ -171,8 +167,8 @@ namespace meta
         ::template apply <NewElement, Range> {};
 
     // Default implementation for drop/drop_one
-    namespace operation
-    {
+    namespace operation {
+
         template <typename Tag, typename Direction, std::size_t number>
             struct drop_general;
 
@@ -180,9 +176,7 @@ namespace meta
             struct drop_general <Tag, Direction, 0>
         {
             template <typename Range> struct apply
-            {
-                typedef Range type;
-            };
+            { typedef Range type; };
         };
 
         template <typename Tag, typename Direction>
@@ -195,8 +189,7 @@ namespace meta
         {
             template <typename Range> struct apply
             : drop_general <Tag, Direction, number - 1>::template
-                apply <typename meta::drop <Direction, Range>::type>
-            {};
+                apply <typename meta::drop <Direction, Range>::type> {};
         };
 
         /**
@@ -212,10 +205,10 @@ namespace meta
         template <typename Tag, typename Direction> struct drop_one
         : drop <Tag, Direction, mpl::size_t <1> >
         {};
-    }
 
+    } // namespace operation
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_RANGE_HPP_INCLUDED
 

@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
-namespace meta
-{
+namespace meta {
+
     struct transform_view_tag;
 
     template <typename Function, typename Range>
@@ -38,16 +38,14 @@ namespace meta
     };
     template <typename Function, typename Range>
         struct range_tag <transform_view <Function, Range> >
-    {
-        typedef transform_view_tag type;
-    };
+    { typedef transform_view_tag type; };
 
     template <typename Function, typename Range>
         struct default_direction <transform_view <Function, Range> >
     : default_direction <Range> {};
 
-    namespace operation
-    {
+    namespace operation {
+
         template <typename Direction>
             struct empty <transform_view_tag, Direction>
         {
@@ -97,12 +95,14 @@ namespace meta
                     bool Empty = meta::empty <Direction, Range>::value>
                 struct apply;
             template <typename NewElement, typename Function, typename Range>
-                struct apply <NewElement, transform_view <Function, Range>, true>
+                struct apply <
+                    NewElement, transform_view <Function, Range>, true>
             : meta::push <NewElement, Range> {};
         };
-    }
 
-}   // namespace meta
+    } // namespace operation
+
+} // namespace meta
 
 #endif  // META_TRANSFORM_VIEW_HPP_INCLUDED
 

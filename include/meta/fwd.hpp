@@ -17,21 +17,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/**
+/** \file
 Forward definitions for the meta namespace.
 */
 #ifndef META_FWD_HPP_INCLUDED
 #define META_FWD_HPP_INCLUDED
 
-namespace meta
-{
+namespace meta {
+
     namespace mpl = boost::mpl;
 
     // Hooks for specialisation.
     template <typename Range> struct range_tag;
 
-    namespace operation
-    {
+    namespace operation {
+
         // For back-off: only one should be enabled for one Range!
         template <typename Range, typename Enable = void>
             struct range_tag_back_off;
@@ -58,7 +58,8 @@ namespace meta
         template <typename RangeTag, typename Direction> struct find;
         template <typename Tag1, typename Tag2, typename Direction>
             struct concatenate;
-    }
+
+    } // namespace operation
 
     // Never mind the default parameters: they are forwarded to the
     // full-parameter versions in range.hpp.
@@ -104,10 +105,7 @@ namespace meta
 
     template <typename ... Types> struct vector;
 
-/*    template <typename Sequence> struct max;
-    template <typename Sequences> struct flatten;*/
-
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_FWD_HPP_INCLUDED
 

@@ -23,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
-namespace meta
-{
+namespace meta {
+
     /**
     Concatenate two ranges.
     This means that Range1 is inserted to the front of Range2.
@@ -54,9 +54,7 @@ namespace meta
 
             template <typename Range1, typename Range2>
                 struct apply <Range1, Range2, true>
-            {
-                typedef Range2 type;
-            };
+            { typedef Range2 type; };
 
             template <typename Range1, typename Range2>
                 struct apply <Range1, Range2, false>
@@ -68,7 +66,7 @@ namespace meta
         };
     }
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_CONCATENATE_HPP_INCLUDED
 

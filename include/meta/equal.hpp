@@ -28,8 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/placeholders.hpp>
 
-namespace meta
-{
+namespace meta {
+
     template <typename Direction, typename Predicate,
             typename Range1 /*= void*/, typename Range2 /*= void*/>
         struct equal;
@@ -76,7 +76,7 @@ namespace meta
         >
     > {};
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_EQUAL_HPP_INCLUDED
 

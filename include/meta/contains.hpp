@@ -27,8 +27,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/range.hpp"
 #include "meta/find.hpp"
 
-namespace meta
-{
+namespace meta {
+
     /**
     Shorthand for not_ <empty <find <is_same <Type, _>, Range> > >.
     \todo Add predicated version?
@@ -46,7 +46,7 @@ namespace meta
     : mpl::not_ <empty <Direction, typename find <
         Direction, std::is_same <Type, mpl::_>, Range>::type> > {};
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_CONTAINS_HPP_INCLUDED
 

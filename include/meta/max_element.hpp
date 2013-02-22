@@ -25,6 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/fold.hpp"
 
 namespace meta {
+
     template <typename Direction, typename Range = void> struct max_element;
 
     template <typename Range> struct max_element <Range>
@@ -48,6 +49,7 @@ namespace meta {
     template <typename Direction, typename Range>
         struct max_element
     : fold <Direction, max_element_detail::max_of_two, Range> {};
+
 } // namespace meta
 
 #endif  // META_MAX_ELEMENT_HPP

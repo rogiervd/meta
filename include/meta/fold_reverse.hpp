@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "meta/range.hpp"
 
 namespace meta {
+
     /**
     Apply Function to each element of the Sequence in reverse order and use its
     result type as a parameter for the previous.
@@ -69,6 +70,7 @@ namespace meta {
         template apply <Function, Range> {};
 
     namespace operation {
+
         /**
         Default implementation: uses first and drop.
         With initial state.
@@ -90,6 +92,7 @@ namespace meta {
                     typename meta::drop <Direction, Range>::type>::type
             > {};
         };
+
         /**
         Default implementation: uses first and drop.
         Without initial state.
@@ -113,6 +116,7 @@ namespace meta {
                     typename meta::drop <Direction, Range>::type>::type
             > {};
         };
+
     } // namespace operation
 
 } // namespace meta

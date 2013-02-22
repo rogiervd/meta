@@ -34,13 +34,12 @@ Merge duplicate types (according to a stack of criteria) in a type sequence.
 
 #include "meta/vector.hpp"
 
-namespace meta
-{
+namespace meta {
 
 template <typename Degenerate, typename Type> struct generalise;
 
-namespace merge_types_detail
-{
+namespace merge_types_detail {
+
     // generalise
     template <typename Degenerate, typename Type,
         typename Generalisation = typename mpl::apply <Degenerate, Type>::type>
@@ -51,24 +50,19 @@ namespace merge_types_detail
     // Type is the same as its degenerate version
     template <typename Degenerate, typename Type>
         struct generalise_impl <Degenerate, Type, Type>
-    {
-        typedef meta::vector <Type> type;
-    };
+    { typedef meta::vector <Type> type; };
 
     /**
     Return a vector with the elements that String1 and String2 both begin with.
     */
-    template <typename String1, typename String2>
-        struct common_start
-    {
-        typedef vector<> type;
-    };
+    template <typename String1, typename String2> struct common_start
+    { typedef vector<> type; };
 
     template <typename Matching, typename ... Rest1, typename ... Rest2>
         struct common_start <
             vector <Matching, Rest1 ...>, vector <Matching, Rest2 ...> >
-    : meta::push <meta::front, Matching,
-        typename common_start <vector <Rest1 ...>, vector <Rest2 ...> >::type> {};
+    : meta::push <meta::front, Matching, typename
+        common_start <vector <Rest1 ...>, vector <Rest2 ...> >::type> {};
 
     template <typename String, typename Strings,
         typename IrrelevantStrings = vector<> >
@@ -121,7 +115,7 @@ namespace merge_types_detail
     : meta::fold <meta::back, add_type <Degenerate, mpl::_2, mpl::_1>,
         vector<>, Types> {};
 
-}   // namespace merge_types_detail
+} // namespace merge_types_detail
 
 template <typename Degenerate, typename Type> struct generalise
 : merge_types_detail::generalise_impl <Degenerate, Type> {};
@@ -131,10 +125,11 @@ template <typename Degenerate, typename Types>
 {
     typedef typename merge_types_detail::merge_types_to_strings <
         Degenerate, Types>::type strings;
-    typedef typename transform <meta::first <meta::back, mpl::_>, strings>::type type;
+    typedef typename transform <meta::first <meta::back, mpl::_>, strings>::type
+        type;
 };
 
-}   // namespace meta
+} // namespace meta
 
 #endif // META_MERGE_TYPES_HPP_INCLUDED
 

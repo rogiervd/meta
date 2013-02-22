@@ -74,37 +74,30 @@ which makes it possible to pattern-match on it.
 #include "meta/range.hpp"
 #include "meta/fold_reverse.hpp"
 
-namespace meta
-{
+namespace meta {
+
     namespace mpl = boost::mpl;
 
     // \todo Optimise operations
     struct vector_tag;
 
-    template <typename ... Types> struct vector
-    {
+    template <typename ... Types> struct vector {
         typedef vector_tag tag;
         typedef vector type;
     };
 
     template <typename ... Types> struct range_tag <vector <Types ...> >
-    {
-        typedef vector_tag type;
-    };
+    { typedef vector_tag type; };
 
-    namespace operation
-    {
-        template <> struct default_direction <vector_tag>
-        {
+    namespace operation {
+
+        template <> struct default_direction <vector_tag> {
             template <typename Range> struct apply
-            {
-                typedef meta::front type;
-            };
+            { typedef meta::front type; };
         };
 
         // empty
-        template <> struct empty <vector_tag, front>
-        {
+        template <> struct empty <vector_tag, front> {
             template <typename Range, typename Void = void> struct apply;
 
             template <typename Void>
@@ -117,8 +110,7 @@ namespace meta
         : empty <vector_tag, front> {};
 
         // size
-        template <> struct size <vector_tag, front>
-        {
+        template <> struct size <vector_tag, front> {
             template <typename Range> struct apply;
 
             template <typename ... Types> struct apply <vector <Types ...>>
@@ -129,20 +121,18 @@ namespace meta
         : size <vector_tag, front> {};
 
         // first
-        template <> struct first <vector_tag, front>
-        {
+        template <> struct first <vector_tag, front> {
             template <typename Vector> struct apply;
             template <typename FirstType, typename ... Types>
                 struct apply <vector <FirstType, Types ...> >
-            {
-                typedef FirstType type;
-            };
+            { typedef FirstType type; };
         };
 
         // first <back>.
         // This implementation should be O(1).
         // (The obvious implementation is recursive and O(n)).
         namespace first_back_detail {
+
             /**
             Wrapper to make sure the exact type does not get lost.
             */
@@ -178,7 +168,8 @@ namespace meta
                 LastType is the last type in the list.
                 */
                 typedef decltype (
-                    std::declval <first_back_detail::return_last_type <Types...>>() (
+                    std::declval <
+                        first_back_detail::return_last_type <Types...>>() (
                         0, std::declval <first_back_detail::wrap <Types>>()...))
                     wrapped_last_type;
                 typedef typename wrapped_last_type::type type;
@@ -186,18 +177,15 @@ namespace meta
         };
 
         // drop
-        template <> struct drop_one <vector_tag, front>
-        {
+        template <> struct drop_one <vector_tag, front> {
             template <typename Vector> struct apply;
+
             template <typename FirstType, typename ... Types>
                 struct apply <vector <FirstType, Types ...> >
-            {
-                typedef vector <Types ...> type;
-            };
+            { typedef vector <Types ...> type; };
         };
 
-        template <> struct drop_one <vector_tag, back>
-        {
+        template <> struct drop_one <vector_tag, back> {
             template <typename Vector> struct apply;
             template <typename FirstType>
                 struct apply <vector <FirstType> >
@@ -212,28 +200,23 @@ namespace meta
         };
 
         // push
-        template <> struct push <vector_tag, front>
-        {
+        template <> struct push <vector_tag, front> {
             template <typename NewElement, typename Vector> struct apply;
+
             template <typename NewElement, typename ... Types>
                 struct apply <NewElement, vector <Types ...> >
-            {
-                typedef vector <NewElement, Types ...> type;
-            };
+            { typedef vector <NewElement, Types ...> type; };
         };
-        template <> struct push <vector_tag, back>
-        {
+        template <> struct push <vector_tag, back> {
             template <typename NewElement, typename Vector> struct apply;
+
             template <typename NewElement, typename ... Types>
                 struct apply <NewElement, vector <Types ...> >
-            {
-                typedef vector <Types ..., NewElement> type;
-            };
+            { typedef vector <Types ..., NewElement> type; };
         };
 
-        /// Specialisation of transform uses C++0x intrinsics
-        template <> struct transform <vector_tag, meta::front>
-        {
+        /// Specialisation of transform uses C++11 intrinsics
+        template <> struct transform <vector_tag, meta::front> {
             template <typename Function, typename Range> struct apply;
 
             template <typename Function, typename ... Types>
@@ -247,8 +230,7 @@ namespace meta
         : transform <vector_tag, meta::front> {};
 
         /// Specialisation of concatenate
-        template <> struct concatenate <vector_tag, vector_tag, meta::front>
-        {
+        template <> struct concatenate <vector_tag, vector_tag, meta::front> {
             template <typename Range1, typename Range2> struct apply;
 
             template <typename ... Types1, typename ... Types2>
@@ -260,8 +242,7 @@ namespace meta
 
         // Specialisation of fold
         // \todo Test
-        template <> struct fold <vector_tag, meta::front>
-        {
+        template <> struct fold <vector_tag, meta::front> {
             template <typename Function, typename State, typename Range>
                 struct apply;
 
@@ -281,7 +262,8 @@ namespace meta
 
             template <typename Function, typename State,
                 typename Type1, typename Type2, typename ... OtherTypes>
-            struct apply <Function, State, vector <Type1, Type2, OtherTypes ...> >
+            struct apply <Function, State,
+                vector <Type1, Type2, OtherTypes ...> >
             : apply <Function,
                 typename mpl::apply <Function,
                     typename mpl::apply <Function, State, Type1>::type,
@@ -290,8 +272,10 @@ namespace meta
             > {};
 
             template <typename Function, typename State,
-                typename Type1, typename Type2, typename Type3, typename ... OtherTypes>
-            struct apply <Function, State, vector <Type1, Type2, Type3, OtherTypes ...> >
+                typename Type1, typename Type2, typename Type3,
+                typename ... OtherTypes>
+            struct apply <Function, State,
+                vector <Type1, Type2, Type3, OtherTypes ...> >
             : apply <Function,
                 typename mpl::apply <Function,
                     typename mpl::apply <Function,
@@ -302,12 +286,11 @@ namespace meta
             > {};
         };
 
-    }   // namespace operation
+    } // namespace operation
 
 
     // MPL-style iterator
-    template <typename Position, typename Vector> struct vector_iterator
-    {
+    template <typename Position, typename Vector> struct vector_iterator {
         typedef boost::mpl::random_access_iterator_tag category;
         static const std::size_t index = Position::value;
     };
@@ -333,7 +316,7 @@ namespace meta
     template <typename ... Types> struct as_vector <front, vector <Types ...> >
     { typedef vector <Types ...> type; };
 
-}   // namespace meta
+} // namespace meta
 
 /*
 MPL sequence compatibility
@@ -379,13 +362,11 @@ For the iterators:
 * distance <i, j>
 */
 
-namespace boost { namespace mpl
-{
+namespace boost { namespace mpl {
+
     template <typename ... Types>
         struct sequence_tag <meta::vector <Types ...> >
-    {
-        typedef meta::vector_tag type;
-    };
+    { typedef meta::vector_tag type; };
 
     template <> struct empty_impl <meta::vector_tag>
     : meta::operation::empty <meta::vector_tag, meta::front> {};
@@ -396,8 +377,7 @@ namespace boost { namespace mpl
     template <> struct front_impl <meta::vector_tag>
     : meta::operation::first <meta::vector_tag, meta::front> {};
 
-    template <> struct push_front_impl <meta::vector_tag>
-    {
+    template <> struct push_front_impl <meta::vector_tag> {
         template <typename Vector, typename NewType> struct apply
         : meta::push <meta::front, NewType, Vector> {};
     };
@@ -405,19 +385,15 @@ namespace boost { namespace mpl
     template <> struct pop_front_impl <meta::vector_tag>
     : meta::operation::drop_one <meta::vector_tag, meta::front> {};
 
-    template <> struct clear_impl <meta::vector_tag>
-    {
+    template <> struct clear_impl <meta::vector_tag> {
         template <typename Vector> struct apply
-        {
-            typedef meta::vector<> type;
-        };
+        { typedef meta::vector<> type; };
     };
 
     template <> struct back_impl <meta::vector_tag>
     : meta::operation::first <meta::vector_tag, meta::back> {};
 
-    template <> struct push_back_impl <meta::vector_tag>
-    {
+    template <> struct push_back_impl <meta::vector_tag> {
         template <typename Vector, typename NewType> struct apply
         : meta::push <meta::back, NewType, Vector> {};
     };
@@ -425,15 +401,13 @@ namespace boost { namespace mpl
     template <> struct pop_back_impl <meta::vector_tag>
     : meta::operation::drop_one <meta::vector_tag, meta::back> {};
 
-    template <> struct at_impl <meta::vector_tag>
-    {
+    template <> struct at_impl <meta::vector_tag> {
         template <typename Vector, typename Position> struct apply
         : meta::first <meta::front,
             typename meta::drop <meta::front, Position, Vector>::type> {};
     };
 
-    template <> struct erase_impl <meta::vector_tag>
-    {
+    template <> struct erase_impl <meta::vector_tag> {
         template <typename Vector, std::size_t first, typename Last = na>
             struct apply_one_c;
         template <typename Vector, std::size_t first, std::size_t last>
@@ -466,9 +440,7 @@ namespace boost { namespace mpl
         // Erase one element
         template <typename FirstType, typename ... Types>
             struct apply_one_c <meta::vector <FirstType, Types ...>, 0>
-        {
-            typedef meta::vector <Types ...> type;
-        };
+        { typedef meta::vector <Types ...> type; };
 
         template <typename FirstType, typename ... Types, std::size_t first>
             struct apply_one_c <meta::vector <FirstType, Types ...>, first>
@@ -479,15 +451,11 @@ namespace boost { namespace mpl
         // Erase a range
         template <typename ... Types>
             struct apply_range_c <meta::vector <Types ...>, 0, 0>
-        {
-            typedef meta::vector <Types ...> type;
-        };
+        {  typedef meta::vector <Types ...> type; };
         // (resolve specialisation)
         template <typename FirstType, typename ... Types>
             struct apply_range_c <meta::vector <FirstType, Types ...>, 0, 0>
-        {
-            typedef meta::vector <FirstType, Types ...> type;
-        };
+        { typedef meta::vector <FirstType, Types ...> type; };
 
         template <typename FirstType, typename ... Types, std::size_t last>
             struct apply_range_c <meta::vector <FirstType, Types ...>, 0, last>
@@ -497,12 +465,11 @@ namespace boost { namespace mpl
             std::size_t first, std::size_t last>
         struct apply_range_c <meta::vector <FirstType, Types ...>, first, last>
         : meta::push <meta::front, FirstType,
-            typename apply_range_c <meta::vector <Types ...>, first - 1, last  - 1
-                >::type> {};
+            typename apply_range_c <meta::vector <Types ...>,
+                first - 1, last  - 1>::type> {};
     };
 
-    template <> struct insert_impl <meta::vector_tag>
-    {
+    template <> struct insert_impl <meta::vector_tag> {
         template <typename Vector, std::size_t index, typename NewType>
             struct apply_c;
 
@@ -521,19 +488,19 @@ namespace boost { namespace mpl
         // Resolve specialisations
         template <typename FirstType, typename ... Types, typename NewType>
         struct apply_c <meta::vector <FirstType, Types ...>, 0, NewType>
-        : meta::push <meta::front, NewType, meta::vector <FirstType, Types ...> > {};
+        : meta::push <meta::front, NewType,
+            meta::vector <FirstType, Types ...> > {};
 
         template <typename FirstType, typename ... Types,
             std::size_t index, typename NewType>
         struct apply_c <meta::vector <FirstType, Types ...>, index, NewType>
         : meta::push <meta::front, FirstType,
-            typename apply_c <meta::vector <Types ...>, index - 1, NewType>::type
+            typename apply_c <meta::vector <Types ...>, index - 1, NewType
+                >::type
         > {};
-
     };
 
-    template <> struct insert_range_impl <meta::vector_tag>
-    {
+    template <> struct insert_range_impl <meta::vector_tag> {
         template <typename Vector, std::size_t index, typename newTypes>
             struct apply_c;
 
@@ -552,9 +519,7 @@ namespace boost { namespace mpl
         template <typename Vector, typename NewTypes>
             struct push_front_range <Vector, NewTypes,
                 typename boost::enable_if <empty <NewTypes> >::type>
-        {
-            typedef Vector type;
-        };
+        { typedef Vector type; };
 
         template <typename Vector, typename NewTypes>
             struct push_front_range <Vector, NewTypes,
@@ -575,25 +540,20 @@ namespace boost { namespace mpl
             std::size_t index, typename NewTypes>
         struct apply_c <meta::vector <FirstType, Types ...>, index, NewTypes>
         : meta::push <meta::front, FirstType,
-            typename apply_c <meta::vector <Types ...>, index - 1, NewTypes>::type
+            typename apply_c <meta::vector <Types ...>, index - 1, NewTypes
+                >::type
         > {};
-
     };
 
     /**** vector_iterator ****/
 
-    template <> struct begin_impl <meta::vector_tag>
-    {
+    template <> struct begin_impl <meta::vector_tag> {
         template <typename Vector> struct apply
-        {
-            typedef meta::vector_iterator <mpl::size_t <0>, Vector> type;
-        };
+        { typedef meta::vector_iterator <mpl::size_t <0>, Vector> type; };
     };
 
-    template <> struct end_impl <meta::vector_tag>
-    {
-        template <typename Vector> struct apply
-        {
+    template <> struct end_impl <meta::vector_tag> {
+        template <typename Vector> struct apply {
             typedef meta::vector_iterator <
                 typename boost::mpl::size <Vector>::type, Vector> type;
         };
@@ -615,7 +575,8 @@ namespace boost { namespace mpl
     };
 
     template <typename Position, typename ... Types>
-        struct prior <meta::vector_iterator <Position, meta::vector <Types ...> > >
+        struct prior <
+            meta::vector_iterator <Position, meta::vector <Types ...> > >
     {
         typedef typename prior <Position>::type new_position;
         static_assert (greater_equal <new_position, mpl::size_t <0> >::value,
@@ -647,7 +608,7 @@ namespace boost { namespace mpl
         >
     : minus <Position2, Position1> {};
 
-}}  // namespace boost::mpl
+}} // namespace boost::mpl
 
 #endif  // META_VECTOR_HPP_INCLUDED
 

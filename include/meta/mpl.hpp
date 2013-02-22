@@ -54,12 +54,12 @@ It uses the same direction::front and direction::back types that ranges use.
 
 #include <boost/utility/enable_if.hpp>
 
-namespace meta
-{
+namespace meta {
+
     struct mpl_sequence_tag;
 
-    namespace operation
-    {
+    namespace operation {
+
         // Allow partial specialisation of meta::range_tag for things that
         // also are MPL sequences.
         template <typename Range>
@@ -69,17 +69,13 @@ namespace meta
             typedef mpl_sequence_tag type;
         };
 
-        template <> struct default_direction <mpl_sequence_tag>
-        {
+        template <> struct default_direction <mpl_sequence_tag> {
             template <typename Range> struct apply
-            {
-                typedef front type;
-            };
+            { typedef front type; };
         };
 
         // empty
-        template <> struct empty <mpl_sequence_tag, meta::front>
-        {
+        template <> struct empty <mpl_sequence_tag, meta::front> {
             template <typename Range> struct apply
             : mpl::empty <Range> {};
         };
@@ -87,8 +83,7 @@ namespace meta
         : empty <mpl_sequence_tag, meta::front> {};
 
         // size
-        template <> struct size <mpl_sequence_tag, meta::front>
-        {
+        template <> struct size <mpl_sequence_tag, meta::front> {
             template <typename Range> struct apply
             : mpl::size <Range> {};
         };
@@ -96,25 +91,21 @@ namespace meta
         : size <mpl_sequence_tag, meta::front> {};
 
         // first
-        template <> struct first <mpl_sequence_tag, meta::front>
-        {
+        template <> struct first <mpl_sequence_tag, meta::front> {
             template <typename Range> struct apply
             : mpl::front <Range> {};
         };
-        template <> struct first <mpl_sequence_tag, meta::back>
-        {
+        template <> struct first <mpl_sequence_tag, meta::back> {
             template <typename Range> struct apply
             : mpl::back <Range> {};
         };
 
         // drop_one
-        template <> struct drop_one <mpl_sequence_tag, meta::front>
-        {
+        template <> struct drop_one <mpl_sequence_tag, meta::front> {
             template <typename Range> struct apply
             : mpl::pop_front <Range> {};
         };
-        template <> struct drop_one <mpl_sequence_tag, meta::back>
-        {
+        template <> struct drop_one <mpl_sequence_tag, meta::back> {
             template <typename Range> struct apply
             : mpl::pop_back <Range> {};
         };
@@ -150,8 +141,7 @@ namespace meta
         };
 
         // push
-        template <> struct push <mpl_sequence_tag, meta::front>
-        {
+        template <> struct push <mpl_sequence_tag, meta::front> {
             template <typename NewElement, typename Range> struct apply
             : mpl::push_front <Range, NewElement> {};
         };
@@ -162,22 +152,20 @@ namespace meta
         };
 
         // fold
-        template <> struct fold <mpl_sequence_tag, meta::front>
-        {
+        template <> struct fold <mpl_sequence_tag, meta::front> {
             template <typename Function, typename State, typename Range>
                 struct apply
             : mpl::fold <Range, State, Function> {};
         };
-        template <> struct fold <mpl_sequence_tag, meta::back>
-        {
+        template <> struct fold <mpl_sequence_tag, meta::back> {
             template <typename Function, typename State, typename Range>
                 struct apply
             : mpl::reverse_fold <Range, State, Function> {};
         };
 
-    }   // namespace operation
+    } // namespace operation
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // RANGE_META_MPL_HPP_INCLUDED
 

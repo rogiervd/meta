@@ -27,8 +27,8 @@ Fold operation that returns the results at each step.
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
-namespace meta
-{
+namespace meta {
+
     template <typename Direction, typename Function,
             typename State /*= void*/, typename Range /*= void*/>
         struct scan
@@ -41,10 +41,8 @@ namespace meta
         typedef Range range;
     };
 
-    template <typename Direction> struct empty_scan
-    {
+    template <typename Direction> struct empty_scan {
         typedef empty_scan type;
-
         typedef Direction direction;
     };
 
@@ -76,9 +74,7 @@ namespace meta
 
     template <typename Direction>
         struct range_tag <empty_scan <Direction> >
-    {
-        typedef scan_tag <Direction> type;
-    };
+    { typedef scan_tag <Direction> type; };
 
     template <typename Direction, typename Function,
             typename State, typename Range>
@@ -90,12 +86,10 @@ namespace meta
 
     template <typename Direction>
         struct default_direction <empty_scan <Direction> >
-    {
-        typedef Direction type;
-    };
+    { typedef Direction type; };
 
-    namespace operation
-    {
+    namespace operation {
+
         template <typename Direction>
             struct empty <scan_tag <Direction>, Direction>
         {
@@ -140,7 +134,8 @@ namespace meta
                 // Apply Function to State and the first item of Range.
                 typedef typename mpl::apply <typename Scan::function,
                         typename Scan::state,
-                        typename meta::first <Direction, typename Scan::range>::type
+                        typename meta::first <Direction, typename Scan::range
+                            >::type
                     >::type new_state;
 
                 typedef meta::scan <Direction,
@@ -159,9 +154,9 @@ namespace meta
             };
         };
 
-    }
+    } // namespace operation
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_SCAN_HPP_INCLUDED
 

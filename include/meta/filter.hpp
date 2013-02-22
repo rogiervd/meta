@@ -27,8 +27,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
-namespace meta
-{
+namespace meta {
+
     template <typename Direction, typename Predicate, typename Range /*= void*/>
         struct filter;
 
@@ -36,37 +36,37 @@ namespace meta
         struct filter <Predicate, Range>
     : filter <typename default_direction <Range>::type, Predicate, Range> {};
 
-    namespace detail
-    {
+    namespace detail {
+
         template <typename Direction, typename Predicate, typename Range,
                 bool Empty = meta::empty <Direction, Range>::value>
             struct filter;
 
         template <typename Direction, typename Predicate, typename Range>
             struct filter <Direction, Predicate, Range, true>
-        {
-            typedef Range type;
-        };
+        { typedef Range type; };
 
         template <typename Direction, typename Predicate, typename Range>
             struct filter <Direction, Predicate, Range, false>
         {
             typedef typename first <Direction, Range>::type head;
             typedef typename drop <Direction, Range>::type tail;
-            typedef typename filter <Direction, Predicate, tail>::type filtered_tail;
+            typedef typename filter <Direction, Predicate, tail>::type
+                filtered_tail;
             typedef typename mpl::eval_if <
                     typename mpl::apply <Predicate, head>::type,
                     push <Direction, head, filtered_tail>,
                     mpl::identity <filtered_tail>
                 >::type type;
         };
-    }   // namespace detail
+
+    } // namespace detail
 
     template <typename Direction, typename Predicate, typename Range>
         struct filter
     : detail::filter <Direction, Predicate, Range> {};
 
-}   // namespace meta
+} // namespace meta
 
 #endif  // META_FILTER_HPP_INCLUDED
 
