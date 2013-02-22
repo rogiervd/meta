@@ -129,12 +129,14 @@ BOOST_AUTO_TEST_CASE (test_meta_vector_mpl_iterators) {
     BOOST_MPL_ASSERT ((std::is_same <
         begin <vector1>::type, prior <end <vector1>::type>::type>));
     BOOST_MPL_ASSERT ((std::is_same <
-        next <begin <vector2>::type>::type, prior <end <vector2>::type>::type>));
+        next <begin <vector2>::type>::type, prior <end <vector2>::type
+            >::type>));
     BOOST_MPL_ASSERT ((std::is_same <
         next <begin <vector4>::type>::type,
         prior <prior <prior <end <vector4>::type>::type>::type>::type>));
     BOOST_MPL_ASSERT ((std::is_same <
-        next <next <next <next <begin <vector4>::type>::type>::type>::type>::type,
+        next <next <next <next <begin <vector4>::type>::type>::type>::type
+            >::type,
         end <vector4>::type>));
     BOOST_MPL_ASSERT ((std::is_same <
         deref <next <begin <vector4>::type>::type>::type,
@@ -151,9 +153,11 @@ BOOST_AUTO_TEST_CASE (test_meta_vector_mpl_iterators) {
     BOOST_MPL_ASSERT ((std::is_same <
         deref <next <begin <vector4>::type>::type>::type, bool>));
     BOOST_MPL_ASSERT ((std::is_same <
-        deref <next <next <begin <vector4>::type>::type>::type>::type, float>));
+        deref <next <next <begin <vector4>::type>::type>::type>::type,
+        float>));
     BOOST_MPL_ASSERT ((std::is_same <
-        deref <next <next <next <begin <vector4>::type>::type>::type>::type>::type,
+        deref <next <next <next <begin <vector4>::type>::type>::type>::type
+            >::type,
         double>));
 
     BOOST_MPL_ASSERT ((equal_to <
@@ -166,7 +170,8 @@ BOOST_AUTO_TEST_CASE (test_meta_vector_mpl_iterators) {
         distance <begin <vector4>::type, end <vector4>::type >::type,
         boost::mpl::size_t <4> >));
     BOOST_MPL_ASSERT ((equal_to <
-        distance <next <begin <vector4>::type>::type, end <vector4>::type >::type,
+        distance <next <begin <vector4>::type>::type, end <vector4>::type
+            >::type,
         boost::mpl::size_t <3> >));
     BOOST_MPL_ASSERT ((equal_to <
         distance <next <begin <vector4>::type>::type,
@@ -287,7 +292,8 @@ BOOST_AUTO_TEST_CASE (test_meta_vector_with_mpl_iterators) {
         vector2
         >));
     BOOST_MPL_ASSERT ((std::is_same <
-        insert_range <vector2, next <begin <vector2>::type>::type, vector0>::type,
+        insert_range <vector2, next <begin <vector2>::type>::type, vector0
+            >::type,
         vector2
         >));
     BOOST_MPL_ASSERT ((std::is_same <
@@ -300,7 +306,8 @@ BOOST_AUTO_TEST_CASE (test_meta_vector_with_mpl_iterators) {
         meta::vector <int, bool, float, double, int, bool>
         >));
     BOOST_MPL_ASSERT ((std::is_same <
-        insert_range <vector2, next <begin <vector2>::type>::type, vector4>::type,
+        insert_range <vector2, next <begin <vector2>::type>::type, vector4
+            >::type,
         meta::vector <int, int, bool, float, double, bool>
         >));
     BOOST_MPL_ASSERT ((std::is_same <
@@ -329,7 +336,8 @@ BOOST_AUTO_TEST_CASE (test_meta_vector_mpl_algorithms) {
         meta::vector <wrapped <int> > >));
     BOOST_MPL_ASSERT ((std::is_same <
         transform <vector4, wrapped <_>>::type,
-        meta::vector <wrapped <int>, wrapped <bool>, wrapped <float>, wrapped <double> > >));
+        meta::vector <wrapped <int>, wrapped <bool>, wrapped <float>,
+            wrapped <double>>>));
 
     BOOST_MPL_ASSERT ((std::is_same <
         transform <vector0, wrap <_>>::type,
@@ -339,7 +347,8 @@ BOOST_AUTO_TEST_CASE (test_meta_vector_mpl_algorithms) {
         meta::vector <wrapped <int> > >));
     BOOST_MPL_ASSERT ((std::is_same <
         transform <vector4, wrap <_>>::type,
-        meta::vector <wrapped <int>, wrapped <bool>, wrapped <float>, wrapped <double> > >));
+        meta::vector <wrapped <int>, wrapped <bool>, wrapped <float>,
+            wrapped <double>>>));
 
     BOOST_MPL_ASSERT ((std::is_same <
         copy_if <vector4, std::is_same <float, _> >::type,

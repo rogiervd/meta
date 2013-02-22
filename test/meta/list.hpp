@@ -63,19 +63,15 @@ namespace meta {
         static const std::size_t size = tail::size + 1;
     };
 
-    template <> struct list <>
-    {
+    template <> struct list <> {
         typedef list type;
-
         static const std::size_t size = 0;
     };
 
     template <std::size_t Size> struct list_tag;
 
     template <typename ... Types> struct range_tag <list <Types ...> >
-    {
-        typedef list_tag <list <Types ...>::size> type;
-    };
+    { typedef list_tag <list <Types ...>::size> type; };
 
     /**
     A meta-list similar to "list", but with an invalid default direction.
@@ -93,30 +89,23 @@ namespace meta {
 
         static const std::size_t size = tail::size + 1;
     };
-    template <> struct weird_list <>
-    {
+    template <> struct weird_list <> {
         typedef weird_list type;
-
         static const std::size_t size = 0;
     };
 
     template <typename ... Types> struct range_tag <weird_list <Types ...> >
-    {
-        typedef list_tag <weird_list <Types ...>::size> type;
-    };
+    { typedef list_tag <weird_list <Types ...>::size> type; };
 
+    namespace operation {
 
-    namespace operation
-    {
         template <std::size_t Size> struct default_direction <list_tag <Size> >
         {
             template <typename List> struct apply;
 
             template <typename ... Types>
                 struct apply <meta::list <Types ...> >
-            {
-                typedef meta::list_direction type;
-            };
+            { typedef meta::list_direction type; };
 
             // For testing purposes, the default direction of weird_list is not
             // list_direction!
@@ -128,36 +117,26 @@ namespace meta {
             {
                 typedef meta::FORGOTTEN_EXPLICIT_DIRECTION_TAG type;
             };
-
         };
 
         // empty
         template <std::size_t Size>
             struct empty <list_tag <Size>, list_direction>
-        {
-            template <typename List> struct apply : mpl::false_ {};
-        };
-        template <>
-            struct empty <list_tag <0>, list_direction>
-        {
-            template <typename List> struct apply : mpl::true_ {};
-        };
+        { template <typename List> struct apply : mpl::false_ {}; };
+        template <> struct empty <list_tag <0>, list_direction>
+        { template <typename List> struct apply : mpl::true_ {}; };
 
         // size
         template <std::size_t Size>
             struct size <list_tag <Size>, list_direction>
-        {
-            template <typename List> struct apply : mpl::size_t <Size> {};
-        };
+        { template <typename List> struct apply : mpl::size_t <Size> {}; };
 
         // first
         template <std::size_t Size>
             struct first <list_tag <Size>, list_direction>
         {
             template <typename List> struct apply
-            {
-                typedef typename List::head type;
-            };
+            { typedef typename List::head type; };
         };
         // Not implementable
         template <> struct first <list_tag <0>, list_direction> {};
@@ -167,9 +146,7 @@ namespace meta {
             struct drop_one <list_tag <Size>, list_direction>
         {
             template <typename List> struct apply
-            {
-                typedef typename List::tail type;
-            };
+            { typedef typename List::tail type; };
         };
         // Not implementable
         template <> struct drop_one <list_tag <0>, list_direction> {};
@@ -182,21 +159,16 @@ namespace meta {
 
             template <typename NewElement, typename ... Types>
                 struct apply <NewElement, list <Types ...> >
-            {
-                typedef list <NewElement, Types ...> type;
-            };
+            { typedef list <NewElement, Types ...> type; };
 
             template <typename NewElement, typename ... Types>
                 struct apply <NewElement, weird_list <Types ...> >
-            {
-                typedef weird_list <NewElement, Types ...> type;
-            };
+            { typedef weird_list <NewElement, Types ...> type; };
         };
 
-    }   // namespace operation
+    } // namespace operation
 
-}   // namespace meta
-
+} // namespace meta
 
 #endif  // META_TEST_LIST_HPP_INCLUDED
 

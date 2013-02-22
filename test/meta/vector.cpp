@@ -55,15 +55,18 @@ BOOST_AUTO_TEST_CASE (test_meta_vector) {
 
     BOOST_MPL_ASSERT ((equal_to <meta::size <vector0>, mpl::size_t <0> >));
     BOOST_MPL_ASSERT ((equal_to <meta::size <vector1>, mpl::size_t <1> >));
-    BOOST_MPL_ASSERT ((equal_to <meta::size <meta::back, vector1>, mpl::size_t <1> >));
+    BOOST_MPL_ASSERT ((equal_to <meta::size <meta::back, vector1>,
+        mpl::size_t <1> >));
     BOOST_MPL_ASSERT ((equal_to <meta::size <vector4>, mpl::size_t <4> >));
 
     BOOST_MPL_ASSERT ((is_same <meta::first <vector1>::type, int>));
     BOOST_MPL_ASSERT ((is_same <meta::first <meta::back, vector1>::type, int>));
     BOOST_MPL_ASSERT ((is_same <meta::first <vector2>::type, int>));
-    BOOST_MPL_ASSERT ((is_same <meta::first <meta::back, vector2>::type, bool>));
+    BOOST_MPL_ASSERT ((is_same <meta::first <meta::back, vector2>::type,
+        bool>));
     BOOST_MPL_ASSERT ((is_same <meta::first <vector4>::type, int>));
-    BOOST_MPL_ASSERT ((is_same <meta::first <meta::back, vector4>::type, double>));
+    BOOST_MPL_ASSERT ((is_same <meta::first <meta::back, vector4>::type,
+        double>));
 
     BOOST_MPL_ASSERT ((is_same <
         meta::drop <mpl::size_t <0>, vector0>::type,
@@ -159,10 +162,12 @@ BOOST_AUTO_TEST_CASE (test_meta_concatenate_vector) {
         meta::concatenate <meta::vector <int>, meta::vector <bool> >::type,
         meta::vector <int, bool> >));
     BOOST_MPL_ASSERT ((is_same <
-        meta::concatenate <meta::vector <int, float>, meta::vector <bool> >::type,
+        meta::concatenate <meta::vector <int, float>, meta::vector <bool>
+            >::type,
         meta::vector <int, float, bool> >));
     BOOST_MPL_ASSERT ((is_same <
-        meta::concatenate <meta::vector <int>, meta::vector <bool, float> >::type,
+        meta::concatenate <meta::vector <int>, meta::vector <bool, float>
+            >::type,
         meta::vector <int, bool, float> >));
 }
 

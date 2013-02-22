@@ -72,20 +72,24 @@ BOOST_AUTO_TEST_CASE (test_meta_concatenate) {
         meta::concatenate <direction, weird_list<>, weird_list <int> >::type,
         weird_list <int> >));
     BOOST_MPL_ASSERT ((is_same <
-        meta::concatenate <direction, weird_list <int>, weird_list <bool> >::type,
+        meta::concatenate <direction, weird_list <int>, weird_list <bool>
+            >::type,
         weird_list <int, bool> >));
     BOOST_MPL_ASSERT ((is_same <
-        meta::concatenate <direction, weird_list <int, float>, weird_list <bool> >::type,
+        meta::concatenate <direction, weird_list <int, float>, weird_list <bool>
+            >::type,
         weird_list <int, float, bool> >));
 
     BOOST_MPL_ASSERT ((is_same <
         meta::concatenate <weird_list <int, float>, list <bool> >::type,
         list <int, float, bool> >));
     BOOST_MPL_ASSERT ((is_same <
-        meta::concatenate <direction, list <int, float>, weird_list <bool> >::type,
+        meta::concatenate <direction, list <int, float>, weird_list <bool>
+            >::type,
         weird_list <int, float, bool> >));
     BOOST_MPL_ASSERT ((is_same <
-        meta::concatenate <direction, weird_list <int, float>, list <bool> >::type,
+        meta::concatenate <direction, weird_list <int, float>, list <bool>
+            >::type,
         list <int, float, bool> >));
 }
 

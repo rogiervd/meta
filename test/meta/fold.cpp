@@ -54,7 +54,8 @@ BOOST_AUTO_TEST_CASE (test_meta_fold) {
         >::type,
         mpl::int_ <12> >));
     BOOST_MPL_ASSERT ((mpl::equal_to <
-        meta::fold <meta::list_direction, mpl::plus <mpl::_1, mpl::_2>, mpl::int_ <7>,
+        meta::fold <meta::list_direction, mpl::plus <mpl::_1, mpl::_2>,
+            mpl::int_ <7>,
             meta::list <mpl::int_ <4>, mpl::int_ <2>, mpl::int_ <-1> >
         >::type,
         mpl::int_ <12> >));
@@ -71,8 +72,8 @@ BOOST_AUTO_TEST_CASE (test_meta_fold) {
         >::type,
         meta::list <bool, int> >));
     BOOST_MPL_ASSERT ((is_same <
-        meta::fold <meta::list_direction, meta::push <mpl::_2, mpl::_1>, meta::list<>,
-            meta::list <int, bool>
+        meta::fold <meta::list_direction, meta::push <mpl::_2, mpl::_1>,
+            meta::list<>, meta::list <int, bool>
         >::type,
         meta::list <bool, int> >));
     BOOST_MPL_ASSERT ((is_same <
@@ -134,7 +135,8 @@ BOOST_AUTO_TEST_CASE (test_meta_fold_reverse) {
         >::type,
         mpl::int_ <12> >));
     BOOST_MPL_ASSERT ((mpl::equal_to <
-        meta::fold_reverse <meta::list_direction, mpl::plus <mpl::_1, mpl::_2>, mpl::int_ <7>,
+        meta::fold_reverse <meta::list_direction, mpl::plus <mpl::_1, mpl::_2>,
+            mpl::int_ <7>,
             meta::list <mpl::int_ <4>, mpl::int_ <2>, mpl::int_ <-1> >
         >::type,
         mpl::int_ <12> >));
@@ -147,13 +149,15 @@ BOOST_AUTO_TEST_CASE (test_meta_fold_reverse) {
 
     BOOST_MPL_ASSERT ((mpl::equal_to <
         meta::fold_reverse <mpl::divides <mpl::_1, mpl::_2>, mpl::int_ <2>,
-            meta::list <mpl::int_ <8>, mpl::int_ <12>, mpl::int_ <24>, mpl::int_ <-4> >
+            meta::list <mpl::int_ <8>, mpl::int_ <12>, mpl::int_ <24>,
+                mpl::int_ <-4> >
         >::type,
         mpl::int_ <-8> >));
 
     BOOST_MPL_ASSERT ((mpl::equal_to <
         meta::fold_reverse <mpl::divides <mpl::_1, mpl::_2>,
-            meta::list <mpl::int_ <8>, mpl::int_ <12>, mpl::int_ <24>, mpl::int_ <-2> >
+            meta::list <mpl::int_ <8>, mpl::int_ <12>, mpl::int_ <24>,
+                mpl::int_ <-2> >
         >::type,
         mpl::int_ <-8> >));
 

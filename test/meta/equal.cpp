@@ -90,24 +90,28 @@ BOOST_AUTO_TEST_CASE (test_meta_range) {
         meta::weird_list<int, bool>, meta::weird_list<int, bool> >));
 
     // With predicate
-    BOOST_MPL_ASSERT ((meta::equal <meta::list_direction, mpl::equal_to <mpl::_, mpl::_>,
-        meta::list<>, meta::list<> >));
+    BOOST_MPL_ASSERT ((meta::equal <meta::list_direction,
+        mpl::equal_to <mpl::_, mpl::_>, meta::list<>, meta::list<> >));
     // Don't even execute any comparison
     BOOST_MPL_ASSERT_NOT ((meta::equal <mpl::equal_to <mpl::_, mpl::_>,
         meta::list<int>, meta::list<> >));
-    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction, mpl::equal_to <mpl::_, mpl::_>,
-        meta::list<>, meta::list<int> >));
+    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction,
+        mpl::equal_to <mpl::_, mpl::_>, meta::list<>, meta::list<int> >));
     BOOST_MPL_ASSERT ((meta::equal <mpl::equal_to <mpl::_, mpl::_>,
         meta::list<mpl::int_ <3> >, meta::list<mpl::size_t <3> > >));
-    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction, mpl::equal_to <mpl::_, mpl::_>,
+    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction,
+        mpl::equal_to <mpl::_, mpl::_>,
         meta::list<mpl::int_ <4> >, meta::list<mpl::int_ <5> > >));
 
-    BOOST_MPL_ASSERT ((meta::equal <meta::list_direction, mpl::equal_to <mpl::_, mpl::_>,
+    BOOST_MPL_ASSERT ((meta::equal <meta::list_direction,
+        mpl::equal_to <mpl::_, mpl::_>,
         meta::weird_list<>, meta::weird_list<> >));
     // Don't even execute any comparison
-    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction, mpl::equal_to <mpl::_, mpl::_>,
+    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction,
+        mpl::equal_to <mpl::_, mpl::_>,
         meta::weird_list<>, meta::weird_list<int> >));
-    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction, mpl::equal_to <mpl::_, mpl::_>,
+    BOOST_MPL_ASSERT_NOT ((meta::equal <meta::list_direction,
+        mpl::equal_to <mpl::_, mpl::_>,
         meta::weird_list<mpl::int_ <4> >, meta::weird_list<mpl::int_ <5> > >));
 }
 

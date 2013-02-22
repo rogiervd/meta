@@ -148,7 +148,6 @@ BOOST_AUTO_TEST_CASE (test_meta_range) {
         meta::weird_list <long, int> >));
     BOOST_MPL_ASSERT ((is_same <push <dir, long, weird_list4>::type,
         meta::weird_list <long, int, bool, float, double> >));
-
 }
 
 BOOST_AUTO_TEST_SUITE_END()

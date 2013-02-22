@@ -92,7 +92,8 @@ BOOST_AUTO_TEST_CASE (test_meta_mpl_intrinsic) {
     BOOST_MPL_ASSERT ((meta::equal <
         meta::drop <mpl::int_<2>, vector2>::type, mpl::vector<> >));
     BOOST_MPL_ASSERT ((meta::equal <
-        meta::drop <mpl::int_<2>, vector4>::type, mpl::vector <float, double> >));
+        meta::drop <mpl::int_<2>, vector4>::type,
+        mpl::vector <float, double>>));
     BOOST_MPL_ASSERT ((meta::equal <
         meta::drop <meta::back, mpl::int_<2>, vector2>::type,
         mpl::vector<> >));
@@ -108,7 +109,8 @@ BOOST_AUTO_TEST_CASE (test_meta_mpl_intrinsic) {
     BOOST_MPL_ASSERT ((meta::equal <
         meta::push <long, vector2>::type, mpl::vector <long, int, bool> >));
     BOOST_MPL_ASSERT ((meta::equal <
-        meta::push <long, vector4>::type, mpl::vector <long, int, bool, float, double> >));
+        meta::push <long, vector4>::type,
+        mpl::vector <long, int, bool, float, double> >));
     BOOST_MPL_ASSERT ((meta::equal <
         meta::push <meta::back, long, vector0>::type,
         mpl::vector <long> >));

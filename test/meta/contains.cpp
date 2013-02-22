@@ -65,7 +65,6 @@ BOOST_AUTO_TEST_CASE (test_meta_contains) {
         bool, weird_list4>));
     BOOST_MPL_ASSERT ((meta::contains <meta::list_direction,
         double, weird_list4>));
-
 }
 
 BOOST_AUTO_TEST_SUITE_END()
