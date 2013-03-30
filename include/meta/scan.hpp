@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Rogier van Dalen.
+Copyright 2011, 2012, 2013 Rogier van Dalen.
 
 This file is part of Rogier van Dalen's Range library for C++.
 
@@ -29,18 +29,34 @@ Fold operation that returns the results at each step.
 
 namespace meta {
 
+    template <typename Direction> struct scan_tag;
+    template <typename Direction> struct empty_scan_tag;
+
     template <typename Direction, typename Function,
             typename State /*= void*/, typename Range /*= void*/>
         struct scan
     {
         typedef scan type;
 
+    private:
         typedef Direction direction;
         typedef Function function;
         typedef State state;
         typedef Range range;
+
+        // Operations need access to all typedefs because of default arguments.
+        template <class Scan> friend struct range_tag;
+        template <class Scan> friend struct default_direction;
+        friend struct operation::size <scan_tag <Direction>, Direction>;
+        friend struct operation::first <scan_tag <Direction>, Direction>;
+        friend struct operation::drop_one <scan_tag <Direction>, Direction>;
     };
 
+    /*
+    Even if the underlying range of a scan is empty, scan<> itself has a first
+    element: its State.
+    empty_scan, on the other hand, is really empty.
+    */
     template <typename Direction> struct empty_scan {
         typedef empty_scan type;
         typedef Direction direction;
@@ -62,19 +78,18 @@ namespace meta {
         typename first <Direction, Range>::type,
         typename drop <Direction, Range>::type> {};
 
-    template <typename Direction> struct scan_tag;
-
     template <typename Direction, typename Function,
             typename State, typename Range>
-        struct range_tag <scan <Direction, Function, State, Range> >
+        struct range_tag <scan <Direction, Function, State, Range>>
     {
+        // Direction may not be scan <...>::direction because of default
+        // arguments.
         typedef scan_tag <
             typename scan <Direction, Function, State, Range>::direction> type;
     };
 
-    template <typename Direction>
-        struct range_tag <empty_scan <Direction> >
-    { typedef scan_tag <Direction> type; };
+    template <typename Direction> struct range_tag <empty_scan <Direction> >
+    { typedef empty_scan_tag <Direction> type; };
 
     template <typename Direction, typename Function,
             typename State, typename Range>
@@ -90,46 +105,49 @@ namespace meta {
 
     namespace operation {
 
+        // empty.
         template <typename Direction>
             struct empty <scan_tag <Direction>, Direction>
-        {
-            template <typename Range, typename Void = void> struct apply
-            : mpl::false_ {};
+        { template <typename Range> struct apply : mpl::false_ {}; };
 
-            template <typename Void>
-                struct apply <empty_scan <Direction>, Void>
-            : mpl::true_ {};
-        };
+        template <typename Direction>
+            struct empty <empty_scan_tag <Direction>, Direction>
+        { template <typename Range> struct apply : mpl::true_ {}; };
 
+        // size.
         template <typename Direction>
             struct size <scan_tag <Direction>, Direction>
         {
-            template <typename Range, typename Void = void> struct apply
-            : mpl::next <typename meta::size <Direction, Range> >::type {};
-
-            template <typename Void>
-                struct apply <empty_scan <Direction>, Void>
-            : mpl::size_t <0> {};
+            template <typename Scan> struct apply
+            : mpl::next <typename meta::size <Direction, typename Scan::range>
+                >::type {};
         };
 
         template <typename Direction>
+            struct size <empty_scan_tag <Direction>, Direction>
+        { template <class Range> struct apply : mpl::size_t <0> {}; };
+
+        // first: return State.
+        template <typename Direction>
             struct first <scan_tag <Direction>, Direction>
         {
-            template <typename Range> struct apply
-            {
-                typedef typename Range::state type;
-            };
+            // Specialising with scan <...> does not work, because of default
+            // arguments.
+            template <class Range> struct apply
+            { typedef typename Range::state type; };
         };
 
+        // drop_one
         template <typename Direction>
             struct drop_one <scan_tag <Direction>, Direction>
         {
             template <typename Scan, typename Enable = void> struct apply;
 
+            // Underlying range is not empty.
             template <typename Scan>
-                struct apply <Scan,
-                    typename boost::disable_if <meta::empty <
-                        Direction, typename Scan::range> >::type>
+                struct apply <Scan, typename boost::disable_if <
+                    meta::empty <Direction, typename Scan::range>
+                >::type>
             {
                 // Apply Function to State and the first item of Range.
                 typedef typename mpl::apply <typename Scan::function,
@@ -139,19 +157,17 @@ namespace meta {
                     >::type new_state;
 
                 typedef meta::scan <Direction,
-                    typename Scan::function,
-                    new_state,
-                    typename meta::drop <Direction, typename Scan::range>::type
-                > type;
+                    typename Scan::function, new_state,
+                    typename meta::drop <
+                        Direction, typename Scan::range>::type> type;
             };
 
-            template <typename Range>
-                struct apply <Range,
-                    typename boost::enable_if <meta::empty <
-                        Direction, typename Range::range> >::type>
-            {
-                typedef empty_scan <Direction> type;
-            };
+            // Underlying range is empty.
+            template <typename Scan>
+                struct apply <Scan, typename boost::enable_if <
+                    meta::empty <Direction, typename Scan::range>
+                >::type>
+            { typedef empty_scan <Direction> type; };
         };
 
     } // namespace operation

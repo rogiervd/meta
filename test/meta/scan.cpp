@@ -47,8 +47,20 @@ BOOST_AUTO_TEST_CASE (test_meta_scan) {
     typedef meta::scan <meta::push <mpl::_2, mpl::_1>,
         meta::list<>, list4> list_list;
 
+    // list_void.
+    BOOST_MPL_ASSERT_NOT ((meta::empty <list_void>::type));
+    BOOST_MPL_ASSERT ((boost::mpl::equal_to <
+        meta::size <list_void>, boost::mpl::size_t <1>>));
     BOOST_MPL_ASSERT ((is_same <meta::first <list_void>::type, void>));
     BOOST_MPL_ASSERT ((meta::empty <meta::drop <list_void>::type>));
+    BOOST_MPL_ASSERT ((meta::empty <meta::drop <list_void>::type>::type));
+    BOOST_MPL_ASSERT ((boost::mpl::equal_to <
+        meta::size <meta::drop <list_void>::type>, boost::mpl::size_t <0>>));
+
+    // list_list.
+    BOOST_MPL_ASSERT_NOT ((meta::empty <list_list>::type));
+    BOOST_MPL_ASSERT ((boost::mpl::equal_to <
+        meta::size <list_list>, boost::mpl::size_t <5>>));
 
     BOOST_MPL_ASSERT ((is_same <
         meta::first <list_list>::type,
@@ -67,6 +79,13 @@ BOOST_AUTO_TEST_CASE (test_meta_scan) {
         meta::list <double, float, bool, int> >));
     BOOST_MPL_ASSERT ((meta::empty <
         meta::drop <mpl::size_t <5>, list_list>::type>));
+
+    BOOST_MPL_ASSERT ((boost::mpl::equal_to <
+        meta::size <meta::drop <mpl::size_t <4>, list_list>::type>,
+        boost::mpl::size_t <1>>));
+    BOOST_MPL_ASSERT ((boost::mpl::equal_to <
+        meta::size <meta::drop <mpl::size_t <5>, list_list>::type>,
+        boost::mpl::size_t <0>>));
 
     typedef meta::scan <meta::list_direction,
         meta::push <meta::list_direction, mpl::_2, mpl::_1>,
