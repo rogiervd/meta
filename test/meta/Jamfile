@@ -12,6 +12,7 @@ test-suite "meta" :
     [ run enumerate.cpp ]
     [ run concatenate.cpp ]
     [ run flatten.cpp ]
+    [ run take.cpp ]
     [ run all.cpp ]
     [ run any.cpp ]
     [ run contains.cpp ]

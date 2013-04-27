@@ -86,6 +86,8 @@ namespace meta {
         struct find;
     template <typename Direction, typename Range1, typename Range2 = void>
         struct concatenate;
+    template <typename Direction, typename Limit, typename Range = void>
+        struct take;
 
     template <typename Direction, typename Sequences = void> struct flatten;
 
