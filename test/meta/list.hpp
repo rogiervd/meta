@@ -1,7 +1,7 @@
 /*
 Copyright 2011, 2012 Rogier van Dalen.
 
-This file is part of Rogier van Dalen's Range library for C++.
+This file is part of Rogier van Dalen's Meta-programming library for C++.
 
 This library is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
-Provide a simple forward list for testing the Range library.
+Provide a simple forward list for testing the Meta-programming library.
 */
 
 #ifndef META_TEST_LIST_HPP_INCLUDED
