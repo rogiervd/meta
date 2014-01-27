@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace meta {
 
-    template <typename Direction, typename Sequences /*= void*/> struct flatten;
+    template <typename Direction, typename Sequences = void> struct flatten;
 
     template <typename Sequences> struct flatten <Sequences>
     : flatten <typename default_direction <Sequences>::type, Sequences> {};

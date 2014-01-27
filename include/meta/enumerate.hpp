@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace meta {
 
-    template <typename Direction, typename Range /*=void*/> struct enumerate;
+    template <typename Direction, typename Range =void> struct enumerate;
 
     template <typename Range> struct enumerate <Range>
     : enumerate <typename default_direction <Range>::type, Range> {};

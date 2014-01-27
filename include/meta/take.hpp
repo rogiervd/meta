@@ -32,7 +32,7 @@ namespace meta {
 
     template <class Direction, class RangeTag> struct take_tag;
 
-    template <class Direction, class Limit, class Underlying /*= void*/>
+    template <class Direction, class Limit, class Underlying = void>
         struct take
     {
         typedef take type;

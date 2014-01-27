@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace meta {
 
-    template <typename Direction, typename Predicate, typename Range /*= void*/>
+    template <typename Direction, typename Predicate, typename Range = void>
         struct find;
 
     template <typename Predicate, typename Range>

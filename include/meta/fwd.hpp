@@ -61,52 +61,6 @@ namespace meta {
 
     } // namespace operation
 
-    // Never mind the default parameters: they are forwarded to the
-    // full-parameter versions in range.hpp.
-    template <typename Range> struct default_direction;
-    template <typename Direction, typename Range = void> struct empty;
-    template <typename Direction, typename Range = void> struct size;
-    template <typename Direction, typename Range = void> struct first;
-    template <typename Direction, typename Range = void> struct drop_one;
-    template <typename Direction, typename Number = void, typename Range = void>
-        struct drop;
-    template <typename Direction, typename NewElement, typename Range = void>
-        struct push;
-
-    template <typename Direction, typename Function, typename State = void,
-            typename Sequence = void>
-        struct fold;
-    template <typename Direction, typename Function, typename State = void,
-            typename Sequence = void>
-        struct fold_reverse;
-
-    template <typename Direction, typename Function, typename Range = void>
-        struct transform;
-    template <typename Direction, typename Predicate, typename Range = void>
-        struct find;
-    template <typename Direction, typename Range1, typename Range2 = void>
-        struct concatenate;
-    template <typename Direction, typename Limit, typename Range = void>
-        struct take;
-
-    template <typename Direction, typename Sequences = void> struct flatten;
-
-    template <typename Direction, typename Function,
-            typename State = void, typename Range = void>
-        struct scan;
-    template <typename Predicate, typename Range>
-        struct filter;
-
-    template <typename Direction, typename Predicate,
-            typename Range1 = void, typename Range2 = void>
-        struct equal;
-    template <typename Direction, typename Type, typename Range = void>
-        struct contains;
-
-    template <typename Direction, typename Sequence = void> struct enumerate;
-
-    template <typename ... Types> struct vector;
-
 } // namespace meta
 
 #endif  // META_FWD_HPP_INCLUDED

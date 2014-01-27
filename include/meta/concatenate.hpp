@@ -29,7 +29,7 @@ namespace meta {
     Concatenate two ranges.
     This means that Range1 is inserted to the front of Range2.
     */
-    template <typename Direction, typename Range1, typename Range2 /*= void*/>
+    template <typename Direction, typename Range1, typename Range2 = void>
         struct concatenate
     : operation::concatenate <
         typename range_tag <Range1>::type, typename range_tag <Range2>::type,

@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace meta {
 
-    template <typename Direction, typename Function, typename Range /*= void*/>
+    template <typename Direction, typename Function, typename Range = void>
         struct transform;
 
     template <typename Function, typename Range>

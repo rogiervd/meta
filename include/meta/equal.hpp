@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace meta {
 
     template <typename Direction, typename Predicate,
-            typename Range1 /*= void*/, typename Range2 /*= void*/>
+            typename Range1 = void, typename Range2 = void>
         struct equal;
 
     template <typename Predicate, typename Range1, typename Range2>

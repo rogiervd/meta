@@ -42,8 +42,8 @@ namespace meta {
     fold_reverse expects a state; fold_reverse_1 uses the last element of the
     range as the initial state.
     */
-    template <typename Direction, typename Function, typename State,
-            typename Range>
+    template <typename Direction, typename Function, typename State = void,
+            typename Range = void>
         struct fold_reverse
     : operation::fold_reverse <typename range_tag <Range>::type, Direction>::
         template apply <Function, State, Range> {};

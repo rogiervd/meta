@@ -36,8 +36,8 @@ namespace meta {
     apply <Function, apply <Function, apply <Function, State, T1>, T2>, T3>
     If State is left out, then the first element is used as the State.
     */
-    template <typename Direction, typename Function, typename State,
-            typename Range>
+    template <typename Direction, typename Function, typename State = void,
+            typename Range = void>
         struct fold
     : operation::fold <typename range_tag <Range>::type, Direction>::template
         apply <Function, State, Range> {};

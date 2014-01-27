@@ -33,7 +33,7 @@ namespace meta {
     template <typename Direction> struct empty_scan_tag;
 
     template <typename Direction, typename Function,
-            typename State /*= void*/, typename Range /*= void*/>
+            typename State = void, typename Range = void>
         struct scan
     {
         typedef scan type;

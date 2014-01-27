@@ -34,7 +34,7 @@ namespace meta {
     \todo Add predicated version?
     Or does that not make sense since this is a shorthand, really?
     */
-    template <typename Direction, typename Type, typename Range /*= void*/>
+    template <typename Direction, typename Type, typename Range = void>
         struct contains;
 
     template <typename Type, typename Range>

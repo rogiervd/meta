@@ -67,7 +67,7 @@ namespace meta {
     \return true_ iff the Range is empty.
     \todo Automatically forward to reverse direction?
     */
-    template <typename DirectionOrRange, typename Range /*= void*/>
+    template <typename DirectionOrRange, typename Range = void>
         struct empty;
 
     // Forward to default direction.
@@ -85,7 +85,7 @@ namespace meta {
     /**
     \return The size of the Range.
     */
-    template <typename DirectionOrRange, typename Range /*= void*/>
+    template <typename DirectionOrRange, typename Range = void>
         struct size;
 
     // Forward to default direction.
@@ -103,7 +103,7 @@ namespace meta {
     /**
     \return The first element in the Range from direction Direction.
     */
-    template <typename DirectionOrRange, typename Range /*= void*/>
+    template <typename DirectionOrRange, typename Range = void>
         struct first;
 
     // Forward to default direction.
@@ -123,8 +123,8 @@ namespace meta {
     Direction.
     */
     template <typename DirectionOrNumberOrRange,
-        typename NumberOrRange /*= void*/,
-        typename Range /*= void*/> struct drop;
+        typename NumberOrRange = void,
+        typename Range = void> struct drop;
 
     template <typename Range>
         struct drop <Range,
@@ -154,7 +154,7 @@ namespace meta {
     Return the range with an extra element added at the end.
     */
     template <typename Direction, typename NewElement, typename Range
-            /*= void*/>
+            = void>
         struct push;
 
     template <typename NewElement, typename Range>
