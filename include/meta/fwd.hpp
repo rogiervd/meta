@@ -94,7 +94,7 @@ namespace meta {
     template <typename Direction, typename Function,
             typename State = void, typename Range = void>
         struct scan;
-    template <typename Direction, typename Predicate, typename Range = void>
+    template <typename Predicate, typename Range>
         struct filter;
 
     template <typename Direction, typename Predicate,

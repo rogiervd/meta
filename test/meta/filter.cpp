@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE (test_meta_filter) {
     namespace mpl = boost::mpl;
 
     BOOST_MPL_ASSERT ((meta::equal <
-        meta::filter <std::is_floating_point <mpl::_>, meta::list<> >::type,
+        meta::filter <std::is_floating_point <mpl::_>, meta::list<>>,
         meta::list<>
         >));
 
@@ -51,36 +51,33 @@ BOOST_AUTO_TEST_CASE (test_meta_filter) {
         >));
 
     BOOST_MPL_ASSERT ((meta::equal <
-        meta::filter <std::is_pod <mpl::_>, list4>::type,
+        meta::filter <std::is_pod <mpl::_>, list4>,
         list4
         >));
 
     BOOST_MPL_ASSERT ((meta::equal <
-        meta::filter <std::is_unsigned <mpl::_>, list4>::type,
+        meta::filter <std::is_unsigned <mpl::_>, list4>,
         meta::list<bool>
         >));
 
     BOOST_MPL_ASSERT ((meta::equal <
-        meta::filter <std::is_class <mpl::_>, list4>::type,
+        meta::filter <std::is_class <mpl::_>, list4>,
         meta::list<>
         >));
 
 
     BOOST_MPL_ASSERT ((meta::equal <meta::list_direction,
-        meta::filter <meta::list_direction,
-            std::is_floating_point <mpl::_>, meta::weird_list<> >::type,
+        meta::filter <std::is_floating_point <mpl::_>, meta::weird_list<>>,
         meta::weird_list<>
         >));
 
     BOOST_MPL_ASSERT ((meta::equal <meta::list_direction,
-        meta::filter <meta::list_direction,
-            std::is_floating_point <mpl::_>, weird_list4>::type,
+        meta::filter <std::is_floating_point <mpl::_>, weird_list4>,
         meta::weird_list <float, double>
         >));
 
     BOOST_MPL_ASSERT ((meta::equal <meta::list_direction,
-        meta::filter <meta::list_direction,
-            std::is_class <mpl::_>, weird_list4>::type,
+        meta::filter <std::is_class <mpl::_>, weird_list4>,
         meta::weird_list<>
         >));
 

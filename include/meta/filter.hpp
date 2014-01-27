@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Rogier van Dalen.
+Copyright 2011, 2012, 2014 Rogier van Dalen.
 
 This file is part of Rogier van Dalen's Meta-programming library for C++.
 
@@ -29,42 +29,89 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace meta {
 
-    template <typename Direction, typename Predicate, typename Range /*= void*/>
-        struct filter;
+    template <typename Predicate, typename Range> struct filter
+    { typedef filter type; };
+
+    struct filter_tag;
 
     template <typename Predicate, typename Range>
-        struct filter <Predicate, Range>
-    : filter <typename default_direction <Range>::type, Predicate, Range> {};
+        struct range_tag <filter <Predicate, Range>>
+    { typedef filter_tag type; };
 
-    namespace detail {
+    template <typename Predicate, typename Range>
+        struct default_direction <filter <Predicate, Range>>
+    : default_direction <Range> {};
 
-        template <typename Direction, typename Predicate, typename Range,
-                bool Empty = meta::empty <Direction, Range>::value>
-            struct filter;
+    namespace operation {
 
-        template <typename Direction, typename Predicate, typename Range>
-            struct filter <Direction, Predicate, Range, true>
-        { typedef Range type; };
+        namespace detail {
 
-        template <typename Direction, typename Predicate, typename Range>
-            struct filter <Direction, Predicate, Range, false>
-        {
-            typedef typename first <Direction, Range>::type head;
-            typedef typename drop <Direction, Range>::type tail;
-            typedef typename filter <Direction, Predicate, tail>::type
-                filtered_tail;
-            typedef typename mpl::eval_if <
-                    typename mpl::apply <Predicate, head>::type,
-                    push <Direction, head, filtered_tail>,
-                    mpl::identity <filtered_tail>
-                >::type type;
+            /** \internal
+            Compute properties of the filtered range.
+            */
+            template <typename Direction, typename Predicate, typename Range,
+                    bool Empty = meta::empty <Direction, Range>::value>
+                struct filter_traits;
+
+            // Empty.
+            template <typename Direction, typename Predicate, typename Range>
+                struct filter_traits <Direction, Predicate, Range, true>
+            { typedef mpl::true_ empty; };
+
+            // Non-empty: return first element f
+            template <typename Direction, typename Predicate, typename Range>
+                struct filter_traits_when_non_empty
+            {
+                typedef mpl::false_ empty;
+                typedef meta::first <Direction, Range> first;
+                typedef meta::filter <Predicate,
+                    typename meta::drop <Direction, Range>::type> next_filter;
+            };
+
+            template <typename Direction, typename Predicate, typename Range>
+                struct filter_traits <Direction, Predicate, Range, false>
+            : mpl::if_ <
+                // If predicate is true for the first element,
+                typename mpl::apply <Predicate, typename
+                    meta::first <Direction, Range>::type>::type,
+                // forward to filter_traits_when_non_empty;
+                filter_traits_when_non_empty <Direction, Predicate, Range>,
+                // otherwise, recursively forward to filter_traits.
+                filter_traits <Direction, Predicate, typename
+                    meta::drop <Direction, Range>::type>
+            >::type {};
+
+        } // namespace detail
+
+        template <class Direction> struct empty <filter_tag, Direction> {
+            template <class Filter> struct apply;
+
+            template <class Predicate, class Range>
+                struct apply <meta::filter <Predicate, Range>>
+            : detail::filter_traits <Direction, Predicate, Range>::empty {};
         };
 
-    } // namespace detail
+        template <class Direction> struct first <filter_tag, Direction> {
+            template <class Filter> struct apply;
 
-    template <typename Direction, typename Predicate, typename Range>
-        struct filter
-    : detail::filter <Direction, Predicate, Range> {};
+            template <class Predicate, class Range>
+                struct apply <meta::filter <Predicate, Range>>
+            : detail::filter_traits <Direction, Predicate, Range>::first
+            {};
+        };
+
+        template <class Direction> struct drop_one <filter_tag, Direction> {
+            template <class Filter> struct apply;
+
+            template <class Predicate, class Range>
+                struct apply <meta::filter <Predicate, Range>>
+            {
+                typedef typename detail::filter_traits <
+                    Direction, Predicate, Range>::next_filter type;
+            };
+        };
+
+    } // namespace operation
 
 } // namespace meta
 
