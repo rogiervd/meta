@@ -215,20 +215,6 @@ namespace meta {
             { typedef vector <Types ..., NewElement> type; };
         };
 
-        /// Specialisation of transform uses C++11 intrinsics
-        template <> struct transform <vector_tag, meta::front> {
-            template <typename Function, typename Range> struct apply;
-
-            template <typename Function, typename ... Types>
-                struct apply <Function, vector <Types ...> >
-            {
-                typedef vector <typename mpl::apply <Function, Types>::type...
-                    > type;
-            };
-        };
-        template <> struct transform <vector_tag, meta::back>
-        : transform <vector_tag, meta::front> {};
-
         /// Specialisation of concatenate
         template <> struct concatenate <vector_tag, vector_tag, meta::front> {
             template <typename Range1, typename Range2> struct apply;
@@ -305,6 +291,8 @@ namespace meta {
     /**
     Turn any range into a vector.
     This is often useful to exploit type pattern matching.
+    Applied to "transform" on a vector, it uses C++11 instrinsics to compute
+    the transform, which is likely much faster than the explicit version.
     */
     template <typename Direction, typename Sequence = void> struct as_vector
     : fold_reverse <Direction,
@@ -315,6 +303,10 @@ namespace meta {
 
     template <typename ... Types> struct as_vector <front, vector <Types ...> >
     { typedef vector <Types ...> type; };
+
+    template <class Function, class ... Types>
+        struct as_vector <transform <Function, vector <Types ...>>>
+    { typedef vector <typename mpl::apply <Function, Types>::type...> type; };
 
 } // namespace meta
 

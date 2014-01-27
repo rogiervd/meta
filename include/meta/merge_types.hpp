@@ -125,8 +125,8 @@ template <typename Degenerate, typename Types>
 {
     typedef typename merge_types_detail::merge_types_to_strings <
         Degenerate, Types>::type strings;
-    typedef typename transform <meta::first <meta::back, mpl::_>, strings>::type
-        type;
+    typedef typename as_vector <transform <meta::first <meta::back, mpl::_>,
+        strings>>::type type;
 };
 
 } // namespace meta

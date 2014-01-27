@@ -33,7 +33,6 @@ typedef meta::vector <int, bool, float, double> vector4;
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-#include "meta/transform.hpp"
 #include <boost/mpl/placeholders.hpp>
 
 #include "meta/concatenate.hpp"
@@ -124,26 +123,15 @@ BOOST_AUTO_TEST_CASE (test_meta_transform_vector) {
     using boost::mpl::_1;
     using std::is_same;
 
-    BOOST_MPL_ASSERT ((is_same <
-        meta::transform <type_wrapper <_1>, meta::vector<> >::type,
-        meta::vector<> >));
-    BOOST_MPL_ASSERT ((is_same <
-        meta::transform <meta::back, type_wrapper <_1>, meta::vector<>
-            >::type,
-        meta::vector<> >));
+    BOOST_MPL_ASSERT ((is_same <meta::as_vector <
+        meta::transform <type_wrapper <_1>, meta::vector<>>>::type,
+        meta::vector<>>));
 
-    BOOST_MPL_ASSERT ((is_same <
+    BOOST_MPL_ASSERT ((is_same <meta::as_vector <
         meta::transform <type_wrapper <_1>,
-            meta::vector <int, long, bool> >::type,
+            meta::vector <int, long, bool>>>::type,
         meta::vector <
-            type_wrapper <int>, type_wrapper <long>, type_wrapper <bool> >
-        >));
-    BOOST_MPL_ASSERT ((is_same <
-        meta::transform <meta::back, type_wrapper <_1>,
-            meta::vector <int, long, bool> >::type,
-        meta::vector <
-            type_wrapper <int>, type_wrapper <long>, type_wrapper <bool> >
-        >));
+            type_wrapper <int>, type_wrapper <long>, type_wrapper <bool>>>));
 }
 
 BOOST_AUTO_TEST_CASE (test_meta_concatenate_vector) {

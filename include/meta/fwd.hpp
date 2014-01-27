@@ -54,12 +54,14 @@ namespace meta {
         template <typename Tag, typename Direction> struct fold_reverse_1;
 
         // Less intrinsic but optimisable.
-        template <typename Tag, typename Direction> struct transform;
         template <typename RangeTag, typename Direction> struct find;
         template <typename Tag1, typename Tag2, typename Direction>
             struct concatenate;
 
     } // namespace operation
+
+    // Declaring these makes it possible for algorithms to optimise for them.
+    template <typename Function, typename Range> struct transform;
 
 } // namespace meta
 

@@ -6,7 +6,6 @@ test-suite "meta" :
     [ run fold.cpp ]
     [ run scan.cpp ]
     [ run transform.cpp ]
-    [ run transform_view.cpp ]
     [ run filter.cpp ]
     [ run find.cpp ]
     [ run enumerate.cpp ]
