@@ -25,6 +25,7 @@ Provide a simple forward list for testing the Meta-programming library.
 #define META_TEST_LIST_HPP_INCLUDED
 
 #include "meta/fwd.hpp"
+#include "meta/fold_reverse.hpp"
 #include "direction/tag.hpp"
 
 #include <boost/mpl/size_t.hpp>
@@ -72,6 +73,13 @@ namespace meta {
 
     template <typename ... Types> struct range_tag <list <Types ...> >
     { typedef list_tag <list <Types ...>::size> type; };
+
+    // as_list implicitly tests empty, first, and drop.
+    template <class Range> struct as_list
+    : meta::fold_reverse <meta::list_direction,
+        meta::push <meta::list_direction, mpl::_1, mpl::_2>,
+        meta::list<>, Range>
+    {};
 
     /**
     A meta-list similar to "list", but with an invalid default direction.
