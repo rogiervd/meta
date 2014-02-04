@@ -1,22 +1,5 @@
 test-suite "meta" :
-    [ run range.cpp ]
-    [ run vector.cpp ]
-    [ run vector_mpl.cpp ]
-    [ run equal.cpp ]
-    [ run fold.cpp ]
-    [ run scan.cpp ]
-    [ run transform.cpp ]
-    [ run filter.cpp ]
-    [ run find.cpp ]
-    [ run enumerate.cpp ]
-    [ run concatenate.cpp ]
-    [ run flatten.cpp ]
-    [ run take.cpp ]
-    [ run all.cpp ]
-    [ run any.cpp ]
-    [ run contains.cpp ]
-    [ run mpl.cpp ]
-    [ run max_element.cpp ]
-    [ run merge_types.cpp ]
+    # Run all .cpp files in this directory as tests.
+    [ run_glob *.cpp ]
     ;
 
