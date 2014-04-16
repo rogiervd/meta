@@ -246,6 +246,8 @@ namespace meta {
                 vector <OtherTypes ...>
             > {};
 
+#if !defined (__INTEL_COMPILER) || __INTEL_COMPILER > 1400
+            // Optimisation that confuses the Intel compiler.
             template <typename Function, typename State,
                 typename Type1, typename Type2, typename ... OtherTypes>
             struct apply <Function, State,
@@ -270,6 +272,7 @@ namespace meta {
                     Type3>::type,
                 vector <OtherTypes ...>
             > {};
+#endif
         };
 
     } // namespace operation
@@ -444,10 +447,13 @@ namespace boost { namespace mpl {
         template <typename ... Types>
             struct apply_range_c <meta::vector <Types ...>, 0, 0>
         {  typedef meta::vector <Types ...> type; };
-        // (resolve specialisation)
+
+#if !defined (__INTEL_COMPILER) || __INTEL_COMPILER > 1400
+        // Resolve specialisations (this confuses the Intel compiler).
         template <typename FirstType, typename ... Types>
             struct apply_range_c <meta::vector <FirstType, Types ...>, 0, 0>
         { typedef meta::vector <FirstType, Types ...> type; };
+#endif
 
         template <typename FirstType, typename ... Types, std::size_t last>
             struct apply_range_c <meta::vector <FirstType, Types ...>, 0, last>
@@ -477,11 +483,14 @@ namespace boost { namespace mpl {
         template <typename ... Types, typename NewType>
         struct apply_c <meta::vector <Types ...>, 0, NewType>
         : meta::push <meta::front, NewType, meta::vector <Types ...> > {};
-        // Resolve specialisations
+
+#if !defined (__INTEL_COMPILER) || __INTEL_COMPILER > 1400
+        // Resolve specialisations (this confuses the Intel compiler).
         template <typename FirstType, typename ... Types, typename NewType>
         struct apply_c <meta::vector <FirstType, Types ...>, 0, NewType>
         : meta::push <meta::front, NewType,
             meta::vector <FirstType, Types ...> > {};
+#endif
 
         template <typename FirstType, typename ... Types,
             std::size_t index, typename NewType>
@@ -523,10 +532,13 @@ namespace boost { namespace mpl {
         template <typename ... Types, typename NewTypes>
         struct apply_c <meta::vector <Types ...>, 0, NewTypes>
         : push_front_range <meta::vector <Types ...>, NewTypes> {};
-        // Resolve specialisations
+
+#if !defined (__INTEL_COMPILER) || __INTEL_COMPILER > 1400
+        // Resolve specialisations (this confuses the Intel compiler).
         template <typename FirstType, typename ... Types, typename NewTypes>
         struct apply_c <meta::vector <FirstType, Types ...>, 0, NewTypes>
         : push_front_range <meta::vector <FirstType, Types ...>, NewTypes> {};
+#endif
 
         template <typename FirstType, typename ... Types,
             std::size_t index, typename NewTypes>
