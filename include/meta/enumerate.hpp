@@ -38,7 +38,7 @@ namespace meta {
 
     template <typename Direction, typename Range> struct enumerate {
         // Initialise with the before-the-begin element (-1, void).
-        typedef mpl::pair <mpl::size_t <-1>, void> before_begin;
+        typedef mpl::pair <mpl::size_t <std::size_t (-1)>, void> before_begin;
 
         // Implementation without lambdas is faster.
         struct function {
