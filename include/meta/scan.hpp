@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012, 2013 Rogier van Dalen.
+Copyright 2011, 2012, 2013, 2014 Rogier van Dalen.
 
 This file is part of Rogier van Dalen's Meta-programming library for C++.
 
@@ -23,6 +23,9 @@ Fold operation that returns the results at each step.
 
 #ifndef META_SCAN_HPP_INCLUDED
 #define META_SCAN_HPP_INCLUDED
+
+#include <boost/utility/enable_if.hpp>
+#include <boost/mpl/if.hpp>
 
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"
@@ -141,14 +144,12 @@ namespace meta {
         template <typename Direction>
             struct drop_one <scan_tag <Direction>, Direction>
         {
-            template <typename Scan, typename Enable = void> struct apply;
+            // If the underlying range is empty.
+            template <typename Scan> struct apply_empty
+            { typedef empty_scan <Direction> type; };
 
-            // Underlying range is not empty.
-            template <typename Scan>
-                struct apply <Scan, typename boost::disable_if <
-                    meta::empty <Direction, typename Scan::range>
-                >::type>
-            {
+            // If the underlying range is not empty.
+            template <typename Scan> struct apply_not_empty {
                 // Apply Function to State and the first item of Range.
                 typedef typename mpl::apply <typename Scan::function,
                         typename Scan::state,
@@ -162,12 +163,9 @@ namespace meta {
                         Direction, typename Scan::range>::type> type;
             };
 
-            // Underlying range is empty.
-            template <typename Scan>
-                struct apply <Scan, typename boost::enable_if <
-                    meta::empty <Direction, typename Scan::range>
-                >::type>
-            { typedef empty_scan <Direction> type; };
+            template <typename Scan> struct apply
+            : boost::mpl::if_ <meta::empty <Direction, typename Scan::range>,
+                apply_empty <Scan>, apply_not_empty <Scan>>::type {};
         };
 
     } // namespace operation

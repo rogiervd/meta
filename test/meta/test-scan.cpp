@@ -47,6 +47,18 @@ BOOST_AUTO_TEST_CASE (test_meta_scan) {
     typedef meta::scan <meta::push <mpl::_2, mpl::_1>,
         meta::list<>, list4> list_list;
 
+    // These are actually private.
+    /*
+    BOOST_MPL_ASSERT ((
+        std::is_same <list_list::direction, meta::list_direction>));
+    BOOST_MPL_ASSERT ((
+        std::is_same <list_list::function, meta::push <mpl::_2, mpl::_1>>));
+    BOOST_MPL_ASSERT ((
+        std::is_same <list_list::state, meta::list<>>));
+    BOOST_MPL_ASSERT ((
+        std::is_same <list_list::range, list4>));
+    */
+
     // list_void.
     BOOST_MPL_ASSERT_NOT ((meta::empty <list_void>::type));
     BOOST_MPL_ASSERT ((boost::mpl::equal_to <
