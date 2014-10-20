@@ -31,20 +31,32 @@ namespace meta {
 
     /**
     Shorthand for not_ <empty <find <is_same <Type, _>, Range> > >.
-    \todo Add predicated version?
-    Or does that not make sense since this is a shorthand, really?
+
+    This causes O(n) instantiations with n the length of the range or the first
+    position of Type.
+    This may be optimised for a specific container type.
     */
-    template <typename Direction, typename Type, typename Range = void>
+    template <class Direction, class Type, class Range = void>
         struct contains;
 
-    template <typename Type, typename Range>
+    template <class Type, class Range>
         struct contains <Type, Range>
     : contains <typename default_direction <Range>::type, Type, Range> {};
 
-    template <typename Direction, typename Type, typename Range>
+    template <class Direction, class Type, class Range>
         struct contains
-    : mpl::not_ <empty <Direction, typename find <
-        Direction, std::is_same <Type, mpl::_>, Range>::type> > {};
+    : operation::contains <typename range_tag <Range>::type, Direction>
+        ::template apply <Type, Range> {};
+
+    namespace operation {
+
+        template <class Tag, class Direction> struct contains {
+            template <class Type, class Range> struct apply
+            : mpl::not_ <meta::empty <Direction, typename meta::find <
+                Direction, std::is_same <Type, mpl::_>, Range>::type>> {};
+        };
+
+    } // namespace operation
 
 } // namespace meta
 

@@ -47,6 +47,8 @@ namespace meta {
             struct drop;
 
         template <typename Tag, typename Direction> struct push;
+        // Does not have to be specialised: the default implementation works.
+        template <typename Tag, typename Direction> struct contains;
 
         // Does not have to be specialised: the default implementation works.
         template <typename Tag, typename Direction> struct fold;
