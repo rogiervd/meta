@@ -166,6 +166,19 @@ namespace meta {
     : operation::push <typename range_tag <Range>::type, Direction>
         ::template apply <NewElement, Range> {};
 
+    /**
+    Return the range with an extra element inserted in an undefined position.
+    */
+    template <class Direction, class NewElement, class Range = void>
+        struct insert;
+
+    template <class NewElement, class Range> struct insert <NewElement, Range>
+    : insert <typename default_direction <Range>::type, NewElement, Range> {};
+
+    template <class Direction, class NewElement, class Range> struct insert
+    : operation::insert <typename range_tag <Range>::type, Direction>
+        ::template apply <NewElement, Range> {};
+
     // Default implementation for drop/drop_one
     namespace operation {
 
