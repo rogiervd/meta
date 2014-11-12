@@ -187,9 +187,17 @@ namespace meta {
         template <typename Tag, typename Direction, std::size_t number>
             struct drop_general
         {
+            /*
+            drop_one must be applied repeatedly, which involves recursion, which
+            involves decomposing "number" up into 1 + rest or rest + 1.
+            The former seems to be ever so slightly faster in a real test.
+            */
             template <typename Range> struct apply
-            : drop_general <Tag, Direction, number - 1>::template
-                apply <typename meta::drop <Direction, Range>::type> {};
+            : meta::drop <Direction,
+                typename drop_general <Tag, Direction, number - 1>::template
+                    apply <Range>::type> {};
+            /*: drop_general <Tag, Direction, number - 1>::template
+                apply <typename meta::drop <Direction, Range>::type> {};*/
         };
 
         /**
