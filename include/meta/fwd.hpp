@@ -67,6 +67,8 @@ namespace meta {
     // Declaring these makes it possible for algorithms to optimise for them.
     template <typename Function, typename Range> struct transform;
 
+    template <typename ... Types> struct vector;
+
 } // namespace meta
 
 #endif  // META_FWD_HPP_INCLUDED

@@ -50,6 +50,49 @@ namespace meta {
         mpl::false_, implementation::any_of_non_empty <Direction, Range>>::type
     {};
 
+    /*
+    Specialisation for vector.
+    In profiling template instantiations in a real project, this turned out a
+    bottleneck.
+    If the first type is false, then the rest should not be evaluated.
+    It is therefore not possible to get this below O(n) instantiations.
+    */
+    namespace implementation {
+
+        template <bool first, class ... Types> struct any_of_vector;
+
+        template <class ... Types> struct any_of_vector <true, Types ...>
+        : boost::mpl::true_ {};
+
+        template <> struct any_of_vector <false>
+        : boost::mpl::false_ {};
+
+        template <class Next, class ... Types>
+            struct any_of_vector <false, Next, Types ...>
+        : any_of_vector <Next::value, Types...> {};
+
+    } // namespace implementation
+
+    // Without direction.
+
+    template <> struct any_of <vector<>> : mpl::false_ {};
+
+    template <class Type1> struct any_of <vector <Type1>> : Type1 {};
+
+    template <class Type1, class ... Types>
+        struct any_of <vector <Type1, Types ...>>
+    : implementation::any_of_vector <Type1::value, Types ...> {};
+
+    // With direction.
+
+    template <> struct any_of <front, vector<>> : mpl::false_ {};
+
+    template <class Type1> struct any_of <front, vector <Type1>> : Type1 {};
+
+    template <class Type1, class ... Types>
+        struct any_of <front, vector <Type1, Types ...>>
+    : implementation::any_of_vector <Type1::value, Types ...> {};
+
 } // namespace meta
 
 #endif // META_ANY_OF_HPP_INCLUDED
