@@ -1,5 +1,5 @@
 /*
-Copyright 2013 Rogier van Dalen.
+Copyright 2013, 2015 Rogier van Dalen.
 
 This file is part of Rogier van Dalen's Meta-programming library for C++.
 
@@ -21,43 +21,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../boost_unit_test.hpp"
 
 #include "list.hpp"
-#include "meta/all.hpp"
-
-typedef meta::list <> list0;
-typedef meta::list <int, bool, float, double> list4;
-
-typedef meta::weird_list <> weird_list0;
-typedef meta::weird_list <int, bool, float, double> weird_list4;
+#include "meta/all_of.hpp"
 
 #include <boost/mpl/assert.hpp>
 
-BOOST_AUTO_TEST_SUITE(test_meta_all)
+BOOST_AUTO_TEST_SUITE(test_meta_all_of)
 
-BOOST_AUTO_TEST_CASE (test_meta_all) {
+BOOST_AUTO_TEST_CASE (test_meta_all_of) {
     namespace mpl = boost::mpl;
 
-    BOOST_MPL_ASSERT ((meta::all <meta::list<>>));
+    BOOST_MPL_ASSERT ((meta::all_of <meta::list<>>));
 
-    BOOST_MPL_ASSERT_NOT ((meta::all <meta::list <mpl::false_>>));
-    BOOST_MPL_ASSERT ((meta::all <meta::list <mpl::true_>>));
+    BOOST_MPL_ASSERT_NOT ((meta::all_of <meta::list <mpl::false_>>));
+    BOOST_MPL_ASSERT ((meta::all_of <meta::list <mpl::true_>>));
 
-    BOOST_MPL_ASSERT_NOT ((meta::all <meta::list <mpl::false_, mpl::false_>>));
-    BOOST_MPL_ASSERT_NOT ((meta::all <meta::list <mpl::false_, mpl::true_>>));
-    BOOST_MPL_ASSERT_NOT ((meta::all <meta::list <mpl::true_, mpl::false_>>));
-    BOOST_MPL_ASSERT ((meta::all <meta::list <mpl::true_, mpl::true_>>));
+    BOOST_MPL_ASSERT_NOT ((meta::all_of <
+        meta::list <mpl::false_, mpl::false_>>));
+    BOOST_MPL_ASSERT_NOT ((meta::all_of <
+        meta::list <mpl::false_, mpl::true_>>));
+    BOOST_MPL_ASSERT_NOT ((meta::all_of <
+        meta::list <mpl::true_, mpl::false_>>));
+    BOOST_MPL_ASSERT ((meta::all_of <meta::list <mpl::true_, mpl::true_>>));
 
     // weird_list
-    BOOST_MPL_ASSERT ((meta::all <meta::list_direction, meta::weird_list<>>));
+    BOOST_MPL_ASSERT ((meta::all_of <meta::list_direction,
+        meta::weird_list<>>));
 
-    BOOST_MPL_ASSERT_NOT ((meta::all <
+    BOOST_MPL_ASSERT_NOT ((meta::all_of <
         meta::list_direction, meta::weird_list <mpl::false_, mpl::false_>>));
-    BOOST_MPL_ASSERT_NOT ((meta::all <
+    BOOST_MPL_ASSERT_NOT ((meta::all_of <
         meta::list_direction, meta::weird_list <mpl::false_, mpl::true_>>));
-    BOOST_MPL_ASSERT_NOT ((meta::all <
+    BOOST_MPL_ASSERT_NOT ((meta::all_of <
         meta::list_direction, meta::weird_list <mpl::true_, mpl::false_>>));
-    BOOST_MPL_ASSERT ((meta::all <
+    BOOST_MPL_ASSERT ((meta::all_of <
         meta::list_direction, meta::weird_list <mpl::true_, mpl::true_>>));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-

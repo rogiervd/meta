@@ -1,5 +1,5 @@
 /*
-Copyright 2013 Rogier van Dalen.
+Copyright 2013, 2015 Rogier van Dalen.
 
 This file is part of Rogier van Dalen's Meta-programming library for C++.
 
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef META_ALL_HPP_INCLUDED
-#define META_ALL_HPP_INCLUDED
+#ifndef META_ALL_OF_HPP_INCLUDED
+#define META_ALL_OF_HPP_INCLUDED
 
 #include <boost/mpl/if.hpp>
 
@@ -32,23 +32,23 @@ namespace meta {
     If Range is empty, also return true.
     Direction can be left out.
     */
-    template <typename Direction, typename Range = void> struct all;
+    template <typename Direction, typename Range = void> struct all_of;
 
-    template <typename Range> struct all <Range>
-    : all <typename default_direction <Range>::type, Range> {};
+    template <typename Range> struct all_of <Range>
+    : all_of <typename default_direction <Range>::type, Range> {};
 
     namespace implementation {
-        template <typename Direction, typename Range> struct all_non_empty
+        template <typename Direction, typename Range> struct all_of_non_empty
         : mpl::if_ <typename first <Direction, Range>::type,
-            meta::all <Direction, typename drop <Direction, Range>::type>,
+            meta::all_of <Direction, typename drop <Direction, Range>::type>,
             mpl::false_>::type {};
     } // namespace implementation
 
-    template <typename Direction, typename Range> struct all
+    template <typename Direction, typename Range> struct all_of
     : mpl::if_ <empty <Direction, Range>,
-        mpl::true_, implementation::all_non_empty <Direction, Range>>::type {};
+        mpl::true_, implementation::all_of_non_empty <Direction, Range>>::type
+    {};
 
 } // namespace meta
 
-#endif  // META_ALL_HPP_INCLUDED
-
+#endif // META_ALL_OF_HPP_INCLUDED
