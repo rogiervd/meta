@@ -27,10 +27,14 @@ namespace meta {
     /**
     Return true iff all arguments are true.
     If no arguments are given, also return true.
+
+    This is less generic than \ref any_of, which works on all types of ranges,
+    but it causes fewer template instantiations, so it improves compile speed
+    and memory use.
     */
     template <bool ...> struct any_of_c;
 
-    template <> struct any_of_c<> : std::true_type {};
+    template <> struct any_of_c<> : std::false_type {};
 
     template <bool value1> struct any_of_c <value1>
     : std::integral_constant <bool, value1> {};

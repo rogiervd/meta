@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_SUITE(test_meta_any_of_c)
 
 BOOST_AUTO_TEST_CASE (test_meta_any_of_c) {
 
-    static_assert (meta::any_of_c<>::value, "");
+    static_assert (!meta::any_of_c<>::value, "");
 
     static_assert (!meta::any_of_c <false>::value, "");
     static_assert (meta::any_of_c <true>::value, "");
