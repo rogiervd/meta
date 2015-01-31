@@ -1,5 +1,5 @@
 /*
-Copyright 2014 Rogier van Dalen.
+Copyright 2014, 2015 Rogier van Dalen.
 
 This file is part of Rogier van Dalen's Meta-programming library for C++.
 
@@ -77,6 +77,19 @@ BOOST_AUTO_TEST_CASE (test_meta_set) {
     BOOST_MPL_ASSERT ((meta::contains <bool, set_2>));
     BOOST_MPL_ASSERT_NOT ((meta::contains <long, set_2>));
 
+    // has_key: the same as contains.
+    BOOST_MPL_ASSERT_NOT ((meta::has_key <int, set_0>));
+    BOOST_MPL_ASSERT_NOT ((meta::has_key <bool, set_0>));
+    BOOST_MPL_ASSERT_NOT ((meta::has_key <long, set_0>));
+
+    BOOST_MPL_ASSERT ((meta::has_key <int, set_1>));
+    BOOST_MPL_ASSERT_NOT ((meta::has_key <bool, set_1>));
+    BOOST_MPL_ASSERT_NOT ((meta::has_key <long, set_1>));
+
+    BOOST_MPL_ASSERT ((meta::has_key <int, set_2>));
+    BOOST_MPL_ASSERT ((meta::has_key <bool, set_2>));
+    BOOST_MPL_ASSERT_NOT ((meta::has_key <long, set_2>));
+
     // insert: new element.
     BOOST_MPL_ASSERT ((std::is_same <
         typename meta::insert <int, set_0>::type, set_1>));
@@ -89,6 +102,12 @@ BOOST_AUTO_TEST_CASE (test_meta_set) {
         typename meta::insert <int, set_2>::type, set_2>));
     BOOST_MPL_ASSERT ((std::is_same <
         typename meta::insert <bool, set_2>::type, set_2>));
+
+    // remove.
+    BOOST_MPL_ASSERT ((std::is_same <
+        typename meta::remove <int, set_1>::type, set_0>));
+    BOOST_MPL_ASSERT ((std::is_same <
+        typename meta::remove <bool, set_2>::type, set_1>));
 }
 
 BOOST_AUTO_TEST_CASE (test_meta_as_set) {

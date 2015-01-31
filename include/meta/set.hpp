@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012, 2014 Rogier van Dalen.
+Copyright 2011, 2012, 2014, 2015 Rogier van Dalen.
 
 This file is part of Rogier van Dalen's Meta-programming library for C++.
 
@@ -33,33 +33,19 @@ Define meta::set, an MPL sequence that can only contain one value of each type.
 #include "meta/contains.hpp"
 #include "meta/fold_reverse.hpp"
 
-#include "meta/detail/key_value.hpp"
+#include "meta/detail/index.hpp"
 
 namespace meta {
 
     struct set_tag;
 
-    template <class ... Types> class set;
+    template <class Type> struct set_element { typedef Type key; };
 
-    template <> class set<> {
+    template <class ... Types> class set {
     public:
         typedef set type;
-    private:
-        typedef key_value_detail::key_value_base index;
 
-        template <class ... Types> friend class set;
-        template <class Tag, class Direction> friend struct operation::contains;
-    };
-
-    template <class First, class ... Rest> class set <First, Rest ...> {
-    public:
-        typedef set type;
-    private:
-        typedef key_value_detail::key_value <First, First,
-            typename set <Rest ...>::index> index;
-
-        template <class ... Types> friend class set;
-        template <class Tag, class Direction> friend struct operation::contains;
+        typedef index_detail::index <set_element <Types> ...> index;
     };
 
     template <class ... Types> struct range_tag <set <Types ...> >
@@ -118,11 +104,14 @@ namespace meta {
 
         // Specific to set:
 
-        // contains.
-        template <> struct contains <set_tag, front> {
+        struct find_in_set {
             template <class Element, class Set> struct apply
-            : key_value_detail::contains <Element, typename Set::index> {};
+            : index_detail::contains <Element, typename Set::index> {};
         };
+
+        // contains.
+        template <> struct contains <set_tag, front> : find_in_set {};
+        template <> struct has_key <set_tag> : find_in_set {};
 
         // insert.
         template <> struct insert <set_tag, front> {
@@ -130,6 +119,21 @@ namespace meta {
             : mpl::eval_if <meta::contains <front, NewElement, Set>,
                 mpl::identity <Set>,
                 meta::push <front, NewElement, Set>> {};
+        };
+
+        // remove.
+        template <> struct remove <set_tag> {
+            template <class Key, class Set> struct apply {
+                typedef typename index_detail::remove <Key, typename Set::index
+                    >::type new_index;
+
+                template <class Index> struct get_set;
+                template <class ... Entries>
+                    struct get_set <index_detail::index <Entries ...>>
+                { typedef set <typename Entries::key ...> type; };
+
+                typedef typename get_set <new_index>::type type;
+            };
         };
 
     } // namespace operation
@@ -151,6 +155,5 @@ namespace meta {
     { typedef set <Types ...> type; };
 
 } // namespace meta
-
 
 #endif  // META_SET_HPP_INCLUDED
