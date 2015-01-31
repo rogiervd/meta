@@ -179,6 +179,27 @@ namespace meta {
     : operation::insert <typename range_tag <Range>::type, Direction>
         ::template apply <NewElement, Range> {};
 
+    /**
+    Return whether a key is in the range.
+    */
+    template <class Key, class Range> struct has_key
+    : operation::has_key <typename range_tag <Range>::type>
+        ::template apply <Key, Range> {};
+
+    /**
+    Return the element at a key.
+    */
+    template <class Key, class Range> struct at
+    : operation::at <typename range_tag <Range>::type>
+        ::template apply <Key, Range> {};
+
+    /**
+    Remove the element at a key.
+    */
+    template <class Key, class Range> struct remove
+    : operation::remove <typename range_tag <Range>::type>
+        ::template apply <Key, Range> {};
+
     // Default implementation for drop/drop_one
     namespace operation {
 

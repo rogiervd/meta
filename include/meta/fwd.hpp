@@ -52,6 +52,11 @@ namespace meta {
         // Does not have to be specialised: the default implementation works.
         template <typename Tag, typename Direction> struct contains;
 
+        // Key-based containers: no direction.
+        template <typename Tag> struct has_key;
+        template <typename Tag> struct at;
+        template <typename Tag> struct remove;
+
         // Does not have to be specialised: the default implementation works.
         template <typename Tag, typename Direction> struct fold;
         template <typename Tag, typename Direction> struct fold_reverse;
