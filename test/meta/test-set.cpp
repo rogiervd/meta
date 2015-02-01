@@ -137,4 +137,39 @@ BOOST_AUTO_TEST_CASE (test_meta_as_set) {
     }
 }
 
+BOOST_AUTO_TEST_CASE (test_meta_is_subset) {
+    static_assert (meta::is_subset <meta::set<>, meta::set<>>::value, "");
+    static_assert (!meta::is_subset <meta::set <int>, meta::set<>>::value, "");
+    static_assert (meta::is_subset <meta::set<>, meta::set <int>>::value, "");
+    static_assert (meta::is_subset <meta::set <int>,
+        meta::set <int>>::value, "");
+
+    static_assert (meta::is_subset <meta::set<>,
+        meta::set <bool>>::value, "");
+    static_assert (!meta::is_subset <meta::set <int>,
+        meta::set <bool>>::value, "");
+    static_assert (meta::is_subset <meta::set<>,
+        meta::set <int, bool>>::value, "");
+    static_assert (meta::is_subset <meta::set <int>,
+        meta::set <bool, int>>::value, "");
+
+    static_assert (meta::is_subset <meta::set <bool>,
+        meta::set <bool>>::value, "");
+    static_assert (!meta::is_subset <meta::set <int, bool>,
+        meta::set <bool>>::value, "");
+    static_assert (meta::is_subset <meta::set <bool>,
+        meta::set <int, bool>>::value, "");
+    static_assert (meta::is_subset <meta::set <int, bool>,
+        meta::set <bool, int>>::value, "");
+
+    static_assert (meta::is_subset <meta::set <bool, float>,
+        meta::set <bool, float>>::value, "");
+    static_assert (!meta::is_subset <meta::set <int, bool, float>,
+        meta::set <float, bool>>::value, "");
+    static_assert (meta::is_subset <meta::set <bool, float>,
+        meta::set <int, float, bool>>::value, "");
+    static_assert (meta::is_subset <meta::set <int, float, bool>,
+        meta::set <bool, float, int>>::value, "");
+}
+
 BOOST_AUTO_TEST_SUITE_END()

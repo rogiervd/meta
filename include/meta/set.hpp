@@ -32,6 +32,7 @@ Define meta::set, an MPL sequence that can only contain one value of each type.
 #include "meta/range.hpp"
 #include "meta/contains.hpp"
 #include "meta/fold_reverse.hpp"
+#include "meta/all_of_c.hpp"
 
 #include "meta/detail/index.hpp"
 
@@ -153,6 +154,18 @@ namespace meta {
     // must go through the normal route to remove duplicates.
     template <typename ... Types> struct as_set <front, set <Types ...> >
     { typedef set <Types ...> type; };
+
+    /** \brief
+    Evaluate to \c true iff \a Subset is a subset of \a Superset, that is, iff
+    \a Superset contains all elements of \a Subset.
+
+    This causes O(n) template instantiations.
+    */
+    template <class Subset, class Superset> struct is_subset;
+
+    template <class ... Elements, class Superset>
+        struct is_subset <set <Elements ...>, Superset>
+    : all_of_c <contains <Elements, Superset>::value ...> {};
 
 } // namespace meta
 
