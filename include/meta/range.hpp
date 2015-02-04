@@ -22,10 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <type_traits>
 
+#include <boost/mpl/size_t.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
-#include <boost/mpl/if.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include "meta/fwd.hpp"
