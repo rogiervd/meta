@@ -2,7 +2,7 @@ import testing ;
 
 project
     : requirements
-      <library>/boost/test//boost_unit_test_framework
+      <library>/boost//unit_test_framework
       <library>/meta//meta
       <warnings-as-errors>on
 
@@ -23,7 +23,5 @@ project
 
     ;
 
-alias "meta-tests" :
-    meta//meta
-    ;
-
+# Always build the project in ./meta/
+build-project meta ;

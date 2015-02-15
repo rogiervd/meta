@@ -1,4 +1,7 @@
-project /meta ;
+project /meta
+    : requirements
+      <use>/boost//headers
+    ;
 
 # Declare target /meta//meta as a header-only library.
 alias meta : : : :
@@ -6,4 +9,3 @@ alias meta : : : :
     # Require C++11.
     <toolset>gcc:<cxxflags>-std=gnu++0x <toolset>clang:<cxxflags>-std=c++11
     ;
-

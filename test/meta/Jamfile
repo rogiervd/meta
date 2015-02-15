@@ -1,5 +1,3 @@
-test-suite "meta" :
-    # Run all .cpp files in this directory as tests.
-    [ run_glob *.cpp detail/*.cpp ]
-    ;
+run_glob *.cpp ;
 
+build-project detail ;
