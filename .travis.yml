@@ -1,9 +1,5 @@
 language: cpp
 
-branches:
-  only:
-    - master
-
 compiler:
   - gcc
   - clang
@@ -22,4 +18,4 @@ install:
   - sudo apt-get install -qq libboost-all-dev
 
 # It just so happens that ${CC} corresponds to the Boost.Build toolset name.
-script: ./test/bjam_test_in_parent_directory.sh toolset=${CC} variant=${VARIANT}
+script: ./test/bjam_test_in_parent_directory.sh -j2 toolset=${CC} variant=${VARIANT}
