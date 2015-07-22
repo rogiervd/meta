@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Rogier van Dalen.
+Copyright 2011, 2012, 2015 Rogier van Dalen.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -86,6 +86,41 @@ namespace meta {
     template <typename ... Types> struct range_tag <vector <Types ...> >
     { typedef vector_tag type; };
 
+    namespace vector_detail {
+
+        /** \brief
+        Wrapper to make sure the exact type does not get lost.
+        Default-constructible.
+        */
+        template <typename Type> struct wrap { typedef Type type; };
+
+        /** \brief
+        Convert a \ref vector of \ref wrap types into a \ref vector of the
+        unwrapped types.
+        */
+        template <class Wraps> struct unwrap_all;
+        template <class ... Wraps> struct unwrap_all <meta::vector <Wraps ...>>
+        { typedef meta::vector <typename Wraps::type ...> type; };
+
+        /**
+        Fake class that can be converted from anything.
+        */
+        template <typename> struct swallow
+        { template <class Any> swallow (Any const &); };
+
+        /**
+        Return the last argument, where the number of arguments is the
+        length of Types, plus 1.
+        This allows the implementation of first <back> below.
+        The last argument must be of type wrap <T>.
+        */
+        template <typename ... Types> struct return_last_type {
+            template <typename LastType> wrap <LastType> operator() (
+                swallow <Types> ..., wrap <LastType> const &);
+        };
+
+    } // namespace vector_detail
+
     namespace operation {
 
         template <> struct default_direction <vector_tag> {
@@ -128,32 +163,6 @@ namespace meta {
         // first <back>.
         // This implementation should be O(1).
         // (The obvious implementation is recursive and O(n)).
-        namespace first_back_detail {
-
-            /**
-            Wrapper to make sure the exact type does not get lost.
-            */
-            template <typename Type> struct wrap { typedef Type type; };
-
-            /**
-            Fake class that can be converted from anything.
-            */
-            template <typename Type> struct convert_from_any
-            { template <class Any> convert_from_any (Any const &); };
-
-            /**
-            Return the last argument, where the number of arguments is the
-            length of Types, plus 1.
-            This allows the implementation of first <back> below.
-            The last argument must be of type wrap <T>.
-            */
-            template <typename ... Types> struct return_last_type {
-                template <typename LastType> wrap <LastType> operator() (
-                    convert_from_any <Types> ..., wrap <LastType> const &);
-            };
-
-        } // namespace first_back_detail
-
         template <> struct first <vector_tag, back> {
             template <typename Vector> struct apply;
             template <typename ... Types> struct apply <vector <Types...> >
@@ -166,8 +175,8 @@ namespace meta {
                 */
                 typedef decltype (
                     std::declval <
-                        first_back_detail::return_last_type <Types...>>() (
-                        0, std::declval <first_back_detail::wrap <Types>>()...))
+                        vector_detail::return_last_type <Types...>>() (
+                        0, std::declval <vector_detail::wrap <Types>>()...))
                     wrapped_last_type;
                 typedef typename wrapped_last_type::type type;
             };
@@ -307,6 +316,59 @@ namespace meta {
     template <class Function, class ... Types>
         struct as_vector <transform <Function, vector <Types ...>>>
     { typedef vector <typename mpl::apply <Function, Types>::type...> type; };
+
+    /** \brief
+    Compute a meta::vector with the last elements in \a Long.
+
+    The number of elements removed from the start of \a Long is the length of
+    \a Short.
+
+    Apart from simple helper structs that are hopefully shared between many
+    calls, the number of template instantiations should be only 1.
+    This very specific operation is provided because the low number of template
+    instantiations is possible.
+    For example, to return the first elements of \a Long instead would take
+    instantiations in the order of the length of it.
+
+    \tparam Short
+        A meta::vector, only the number of elements of which is important.
+    \tparam Long
+        A meta::vector that must be at least as long as \a Short, and whose
+        elements that make it longer will be returned.
+    */
+    template <class Short, class Long> class tail_of_longer;
+
+    template <class ... Short, class ... Long>
+        class tail_of_longer <meta::vector <Short ...>, meta::vector <Long ...>>
+    {
+        /**
+        Return a meta::vector with the types of the arguments, but with the
+        first sizeof... (Short) arguments removed.
+        (Only declared, not defined.)
+        */
+        /* Simple implementation. Clang 3.0 crashes over this. */
+        // template <class ... After> static meta::vector <After ...>
+        //     return_after (vector_detail::swallow <Short> const & ...,
+        //         After const & ...);
+
+        /*
+        Implementation that makes the first type from "After" explicit.
+        CLang 3.0 is happy with this.
+        */
+        static meta::vector<> return_after (
+            vector_detail::swallow <Short> const & ...);
+
+        template <class After1, class ... After> static
+            meta::vector <After1, After ...> return_after (
+                vector_detail::swallow <Short> const & ...,
+                After1, After const & ...);
+
+        typedef decltype (return_after (vector_detail::wrap <Long>() ...))
+            after_holders;
+
+    public:
+        typedef typename vector_detail::unwrap_all <after_holders>::type type;
+    };
 
 } // namespace meta
 

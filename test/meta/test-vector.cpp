@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Rogier van Dalen.
+Copyright 2011, 2012, 2015 Rogier van Dalen.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -187,6 +187,29 @@ BOOST_AUTO_TEST_CASE (test_meta_as_vector) {
     BOOST_MPL_ASSERT ((is_same <
         meta::as_vector <meta::vector <int, float>>::type,
         meta::vector <int, float>>));
+}
+
+BOOST_AUTO_TEST_CASE (test_meta_split_vector) {
+    static_assert (std::is_same <meta::tail_of_longer <
+            meta::vector<>, meta::vector<>>::type,
+        meta::vector<>
+        >::value, "");
+    static_assert (std::is_same <meta::tail_of_longer <
+            meta::vector<>, meta::vector <int>>::type,
+        meta::vector <int>
+        >::value, "");
+    static_assert (std::is_same <meta::tail_of_longer <
+            meta::vector <int>, meta::vector <bool, int>>::type,
+        meta::vector <int>
+        >::value, "");
+    static_assert (std::is_same <meta::tail_of_longer <
+            meta::vector <int>, meta::vector <bool, long, int>>::type,
+        meta::vector <long, int>
+        >::value, "");
+    static_assert (std::is_same <meta::tail_of_longer <
+            meta::vector <int, long>, meta::vector <bool, long, int>>::type,
+        meta::vector <int>
+        >::value, "");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
