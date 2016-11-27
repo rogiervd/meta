@@ -1,5 +1,5 @@
 /*
-Copyright 2014 Rogier van Dalen.
+Copyright 2014, 2015 Rogier van Dalen.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@ limitations under the License.
 
 #include <type_traits>
 
-#include <boost/mpl/bool.hpp>
-
 #include "meta/range.hpp"
 #include "meta/vector.hpp"
+
+#include "count_c.hpp"
 
 namespace meta {
 
@@ -52,32 +52,24 @@ namespace meta {
         The value of the first element.
         If this is left out, 0 is assumed.
     \tparam end The value of the one-past-last element.
+
+    \sa count_c
     */
-    template <std::size_t ... Arguments> class count;
+    template <std::size_t ... arguments> struct count;
 
-    // One parameter: prepend "0".
-    template <std::size_t end> class count <end>
-    : public count <0, end> {};
+    namespace count_detail {
 
-    // Two parameters: base case.
-    template <std::size_t begin> class count <begin, begin> {
-    public:
-        typedef meta::vector<> type;
-    };
+        template <class Values> struct make_integral_constants;
 
-    // Two parameters: recursive case.
-    template <std::size_t begin, std::size_t end> class count <begin, end> {
-        template <class Rest> struct compute;
+        template <std::size_t ... values>
+            struct make_integral_constants <size_t_vector <values ...>>
+        : meta::vector <std::integral_constant <std::size_t, values> ...> {};
 
-        template <class ... Rest> struct compute <vector <Rest ...>> {
-            typedef meta::vector <std::integral_constant <std::size_t, begin>,
-                Rest ...> type;
-        };
+    } // namespace count_detail
 
-    public:
-        typedef typename compute <typename count <begin + 1, end>::type>::type
-            type;
-    };
+    template <std::size_t ... Arguments> struct count
+    : count_detail::make_integral_constants <
+        typename count_c <Arguments ...>::type> {};
 
 } // namespace meta
 

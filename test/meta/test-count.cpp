@@ -1,5 +1,5 @@
 /*
-Copyright 2013 Rogier van Dalen.
+Copyright 2013, 2015 Rogier van Dalen.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -71,6 +71,13 @@ BOOST_AUTO_TEST_CASE (test_meta_count) {
         std::integral_constant <std::size_t, 18>,
         std::integral_constant <std::size_t, 19>,
         std::integral_constant <std::size_t, 20>>>));
+}
+
+BOOST_AUTO_TEST_CASE (test_meta_count_big) {
+    // Generating a count of this size should be possible without the compiler
+    // batting an eyelid.
+    meta::count <1275>::type v;
+    (void) v;
 }
 
 // Simple example.
