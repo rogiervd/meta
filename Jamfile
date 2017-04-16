@@ -1,3 +1,5 @@
+FAIL_ON_PURPOSE
+
 project /meta
     : requirements
       <use>/boost//headers
