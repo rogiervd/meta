@@ -1,0 +1,119 @@
+# Define the tests.
+load("//test/meta:define_test.bzl", "cc_test_meta")
+
+cc_test_meta(test_name = "test-all_of_c")
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-all_of",
+)
+
+cc_test_meta(test_name = "test-any_of_c")
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-any_of",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-concatenate",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-contains",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-count",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-empty_view",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-enumerate",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-equal",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-filter",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-find",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-flatten",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-fold",
+)
+
+cc_test_meta(test_name = "test-map")
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-max_element",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-merge",
+)
+
+cc_test_meta(test_name = "test-mpl")
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-range",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-scan",
+)
+
+cc_test_meta(test_name = "test-set")
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-single_view",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-sort",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-take",
+)
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-transform",
+)
+
+cc_test_meta(test_name = "test-vector_mpl")
+
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-vector",
+)

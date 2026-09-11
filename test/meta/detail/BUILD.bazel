@@ -1,0 +1,12 @@
+# Define the tests.
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "test-index",
+    size = "small",
+    srcs = ["test-index.cpp"],
+    deps = [
+        "//:meta",
+        "@boost.test//:unit_test_main",
+    ],
+)

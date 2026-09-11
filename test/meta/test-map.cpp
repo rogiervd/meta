@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 #define BOOST_TEST_MODULE map
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 
 #include "meta/map.hpp"
 #include "meta/range.hpp"

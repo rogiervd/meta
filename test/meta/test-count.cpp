@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 #define BOOST_TEST_MODULE test_meta_count
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 
 #include "meta/count.hpp"
 
