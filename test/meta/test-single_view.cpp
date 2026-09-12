@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 #define BOOST_TEST_MODULE test_meta_single_view
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 
 #include "meta/single_view.hpp"
 
