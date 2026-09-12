@@ -29,6 +29,10 @@ cc_test_meta(
     extra_srcs = ["list.hpp"],
     test_name = "test-count",
 )
+cc_test_meta(
+    extra_srcs = ["list.hpp"],
+    test_name = "test-count_c",
+)
 
 cc_test_meta(
     extra_srcs = ["list.hpp"],
