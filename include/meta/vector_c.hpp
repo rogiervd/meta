@@ -30,13 +30,14 @@ This does not currently behave as a Range.
 This is useful to pass into a function which can deduce it in parameter
 pack expansion.
 */
-template <class Type, Type... Values> struct vector_c {
-  typedef vector_c type;
+template <class Type, Type... Values> struct vector_c
+{
+    typedef vector_c type;
 };
 
-template <std::size_t... Values>
-using size_t_vector = vector_c<std::size_t, Values...>;
+template <std::size_t... Values> using size_t_vector =
+    vector_c<std::size_t, Values...>;
 
-} // namespace meta
+}  // namespace meta
 
-#endif // META_VECTOR_C_HPP_INCLUDED
+#endif  // META_VECTOR_C_HPP_INCLUDED

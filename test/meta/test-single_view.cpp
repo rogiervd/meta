@@ -27,58 +27,65 @@ limitations under the License.
 
 BOOST_AUTO_TEST_SUITE(test_meta_single_view)
 
-BOOST_AUTO_TEST_CASE(test_meta_single_view) {
-  // Specify direction.
-  {
-    typedef meta::single_view<meta::list_direction, int> v;
+BOOST_AUTO_TEST_CASE(test_meta_single_view)
+{
+    // Specify direction.
+    {
+        typedef meta::single_view<meta::list_direction, int> v;
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<meta::default_direction<v>::type, meta::list_direction>));
+        BOOST_MPL_ASSERT(
+            (std::is_same<
+                meta::default_direction<v>::type, meta::list_direction>) );
 
-    BOOST_MPL_ASSERT_NOT((meta::empty<v>));
-    BOOST_MPL_ASSERT_NOT((meta::empty<meta::list_direction, v>));
+        BOOST_MPL_ASSERT_NOT((meta::empty<v>) );
+        BOOST_MPL_ASSERT_NOT((meta::empty<meta::list_direction, v>) );
 
-    BOOST_MPL_ASSERT(
-        (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<1>>));
-    BOOST_MPL_ASSERT((boost::mpl::equal_to<meta::size<meta::list_direction, v>,
-                                           boost::mpl::size_t<1>>));
+        BOOST_MPL_ASSERT(
+            (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<1>>) );
+        BOOST_MPL_ASSERT(
+            (boost::mpl::equal_to<
+                meta::size<meta::list_direction, v>, boost::mpl::size_t<1>>) );
 
-    BOOST_MPL_ASSERT((std::is_same<meta::first<v>::type, int>));
-    BOOST_MPL_ASSERT(
-        (std::is_same<meta::first<meta::list_direction, v>::type, int>));
+        BOOST_MPL_ASSERT((std::is_same<meta::first<v>::type, int>) );
+        BOOST_MPL_ASSERT(
+            (std::is_same<meta::first<meta::list_direction, v>::type, int>) );
 
-    // The result of drop <single_view <...> is not defined to be an
-    // empty_view.
-    // But then, if the following passes, then it is left to empty_view.cpp
-    // to test its behaviour.
-    BOOST_MPL_ASSERT((std::is_same<meta::drop<v>::type,
-                                   meta::empty_view<meta::list_direction>>));
-    BOOST_MPL_ASSERT((std::is_same<meta::drop<meta::list_direction, v>::type,
-                                   meta::empty_view<meta::list_direction>>));
-  }
-  // Don't specify direction: should be "front".
-  {
-    typedef meta::single_view<bool> v;
+        // The result of drop <single_view <...> is not defined to be an
+        // empty_view.
+        // But then, if the following passes, then it is left to empty_view.cpp
+        // to test its behaviour.
+        BOOST_MPL_ASSERT(
+            (std::is_same<
+                meta::drop<v>::type, meta::empty_view<meta::list_direction>>) );
+        BOOST_MPL_ASSERT((std::is_same<
+                          meta::drop<meta::list_direction, v>::type,
+                          meta::empty_view<meta::list_direction>>) );
+    }
+    // Don't specify direction: should be "front".
+    {
+        typedef meta::single_view<bool> v;
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<meta::default_direction<v>::type, meta::front>));
+        BOOST_MPL_ASSERT(
+            (std::is_same<meta::default_direction<v>::type, meta::front>) );
 
-    BOOST_MPL_ASSERT_NOT((meta::empty<v>));
-    BOOST_MPL_ASSERT_NOT((meta::empty<meta::front, v>));
+        BOOST_MPL_ASSERT_NOT((meta::empty<v>) );
+        BOOST_MPL_ASSERT_NOT((meta::empty<meta::front, v>) );
 
-    BOOST_MPL_ASSERT(
-        (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<1>>));
-    BOOST_MPL_ASSERT((boost::mpl::equal_to<meta::size<meta::front, v>,
-                                           boost::mpl::size_t<1>>));
+        BOOST_MPL_ASSERT(
+            (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<1>>) );
+        BOOST_MPL_ASSERT((boost::mpl::equal_to<
+                          meta::size<meta::front, v>, boost::mpl::size_t<1>>) );
 
-    BOOST_MPL_ASSERT((std::is_same<meta::first<v>::type, bool>));
-    BOOST_MPL_ASSERT((std::is_same<meta::first<meta::front, v>::type, bool>));
+        BOOST_MPL_ASSERT((std::is_same<meta::first<v>::type, bool>) );
+        BOOST_MPL_ASSERT(
+            (std::is_same<meta::first<meta::front, v>::type, bool>) );
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<meta::drop<v>::type, meta::empty_view<meta::front>>));
-    BOOST_MPL_ASSERT((std::is_same<meta::drop<meta::front, v>::type,
-                                   meta::empty_view<meta::front>>));
-  }
+        BOOST_MPL_ASSERT((
+            std::is_same<meta::drop<v>::type, meta::empty_view<meta::front>>) );
+        BOOST_MPL_ASSERT((std::is_same<
+                          meta::drop<meta::front, v>::type,
+                          meta::empty_view<meta::front>>) );
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

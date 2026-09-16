@@ -53,114 +53,124 @@ template <class Direction, class Compare = void, class Range = void>
 struct sort;
 
 // Only direction: insert mpl::less <...>.
-template <class Direction, class Range>
-struct sort<Direction, Range,
-            typename boost::enable_if<is_direction<Direction>>::type>
-    : sort<Direction, mpl::less<mpl::_1, mpl::_2>, Range> {};
+template <class Direction, class Range> struct sort<
+    Direction, Range, typename boost::enable_if<is_direction<Direction>>::type>
+: sort<Direction, mpl::less<mpl::_1, mpl::_2>, Range>
+{};
 
 // Only Compare: insert default direction.
-template <class Compare, class Range>
-struct sort<Compare, Range,
-            typename boost::disable_if<boost::mpl::or_<
-                is_direction<Compare>, std::is_same<Range, void>>>::type>
-    : sort<typename default_direction<Range>::type, Compare, Range> {};
+template <class Compare, class Range> struct sort<
+    Compare, Range,
+    typename boost::disable_if<boost::mpl::or_<
+        is_direction<Compare>, std::is_same<Range, void>>>::type>
+: sort<typename default_direction<Range>::type, Compare, Range>
+{};
 
 // No parameters: insert default direction.
-template <class Range>
-struct sort<Range> : sort<typename default_direction<Range>::type, Range> {};
+template <class Range> struct sort<Range>
+: sort<typename default_direction<Range>::type, Range>
+{};
 
 namespace sort_detail {
 
-/**
-Return a pair with a range containing the first \c 2**depth elements
-from \c Rest in order, and Rest without those first elements.
-If \c Rest has fewer elements then 2**depth, then return a pair with an
-range with all of them in order, and an empty range.
-*/
-template <class Direction, class Compare, int Depth, class Rest>
-class sort_part;
+    /**
+    Return a pair with a range containing the first \c 2**depth elements
+    from \c Rest in order, and Rest without those first elements.
+    If \c Rest has fewer elements then 2**depth, then return a pair with an
+    range with all of them in order, and an empty range.
+    */
+    template <class Direction, class Compare, int Depth, class Rest>
+    class sort_part;
 
-/**
-Return a range with all \c 2**(Depth-1) elements of sorted range
-\c First and the first \c 2**(depth-1) elements of \c Rest, or less if
-\c Rest is exhausted.
-Also return the remainder of \c Rest as second element of the pair.
-*/
-template <class Direction, class Compare, int Depth, class First, class Rest>
-class sort_part_with;
+    /**
+    Return a range with all \c 2**(Depth-1) elements of sorted range
+    \c First and the first \c 2**(depth-1) elements of \c Rest, or less if
+    \c Rest is exhausted.
+    Also return the remainder of \c Rest as second element of the pair.
+    */
+    template <
+        class Direction, class Compare, int Depth, class First, class Rest>
+    class sort_part_with;
 
-/* sort_part. */
-// Depth == 0: Sorted range of length 2**0 = 1: trivial.
-template <class Direction, class Compare, class Rest>
-class sort_part<Direction, Compare, 0, Rest> {
-  BOOST_MPL_ASSERT_NOT((meta::empty<Direction, Rest>));
-  typedef typename first<Direction, Rest>::type head;
+    /* sort_part. */
+    // Depth == 0: Sorted range of length 2**0 = 1: trivial.
+    template <class Direction, class Compare, class Rest>
+    class sort_part<Direction, Compare, 0, Rest>
+    {
+        BOOST_MPL_ASSERT_NOT((meta::empty<Direction, Rest>) );
+        typedef typename first<Direction, Rest>::type head;
 
-public:
-  typedef mpl::pair<single_view<Direction, head>,
-                    typename drop<Direction, Rest>::type>
-      type;
-};
+    public:
+        typedef mpl::pair<
+            single_view<Direction, head>, typename drop<Direction, Rest>::type>
+            type;
+    };
 
-// Depth > 0.
-template <class Direction, class Compare, int Depth, class Rest>
-class sort_part {
-  BOOST_MPL_ASSERT_NOT((meta::empty<Direction, Rest>));
-  static_assert(Depth > 0, "");
+    // Depth > 0.
+    template <class Direction, class Compare, int Depth, class Rest>
+    class sort_part
+    {
+        BOOST_MPL_ASSERT_NOT((meta::empty<Direction, Rest>) );
+        static_assert(Depth > 0, "");
 
-  // Find the first half.
-  typedef
-      typename sort_part<Direction, Compare, Depth - 1, Rest>::type first_part;
-  typedef typename first_part::first first;
-  typedef typename first_part::second first_rest;
+        // Find the first half.
+        typedef typename sort_part<Direction, Compare, Depth - 1, Rest>::type
+            first_part;
+        typedef typename first_part::first first;
+        typedef typename first_part::second first_rest;
 
-public:
-  typedef typename mpl::eval_if<
-      empty<Direction, first_rest>,
-      // We want something of depth Depth, but there are not enough
-      // elements to produce it.
-      mpl::pair<first, first_rest>,
-      // Oherwise, combine the first half with the second half.
-      sort_part_with<Direction, Compare, Depth, first, first_rest>>::type type;
-};
+    public:
+        typedef typename mpl::eval_if<
+            empty<Direction, first_rest>,
+            // We want something of depth Depth, but there are not enough
+            // elements to produce it.
+            mpl::pair<first, first_rest>,
+            // Oherwise, combine the first half with the second half.
+            sort_part_with<Direction, Compare, Depth, first, first_rest>>::type
+            type;
+    };
 
-/* sort_part_with. */
-template <class Direction, class Compare, int Depth, class First, class Rest>
-class sort_part_with {
-  static_assert(Depth >= 1, "");
+    /* sort_part_with. */
+    template <
+        class Direction, class Compare, int Depth, class First, class Rest>
+    class sort_part_with
+    {
+        static_assert(Depth >= 1, "");
 
-  // Sort second part.
-  typedef
-      typename sort_part<Direction, Compare, Depth - 1, Rest>::type second_part;
+        // Sort second part.
+        typedef typename sort_part<Direction, Compare, Depth - 1, Rest>::type
+            second_part;
 
-public:
-  typedef mpl::pair<
-      merge<Direction, Compare, First, typename second_part::first>,
-      typename second_part::second>
-      type;
-};
+    public:
+        typedef mpl::pair<
+            merge<Direction, Compare, First, typename second_part::first>,
+            typename second_part::second>
+            type;
+    };
 
-/** \struct sort_at_least_with.
-Try to sort with depth Depth.
-If \c Rest is then not exhausted, try Depth+1, recursively, and so on.
-*/
-template <class Direction, class Compare, int Depth, class First, class Rest>
-class sort_at_least_with {
-  static_assert(Depth >= 1, "");
-  BOOST_MPL_ASSERT_NOT((empty<Direction, Rest>));
+    /** \struct sort_at_least_with.
+    Try to sort with depth Depth.
+    If \c Rest is then not exhausted, try Depth+1, recursively, and so on.
+    */
+    template <
+        class Direction, class Compare, int Depth, class First, class Rest>
+    class sort_at_least_with
+    {
+        static_assert(Depth >= 1, "");
+        BOOST_MPL_ASSERT_NOT((empty<Direction, Rest>) );
 
-  typedef typename sort_part_with<Direction, Compare, Depth, First, Rest>::type
-      current;
+        typedef typename sort_part_with<
+            Direction, Compare, Depth, First, Rest>::type current;
 
-public:
-  typedef typename mpl::eval_if<
-      empty<Direction, typename current::second>, mpl::first<current>,
-      sort_at_least_with<Direction, Compare, Depth + 1, typename current::first,
-                         typename current::second>>::type type;
-};
+    public:
+        typedef typename mpl::eval_if<
+            empty<Direction, typename current::second>, mpl::first<current>,
+            sort_at_least_with<
+                Direction, Compare, Depth + 1, typename current::first,
+                typename current::second>>::type type;
+    };
 
-template <class Direction, class Compare, class Range>
-struct sort_non_empty
+    template <class Direction, class Compare, class Range> struct sort_non_empty
     : mpl::eval_if<
           empty<Direction, typename drop<Direction, Range>::type>,
           // Only one element.
@@ -169,16 +179,18 @@ struct sort_non_empty
           sort_at_least_with<
               Direction, Compare, 1,
               single_view<Direction, typename first<Direction, Range>::type>,
-              typename drop<Direction, Range>::type>> {};
+              typename drop<Direction, Range>::type>>
+    {};
 
-} // namespace sort_detail
+}  // namespace sort_detail
 
 /* sort. */
-template <class Direction, class Compare, class Range>
-struct sort
-    : mpl::eval_if<empty<Direction, Range>, mpl::identity<Range>,
-                   sort_detail::sort_non_empty<Direction, Compare, Range>> {};
+template <class Direction, class Compare, class Range> struct sort
+: mpl::eval_if<
+      empty<Direction, Range>, mpl::identity<Range>,
+      sort_detail::sort_non_empty<Direction, Compare, Range>>
+{};
 
-} // namespace meta
+}  // namespace meta
 
-#endif // META_SORT_HPP_INCLUDED
+#endif  // META_SORT_HPP_INCLUDED

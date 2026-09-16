@@ -27,37 +27,40 @@ limitations under the License.
 
 BOOST_AUTO_TEST_SUITE(test_meta_empty_view)
 
-BOOST_AUTO_TEST_CASE(test_meta_empty_view) {
-  // Specify direction.
-  {
-    typedef meta::empty_view<meta::list_direction> v;
+BOOST_AUTO_TEST_CASE(test_meta_empty_view)
+{
+    // Specify direction.
+    {
+        typedef meta::empty_view<meta::list_direction> v;
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<meta::default_direction<v>::type, meta::list_direction>));
+        BOOST_MPL_ASSERT(
+            (std::is_same<
+                meta::default_direction<v>::type, meta::list_direction>) );
 
-    BOOST_MPL_ASSERT((meta::empty<v>));
-    BOOST_MPL_ASSERT((meta::empty<meta::list_direction, v>));
+        BOOST_MPL_ASSERT((meta::empty<v>) );
+        BOOST_MPL_ASSERT((meta::empty<meta::list_direction, v>) );
 
-    BOOST_MPL_ASSERT(
-        (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>));
-    BOOST_MPL_ASSERT((boost::mpl::equal_to<meta::size<meta::list_direction, v>,
-                                           boost::mpl::size_t<0>>));
-  }
-  // Don't specify direction: should be "front".
-  {
-    typedef meta::empty_view<> v;
+        BOOST_MPL_ASSERT(
+            (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>) );
+        BOOST_MPL_ASSERT(
+            (boost::mpl::equal_to<
+                meta::size<meta::list_direction, v>, boost::mpl::size_t<0>>) );
+    }
+    // Don't specify direction: should be "front".
+    {
+        typedef meta::empty_view<> v;
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<meta::default_direction<v>::type, meta::front>));
+        BOOST_MPL_ASSERT(
+            (std::is_same<meta::default_direction<v>::type, meta::front>) );
 
-    BOOST_MPL_ASSERT((meta::empty<v>));
-    BOOST_MPL_ASSERT((meta::empty<meta::front, v>));
+        BOOST_MPL_ASSERT((meta::empty<v>) );
+        BOOST_MPL_ASSERT((meta::empty<meta::front, v>) );
 
-    BOOST_MPL_ASSERT(
-        (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>));
-    BOOST_MPL_ASSERT((boost::mpl::equal_to<meta::size<meta::front, v>,
-                                           boost::mpl::size_t<0>>));
-  }
+        BOOST_MPL_ASSERT(
+            (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>) );
+        BOOST_MPL_ASSERT((boost::mpl::equal_to<
+                          meta::size<meta::front, v>, boost::mpl::size_t<0>>) );
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

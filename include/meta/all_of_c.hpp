@@ -31,28 +31,33 @@ and memory use.
 */
 template <bool...> struct all_of_c;
 
-template <> struct all_of_c<> : std::true_type {};
+template <> struct all_of_c<> : std::true_type
+{};
 
-template <bool value1>
-struct all_of_c<value1> : std::integral_constant<bool, value1> {};
+template <bool value1> struct all_of_c<value1>
+: std::integral_constant<bool, value1>
+{};
 
-template <bool value1, bool value2>
-struct all_of_c<value1, value2>
-    : std::integral_constant<bool, value1 && value2> {};
+template <bool value1, bool value2> struct all_of_c<value1, value2>
+: std::integral_constant<bool, value1 && value2>
+{};
 
 template <bool value1, bool value2, bool value3>
 struct all_of_c<value1, value2, value3>
-    : std::integral_constant<bool, value1 && value2 && value3> {};
+: std::integral_constant<bool, value1 && value2 && value3>
+{};
 
 template <bool value1, bool value2, bool value3, bool value4>
 struct all_of_c<value1, value2, value3, value4>
-    : std::integral_constant<bool, value1 && value2 && value3 && value4> {};
+: std::integral_constant<bool, value1 && value2 && value3 && value4>
+{};
 
 template <bool value1, bool value2, bool value3, bool value4, bool... rest>
 struct all_of_c<value1, value2, value3, value4, rest...>
-    : std::integral_constant<bool, value1 && value2 && value3 && value4 &&
-                                       all_of_c<rest...>::value> {};
+: std::integral_constant<
+      bool, value1 && value2 && value3 && value4 && all_of_c<rest...>::value>
+{};
 
-} // namespace meta
+}  // namespace meta
 
-#endif // META_ALL_OF_C_HPP_INCLUDED
+#endif  // META_ALL_OF_C_HPP_INCLUDED

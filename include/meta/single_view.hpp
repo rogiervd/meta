@@ -34,54 +34,69 @@ The direction of traversal can be specified; if not, it is "front".
 */
 template <class... Arguments> struct single_view;
 
-template <class Direction, class Element>
-struct single_view<Direction, Element> {
-  typedef single_view type;
-  typedef Direction direction;
-  typedef Element element;
+template <class Direction, class Element> struct single_view<Direction, Element>
+{
+    typedef single_view type;
+    typedef Direction direction;
+    typedef Element element;
 };
 
-template <class Element>
-struct single_view<Element> : single_view<front, Element> {};
+template <class Element> struct single_view<Element>
+: single_view<front, Element>
+{};
 
 template <class Direction> struct single_view_tag;
 
-template <class... Arguments> struct range_tag<single_view<Arguments...>> {
-  typedef single_view_tag<typename single_view<Arguments...>::direction> type;
+template <class... Arguments> struct range_tag<single_view<Arguments...>>
+{
+    typedef single_view_tag<typename single_view<Arguments...>::direction> type;
 };
 
 namespace operation {
 
-template <class Direction>
-struct default_direction<single_view_tag<Direction>> {
-  template <class Range> struct apply {
-    typedef Direction type;
-  };
-};
+    template <class Direction>
+    struct default_direction<single_view_tag<Direction>>
+    {
+        template <class Range> struct apply
+        {
+            typedef Direction type;
+        };
+    };
 
-template <class Direction> struct empty<single_view_tag<Direction>, Direction> {
-  template <class Range> struct apply : mpl::false_ {};
-};
+    template <class Direction>
+    struct empty<single_view_tag<Direction>, Direction>
+    {
+        template <class Range> struct apply : mpl::false_
+        {};
+    };
 
-template <class Direction> struct size<single_view_tag<Direction>, Direction> {
-  template <class Range> struct apply : mpl::size_t<1> {};
-};
+    template <class Direction>
+    struct size<single_view_tag<Direction>, Direction>
+    {
+        template <class Range> struct apply : mpl::size_t<1>
+        {};
+    };
 
-template <class Direction> struct first<single_view_tag<Direction>, Direction> {
-  template <class Range> struct apply {
-    typedef typename Range::element type;
-  };
-};
+    template <class Direction>
+    struct first<single_view_tag<Direction>, Direction>
+    {
+        template <class Range> struct apply
+        {
+            typedef typename Range::element type;
+        };
+    };
 
-template <class Direction>
-struct drop_one<single_view_tag<Direction>, Direction> {
-  template <class Range> struct apply {
-    typedef empty_view<Direction> type;
-  };
-};
+    template <class Direction>
+    struct drop_one<single_view_tag<Direction>, Direction>
+    {
+        template <class Range> struct apply
+        {
+            typedef empty_view<Direction> type;
+        };
+    };
 
-} // namespace operation
+}  // namespace operation
 
-} // namespace meta
+}  // namespace meta
 
-#endif // META_SINGLE_VIEW_HPP_INCLUDED
+#endif  // META_SINGLE_VIEW_HPP_INCLUDED

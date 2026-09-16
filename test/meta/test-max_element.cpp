@@ -28,37 +28,42 @@ limitations under the License.
 
 BOOST_AUTO_TEST_SUITE(test_meta_max_element)
 
-BOOST_AUTO_TEST_CASE(test_meta_max_element) {
-  namespace mpl = boost::mpl;
-  using meta::list;
-  using mpl::int_;
+BOOST_AUTO_TEST_CASE(test_meta_max_element)
+{
+    namespace mpl = boost::mpl;
+    using meta::list;
+    using mpl::int_;
 
-  BOOST_MPL_ASSERT(
-      (mpl::equal_to<meta::max_element<list<int_<4>>>::type, int_<4>>));
-  BOOST_MPL_ASSERT((
-      mpl::equal_to<meta::max_element<list<int_<4>, int_<5>>>::type, int_<5>>));
-  BOOST_MPL_ASSERT((
-      mpl::equal_to<meta::max_element<list<int_<5>, int_<4>>>::type, int_<5>>));
-  BOOST_MPL_ASSERT(
-      (mpl::equal_to<meta::max_element<list<int_<5>, int_<4>, int_<7>>>::type,
-                     int_<7>>));
+    BOOST_MPL_ASSERT(
+        (mpl::equal_to<meta::max_element<list<int_<4>>>::type, int_<4>>) );
+    BOOST_MPL_ASSERT(
+        (mpl::equal_to<
+            meta::max_element<list<int_<4>, int_<5>>>::type, int_<5>>) );
+    BOOST_MPL_ASSERT(
+        (mpl::equal_to<
+            meta::max_element<list<int_<5>, int_<4>>>::type, int_<5>>) );
+    BOOST_MPL_ASSERT((mpl::equal_to<
+                      meta::max_element<list<int_<5>, int_<4>, int_<7>>>::type,
+                      int_<7>>) );
 
-  // Use std::integral_constant
-  static_assert(
-      meta::max_element<
-          list<std::integral_constant<int, 5>, std::integral_constant<int, 4>,
-               std::integral_constant<int, 7>>>::type::value == 7,
-      "");
+    // Use std::integral_constant
+    static_assert(
+        meta::max_element<list<
+                std::integral_constant<int, 5>, std::integral_constant<int, 4>,
+                std::integral_constant<int, 7>>>::type::value
+            == 7,
+        "");
 
-  BOOST_MPL_ASSERT(
-      (mpl::equal_to<meta::max_element<meta::list_direction,
-                                       list<int_<5>, int_<4>, int_<7>>>::type,
-                     int_<7>>));
-  BOOST_MPL_ASSERT(
-      (mpl::equal_to<
-          meta::max_element<meta::list_direction,
-                            meta::weird_list<int_<5>, int_<4>, int_<7>>>::type,
-          int_<7>>));
+    BOOST_MPL_ASSERT(
+        (mpl::equal_to<
+            meta::max_element<
+                meta::list_direction, list<int_<5>, int_<4>, int_<7>>>::type,
+            int_<7>>) );
+    BOOST_MPL_ASSERT((mpl::equal_to<
+                      meta::max_element<
+                          meta::list_direction,
+                          meta::weird_list<int_<5>, int_<4>, int_<7>>>::type,
+                      int_<7>>) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -37,8 +37,9 @@ Direction may not be const-qualified or a reference.
 
 Specialise this for user-defined direction classes.
 */
-template <class Direction, class Enable = void>
-struct is_direction_bare : boost::mpl::false_ {};
+template <class Direction, class Enable = void> struct is_direction_bare
+: boost::mpl::false_
+{};
 
 /**
 Metafunction that returns true iff Direction is a direction.
@@ -46,9 +47,9 @@ Direction may be const-qualified and/or a reference.
 
 Specialise is_direction_bare for user-defined direction classes.
 */
-template <class Direction>
-struct is_direction : is_direction_bare<typename std::decay<Direction>::type> {
-};
+template <class Direction> struct is_direction
+: is_direction_bare<typename std::decay<Direction>::type>
+{};
 
 /* Predefined directions */
 
@@ -57,9 +58,11 @@ struct is_direction : is_direction_bare<typename std::decay<Direction>::type> {
 struct front;
 struct back;
 
-template <> struct is_direction_bare<direction::front> : boost::mpl::true_ {};
-template <> struct is_direction_bare<direction::back> : boost::mpl::true_ {};
+template <> struct is_direction_bare<direction::front> : boost::mpl::true_
+{};
+template <> struct is_direction_bare<direction::back> : boost::mpl::true_
+{};
 
-} // namespace direction
+}  // namespace direction
 
-#endif // RANGE_DIRECTION_TAG_HPP_INCLUDED
+#endif  // RANGE_DIRECTION_TAG_HPP_INCLUDED

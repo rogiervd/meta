@@ -59,18 +59,19 @@ template <std::size_t... arguments> struct count;
 
 namespace count_detail {
 
-template <class Values> struct make_integral_constants;
+    template <class Values> struct make_integral_constants;
 
-template <std::size_t... values>
-struct make_integral_constants<size_t_vector<values...>>
-    : meta::vector<std::integral_constant<std::size_t, values>...> {};
+    template <std::size_t... values>
+    struct make_integral_constants<size_t_vector<values...>>
+    : meta::vector<std::integral_constant<std::size_t, values>...>
+    {};
 
-} // namespace count_detail
+}  // namespace count_detail
 
-template <std::size_t... Arguments>
-struct count : count_detail::make_integral_constants<
-                   typename count_c<Arguments...>::type> {};
+template <std::size_t... Arguments> struct count
+: count_detail::make_integral_constants<typename count_c<Arguments...>::type>
+{};
 
-} // namespace meta
+}  // namespace meta
 
-#endif // META_COUNT_HPP_INCLUDED
+#endif  // META_COUNT_HPP_INCLUDED
