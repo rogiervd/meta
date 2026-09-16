@@ -24,71 +24,71 @@ limitations under the License.
 
 namespace meta {
 
-    /**
-    Return true iff any element in Range is true.
-    If Range is empty, then return false.
-    Direction can be left out.
-    */
-    template <typename Direction, typename Range = void> struct any_of;
+/**
+Return true iff any element in Range is true.
+If Range is empty, then return false.
+Direction can be left out.
+*/
+template <typename Direction, typename Range = void> struct any_of;
 
-    template <typename Range> struct any_of <Range>
-    : any_of <typename default_direction <Range>::type, Range> {};
+template <typename Range>
+struct any_of<Range> : any_of<typename default_direction<Range>::type, Range> {
+};
 
-    namespace implementation {
-        template <typename Direction, typename Range> struct any_of_non_empty
-        : mpl::if_ <typename first <Direction, Range>::type,
-            mpl::true_,
-            meta::any_of <Direction, typename drop <Direction, Range>::type>
-            >::type {};
-    } // namespace implementation
+namespace implementation {
+template <typename Direction, typename Range>
+struct any_of_non_empty
+    : mpl::if_<typename first<Direction, Range>::type, mpl::true_,
+               meta::any_of<Direction,
+                            typename drop<Direction, Range>::type>>::type {};
+} // namespace implementation
 
-    template <typename Direction, typename Range> struct any_of
-    : mpl::if_ <empty <Direction, Range>,
-        mpl::false_, implementation::any_of_non_empty <Direction, Range>>::type
-    {};
+template <typename Direction, typename Range>
+struct any_of
+    : mpl::if_<empty<Direction, Range>, mpl::false_,
+               implementation::any_of_non_empty<Direction, Range>>::type {};
 
-    /*
-    Specialisation for vector.
-    In profiling template instantiations in a real project, this turned out a
-    bottleneck.
-    If the first type is false, then the rest should not be evaluated.
-    It is therefore not possible to get this below O(n) instantiations.
-    */
-    namespace implementation {
+/*
+Specialisation for vector.
+In profiling template instantiations in a real project, this turned out a
+bottleneck.
+If the first type is false, then the rest should not be evaluated.
+It is therefore not possible to get this below O(n) instantiations.
+*/
+namespace implementation {
 
-        template <bool first, class ... Types> struct any_of_vector;
+template <bool first, class... Types> struct any_of_vector;
 
-        template <class ... Types> struct any_of_vector <true, Types ...>
-        : boost::mpl::true_ {};
+template <class... Types>
+struct any_of_vector<true, Types...> : boost::mpl::true_ {};
 
-        template <> struct any_of_vector <false>
-        : boost::mpl::false_ {};
+template <> struct any_of_vector<false> : boost::mpl::false_ {};
 
-        template <class Next, class ... Types>
-            struct any_of_vector <false, Next, Types ...>
-        : any_of_vector <Next::value, Types...> {};
+template <class Next, class... Types>
+struct any_of_vector<false, Next, Types...>
+    : any_of_vector<Next::value, Types...> {};
 
-    } // namespace implementation
+} // namespace implementation
 
-    // Without direction.
+// Without direction.
 
-    template <> struct any_of <vector<>> : mpl::false_ {};
+template <> struct any_of<vector<>> : mpl::false_ {};
 
-    template <class Type1> struct any_of <vector <Type1>> : Type1 {};
+template <class Type1> struct any_of<vector<Type1>> : Type1 {};
 
-    template <class Type1, class ... Types>
-        struct any_of <vector <Type1, Types ...>>
-    : implementation::any_of_vector <Type1::value, Types ...> {};
+template <class Type1, class... Types>
+struct any_of<vector<Type1, Types...>>
+    : implementation::any_of_vector<Type1::value, Types...> {};
 
-    // With direction.
+// With direction.
 
-    template <> struct any_of <front, vector<>> : mpl::false_ {};
+template <> struct any_of<front, vector<>> : mpl::false_ {};
 
-    template <class Type1> struct any_of <front, vector <Type1>> : Type1 {};
+template <class Type1> struct any_of<front, vector<Type1>> : Type1 {};
 
-    template <class Type1, class ... Types>
-        struct any_of <front, vector <Type1, Types ...>>
-    : implementation::any_of_vector <Type1::value, Types ...> {};
+template <class Type1, class... Types>
+struct any_of<front, vector<Type1, Types...>>
+    : implementation::any_of_vector<Type1::value, Types...> {};
 
 } // namespace meta
 

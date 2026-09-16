@@ -21,20 +21,21 @@ limitations under the License.
 
 namespace meta {
 
-    /** \struct vector_c
-    Compile-time vector with values of one fixed type.
+/** \struct vector_c
+Compile-time vector with values of one fixed type.
 
-    This does not currently behave as a Range.
-    (But that could be added later.)
+This does not currently behave as a Range.
+(But that could be added later.)
 
-    This is useful to pass into a function which can deduce it in parameter
-    pack expansion.
-    */
-    template <class Type, Type ... Values> struct vector_c
-    { typedef vector_c type; };
+This is useful to pass into a function which can deduce it in parameter
+pack expansion.
+*/
+template <class Type, Type... Values> struct vector_c {
+  typedef vector_c type;
+};
 
-    template <std::size_t ... Values>
-        using size_t_vector = vector_c <std::size_t, Values...>;
+template <std::size_t... Values>
+using size_t_vector = vector_c<std::size_t, Values...>;
 
 } // namespace meta
 
