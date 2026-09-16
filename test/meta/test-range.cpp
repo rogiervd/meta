@@ -20,132 +20,139 @@ limitations under the License.
 #include "list.hpp"
 #include "meta/range.hpp"
 
-typedef meta::list <> list0;
-typedef meta::list <int> list1;
-typedef meta::list <int, bool, float, double> list4;
+typedef meta::list<> list0;
+typedef meta::list<int> list1;
+typedef meta::list<int, bool, float, double> list4;
 
-typedef meta::weird_list <> weird_list0;
-typedef meta::weird_list <int> weird_list1;
-typedef meta::weird_list <int, bool, float, double> weird_list4;
+typedef meta::weird_list<> weird_list0;
+typedef meta::weird_list<int> weird_list1;
+typedef meta::weird_list<int, bool, float, double> weird_list4;
 
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/size_t.hpp>
 
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/plus.hpp>
 #include <boost/mpl/divides.hpp>
+#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/placeholders.hpp>
+#include <boost/mpl/plus.hpp>
 
 BOOST_AUTO_TEST_SUITE(test_meta_range)
 
-BOOST_AUTO_TEST_CASE (test_meta_range) {
+BOOST_AUTO_TEST_CASE(test_meta_range)
+{
     namespace mpl = boost::mpl;
-    using std::is_same;
     using mpl::equal_to;
+    using std::is_same;
     typedef meta::list_direction dir;
 
-    using meta::empty;
-    using meta::size;
-    using meta::first;
     using meta::drop;
+    using meta::empty;
+    using meta::first;
     using meta::push;
+    using meta::size;
 
-    BOOST_MPL_ASSERT ((meta::is_range <list0>));
-    BOOST_MPL_ASSERT ((meta::is_range <list1>));
-    BOOST_MPL_ASSERT ((meta::is_range <list4>));
-    BOOST_MPL_ASSERT_NOT ((meta::is_range <int>));
-    BOOST_MPL_ASSERT_NOT ((meta::is_range <bool>));
+    BOOST_MPL_ASSERT((meta::is_range<list0>) );
+    BOOST_MPL_ASSERT((meta::is_range<list1>) );
+    BOOST_MPL_ASSERT((meta::is_range<list4>) );
+    BOOST_MPL_ASSERT_NOT((meta::is_range<int>) );
+    BOOST_MPL_ASSERT_NOT((meta::is_range<bool>) );
 
     // empty
-    BOOST_MPL_ASSERT ((empty <list0>));
-    BOOST_MPL_ASSERT_NOT ((empty <list1>));
-    BOOST_MPL_ASSERT_NOT ((empty <list4>));
+    BOOST_MPL_ASSERT((empty<list0>) );
+    BOOST_MPL_ASSERT_NOT((empty<list1>) );
+    BOOST_MPL_ASSERT_NOT((empty<list4>) );
 
-    BOOST_MPL_ASSERT ((empty <dir, list0>));
-    BOOST_MPL_ASSERT_NOT ((empty <dir, list1>));
-    BOOST_MPL_ASSERT_NOT ((empty <dir, list4>));
+    BOOST_MPL_ASSERT((empty<dir, list0>) );
+    BOOST_MPL_ASSERT_NOT((empty<dir, list1>) );
+    BOOST_MPL_ASSERT_NOT((empty<dir, list4>) );
 
-    BOOST_MPL_ASSERT ((empty <dir, weird_list0>));
-    BOOST_MPL_ASSERT_NOT ((empty <dir, weird_list1>));
-    BOOST_MPL_ASSERT_NOT ((empty <dir, weird_list4>));
+    BOOST_MPL_ASSERT((empty<dir, weird_list0>) );
+    BOOST_MPL_ASSERT_NOT((empty<dir, weird_list1>) );
+    BOOST_MPL_ASSERT_NOT((empty<dir, weird_list4>) );
 
     // size
-    BOOST_MPL_ASSERT ((equal_to <size <list0>, mpl::size_t <0> >));
-    BOOST_MPL_ASSERT ((equal_to <size <list1>, mpl::size_t <1> >));
-    BOOST_MPL_ASSERT ((equal_to <size <list4>, mpl::size_t <4> >));
+    BOOST_MPL_ASSERT((equal_to<size<list0>, mpl::size_t<0>>) );
+    BOOST_MPL_ASSERT((equal_to<size<list1>, mpl::size_t<1>>) );
+    BOOST_MPL_ASSERT((equal_to<size<list4>, mpl::size_t<4>>) );
 
-    BOOST_MPL_ASSERT ((equal_to <size <dir, list0>, mpl::size_t <0> >));
-    BOOST_MPL_ASSERT ((equal_to <size <dir, list1>, mpl::size_t <1> >));
-    BOOST_MPL_ASSERT ((equal_to <size <dir, list4>, mpl::size_t <4> >));
+    BOOST_MPL_ASSERT((equal_to<size<dir, list0>, mpl::size_t<0>>) );
+    BOOST_MPL_ASSERT((equal_to<size<dir, list1>, mpl::size_t<1>>) );
+    BOOST_MPL_ASSERT((equal_to<size<dir, list4>, mpl::size_t<4>>) );
 
-    BOOST_MPL_ASSERT ((equal_to <size <dir, weird_list0>, mpl::size_t <0> >));
-    BOOST_MPL_ASSERT ((equal_to <size <dir, weird_list1>, mpl::size_t <1> >));
-    BOOST_MPL_ASSERT ((equal_to <size <dir, weird_list4>, mpl::size_t <4> >));
+    BOOST_MPL_ASSERT((equal_to<size<dir, weird_list0>, mpl::size_t<0>>) );
+    BOOST_MPL_ASSERT((equal_to<size<dir, weird_list1>, mpl::size_t<1>>) );
+    BOOST_MPL_ASSERT((equal_to<size<dir, weird_list4>, mpl::size_t<4>>) );
 
     // first
-    BOOST_MPL_ASSERT ((is_same <first <list1>::type, int>));
-    BOOST_MPL_ASSERT ((is_same <first <list4>::type, int>));
+    BOOST_MPL_ASSERT((is_same<first<list1>::type, int>) );
+    BOOST_MPL_ASSERT((is_same<first<list4>::type, int>) );
 
-    BOOST_MPL_ASSERT ((is_same <first <dir, list1>::type, int>));
-    BOOST_MPL_ASSERT ((is_same <first <dir, list4>::type, int>));
+    BOOST_MPL_ASSERT((is_same<first<dir, list1>::type, int>) );
+    BOOST_MPL_ASSERT((is_same<first<dir, list4>::type, int>) );
 
-    BOOST_MPL_ASSERT ((is_same <first <dir, weird_list1>::type, int>));
-    BOOST_MPL_ASSERT ((is_same <first <dir, weird_list4>::type, int>));
+    BOOST_MPL_ASSERT((is_same<first<dir, weird_list1>::type, int>) );
+    BOOST_MPL_ASSERT((is_same<first<dir, weird_list4>::type, int>) );
 
     // drop one
-    BOOST_MPL_ASSERT ((is_same <drop <list1>::type, meta::list<> >));
-    BOOST_MPL_ASSERT ((is_same <drop <list4>::type,
-        meta::list <bool, float, double> >));
+    BOOST_MPL_ASSERT((is_same<drop<list1>::type, meta::list<>>) );
+    BOOST_MPL_ASSERT(
+        (is_same<drop<list4>::type, meta::list<bool, float, double>>) );
 
-    BOOST_MPL_ASSERT ((is_same <drop <dir, list1>::type, meta::list<> >));
-    BOOST_MPL_ASSERT ((is_same <drop <dir, list4>::type,
-        meta::list <bool, float, double> >));
+    BOOST_MPL_ASSERT((is_same<drop<dir, list1>::type, meta::list<>>) );
+    BOOST_MPL_ASSERT(
+        (is_same<drop<dir, list4>::type, meta::list<bool, float, double>>) );
 
-    BOOST_MPL_ASSERT ((is_same <drop <dir, weird_list1>::type,
-        meta::weird_list<> >));
-    BOOST_MPL_ASSERT ((is_same <drop <dir, weird_list4>::type,
-        meta::weird_list <bool, float, double> >));
+    BOOST_MPL_ASSERT(
+        (is_same<drop<dir, weird_list1>::type, meta::weird_list<>>) );
+    BOOST_MPL_ASSERT((is_same<
+                      drop<dir, weird_list4>::type,
+                      meta::weird_list<bool, float, double>>) );
 
     // drop
-    BOOST_MPL_ASSERT ((is_same <drop <mpl::size_t <2>, list4>::type,
-        meta::list <float, double> >));
-    BOOST_MPL_ASSERT ((is_same <drop <mpl::int_ <4>, list4>::type,
-        meta::list <> >));
+    BOOST_MPL_ASSERT(
+        (is_same<
+            drop<mpl::size_t<2>, list4>::type, meta::list<float, double>>) );
+    BOOST_MPL_ASSERT((is_same<drop<mpl::int_<4>, list4>::type, meta::list<>>) );
 
-    BOOST_MPL_ASSERT ((is_same <drop <dir, mpl::size_t <2>, list4>::type,
-        meta::list <float, double> >));
-    BOOST_MPL_ASSERT ((is_same <drop <dir, mpl::int_ <4>, list4>::type,
-        meta::list <> >));
+    BOOST_MPL_ASSERT((is_same<
+                      drop<dir, mpl::size_t<2>, list4>::type,
+                      meta::list<float, double>>) );
+    BOOST_MPL_ASSERT(
+        (is_same<drop<dir, mpl::int_<4>, list4>::type, meta::list<>>) );
 
-    BOOST_MPL_ASSERT ((is_same <drop <dir, mpl::size_t <2>, weird_list4>::type,
-        meta::weird_list <float, double> >));
-    BOOST_MPL_ASSERT ((is_same <drop <dir, mpl::int_ <4>, weird_list4>::type,
-        meta::weird_list <> >));
+    BOOST_MPL_ASSERT((is_same<
+                      drop<dir, mpl::size_t<2>, weird_list4>::type,
+                      meta::weird_list<float, double>>) );
+    BOOST_MPL_ASSERT(
+        (is_same<
+            drop<dir, mpl::int_<4>, weird_list4>::type, meta::weird_list<>>) );
 
     // push
-    BOOST_MPL_ASSERT ((is_same <push <long, list0>::type,
-        meta::list <long> >));
-    BOOST_MPL_ASSERT ((is_same <push <long, list1>::type,
-        meta::list <long, int> >));
-    BOOST_MPL_ASSERT ((is_same <push <long, list4>::type,
-        meta::list <long, int, bool, float, double> >));
+    BOOST_MPL_ASSERT((is_same<push<long, list0>::type, meta::list<long>>) );
+    BOOST_MPL_ASSERT(
+        (is_same<push<long, list1>::type, meta::list<long, int>>) );
+    BOOST_MPL_ASSERT((is_same<
+                      push<long, list4>::type,
+                      meta::list<long, int, bool, float, double>>) );
 
-    BOOST_MPL_ASSERT ((is_same <push <dir, long, list0>::type,
-        meta::list <long> >));
-    BOOST_MPL_ASSERT ((is_same <push <dir, long, list1>::type,
-        meta::list <long, int> >));
-    BOOST_MPL_ASSERT ((is_same <push <dir, long, list4>::type,
-        meta::list <long, int, bool, float, double> >));
+    BOOST_MPL_ASSERT(
+        (is_same<push<dir, long, list0>::type, meta::list<long>>) );
+    BOOST_MPL_ASSERT(
+        (is_same<push<dir, long, list1>::type, meta::list<long, int>>) );
+    BOOST_MPL_ASSERT((is_same<
+                      push<dir, long, list4>::type,
+                      meta::list<long, int, bool, float, double>>) );
 
-    BOOST_MPL_ASSERT ((is_same <push <dir, long, weird_list0>::type,
-        meta::weird_list <long> >));
-    BOOST_MPL_ASSERT ((is_same <push <dir, long, weird_list1>::type,
-        meta::weird_list <long, int> >));
-    BOOST_MPL_ASSERT ((is_same <push <dir, long, weird_list4>::type,
-        meta::weird_list <long, int, bool, float, double> >));
+    BOOST_MPL_ASSERT(
+        (is_same<push<dir, long, weird_list0>::type, meta::weird_list<long>>) );
+    BOOST_MPL_ASSERT(
+        (is_same<
+            push<dir, long, weird_list1>::type, meta::weird_list<long, int>>) );
+    BOOST_MPL_ASSERT((is_same<
+                      push<dir, long, weird_list4>::type,
+                      meta::weird_list<long, int, bool, float, double>>) );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-

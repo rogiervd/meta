@@ -31,46 +31,55 @@ Queries cost O(1) instantiations.
 
 namespace meta { namespace index_detail {
 
-    template <class ... Keys> class index;
+    template <class... Keys> class index;
     template <class Key, class Value> struct key_value;
     template <class Key, class Index> struct contains;
 
-    struct not_found {};
+    struct not_found
+    {};
 
-    template <class Key> struct pass_key {
+    template <class Key> struct pass_key
+    {
         typedef Key type;
     };
 
-    template <> class index<> {
+    template <> class index<>
+    {
     public:
-        template <class Key> static not_found find (pass_key <Key>);
+        template <class Key> static not_found find(pass_key<Key>);
     };
 
-    template <class Entry, class ... Rest> class index <Entry, Rest ...>
-    : Entry, index <Rest ...> {
+    template <class Entry, class... Rest> class index<Entry, Rest...>
+    : Entry, index<Rest...>
+    {
     private:
-        typedef index <Rest ...> rest_index;
+        typedef index<Rest...> rest_index;
 
         typedef typename Entry::key entry_key;
 
-        static_assert (!contains <entry_key, rest_index>::value,
+        static_assert(
+            !contains<entry_key, rest_index>::value,
             "Key can only be in index once.");
 
     public:
         using rest_index::find;
-        static Entry find (pass_key <entry_key>);
+        static Entry find(pass_key<entry_key>);
 
         /// Return the index without the entry with key \a Key
-        template <class Key, class ... PreviousEntries> struct remove
-        : rest_index::template remove <Key, PreviousEntries ..., Entry> {};
+        template <class Key, class... PreviousEntries> struct remove
+        : rest_index::template remove<Key, PreviousEntries..., Entry>
+        {};
 
-        template <class ... PreviousEntries>
-            struct remove <entry_key, PreviousEntries ...>
-        { typedef index <PreviousEntries ..., Rest ...> type; };
+        template <class... PreviousEntries>
+        struct remove<entry_key, PreviousEntries...>
+        {
+            typedef index<PreviousEntries..., Rest...> type;
+        };
     };
 
-    template <class Key, class Index> struct find_entry {
-        typedef decltype (Index::find (pass_key <Key>())) type;
+    template <class Key, class Index> struct find_entry
+    {
+        typedef decltype(Index::find(pass_key<Key>())) type;
     };
 
     /** \brief
@@ -79,8 +88,9 @@ namespace meta { namespace index_detail {
     This results in O(1) instantiations.
     */
     template <class Key, class Index> struct contains
-    : boost::mpl::not_ <
-        std::is_same <typename find_entry <Key, Index>::type, not_found>> {};
+    : boost::mpl::not_<
+          std::is_same<typename find_entry<Key, Index>::type, not_found>>
+    {};
 
     /** \brief
     Return the index with the entry with key \a Key removed.
@@ -89,7 +99,8 @@ namespace meta { namespace index_detail {
     in the index.
     */
     template <class Key, class Index> struct remove
-    : Index::template remove <Key> {};
+    : Index::template remove<Key>
+    {};
 
     /** \brief
     Add entry \a Entry to index \a Index.
@@ -100,23 +111,24 @@ namespace meta { namespace index_detail {
     */
     template <class Entry, class Index> struct push_front;
 
-    template <class Entry, class ... Entries>
-        struct push_front <Entry, index <Entries ...>>
+    template <class Entry, class... Entries>
+    struct push_front<Entry, index<Entries...>>
     {
-        static_assert (
-            !contains <typename Entry::key, index <Entries ...>>::value,
+        static_assert(
+            !contains<typename Entry::key, index<Entries...>>::value,
             "Key must not already be in this index.");
-        typedef index <Entry, Entries ...> type;
+        typedef index<Entry, Entries...> type;
     };
 
     /* insert. */
     template <class Entry, class Index, bool key_exists>
-        struct insert_implementation
-    : push_front <Entry, Index> {};
+    struct insert_implementation : push_front<Entry, Index>
+    {};
 
     template <class Entry, class Index>
-        struct insert_implementation <Entry, Index, true>
-    : push_front <Entry, typename remove <typename Entry::key, Index>::type> {};
+    struct insert_implementation<Entry, Index, true>
+    : push_front<Entry, typename remove<typename Entry::key, Index>::type>
+    {};
 
     /**
     Add entry \a Entry to \a Index, replacing any old entry with the same key.
@@ -125,9 +137,10 @@ namespace meta { namespace index_detail {
     in the index, or O(1) instantiations if the element is not yet in the index.
     */
     template <class Entry, class Index> struct insert
-    : insert_implementation <Entry, Index,
-        contains <typename Entry::key, Index>::value> {};
+    : insert_implementation<
+          Entry, Index, contains<typename Entry::key, Index>::value>
+    {};
 
-}} // namespace meta::index_detail
+}}  // namespace meta::index_detail
 
-#endif // META_DETAIL_INDEX_HPP_INCLUDED
+#endif  // META_DETAIL_INDEX_HPP_INCLUDED
