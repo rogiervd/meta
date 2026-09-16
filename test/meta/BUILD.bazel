@@ -1,0 +1,62 @@
+# Define the tests.
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+[
+    cc_test(
+        name = test_name,
+        size = "small",
+        srcs = [test_name + ".cpp"],
+        deps = [
+            "//:meta",
+            "@boost.test//:unit_test_main",
+        ],
+    )
+    for test_name in [
+        "test-all_of_c",
+        "test-any_of_c",
+        "test-map",
+        "test-mpl",
+        "test-set",
+        "test-vector_mpl",
+    ]
+]
+
+# Tests that require list.hpp.
+[
+    cc_test(
+        name = test_name,
+        size = "small",
+        srcs = [
+            test_name + ".cpp",
+            "list.hpp",
+        ],
+        deps = [
+            "//:meta",
+            "@boost.test//:unit_test_main",
+        ],
+    )
+    for test_name in [
+        "test-all_of",
+        "test-any_of",
+        "test-concatenate",
+        "test-contains",
+        "test-count",
+        "test-count_c",
+        "test-empty_view",
+        "test-enumerate",
+        "test-equal",
+        "test-filter",
+        "test-find",
+        "test-flatten",
+        "test-fold",
+        "test-max_element",
+        "test-merge",
+        "test-range",
+        "test-scan",
+        "test-single_view",
+        "test-sort",
+        "test-take",
+        "test-transform",
+        "test-vector",
+    ]
+]

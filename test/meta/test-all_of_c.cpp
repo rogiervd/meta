@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 #define BOOST_TEST_MODULE test_meta_all_of_c
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 
 #include "meta/all_of_c.hpp"
 
