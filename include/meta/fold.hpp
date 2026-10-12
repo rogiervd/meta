@@ -19,6 +19,7 @@ limitations under the License.
 
 #include <boost/utility/enable_if.hpp>
 
+#include <boost/mpl/apply.hpp>
 #include <boost/mpl/eval_if.hpp>
 
 #include "meta/fwd.hpp"
