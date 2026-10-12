@@ -10,6 +10,7 @@ cc_library(
         "include/meta/*.hpp",
         "include/meta/detail/*.hpp",
     ]),
+    features = ["parse_headers"],
     # The prefix to be added to the include path.
     # If the include directory can be set to "include", then include_prefix
     # should be set to "".
