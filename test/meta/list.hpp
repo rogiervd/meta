@@ -34,8 +34,8 @@ struct FORGOTTEN_EXPLICIT_DIRECTION_TAG;
 }  // namespace meta
 
 namespace direction {
-template <> struct is_direction_bare<meta::list_direction> : boost::mpl::true_
-{};
+template <> struct is_direction_bare<meta::list_direction> : boost::mpl::true_ {
+};
 }  // namespace direction
 
 namespace meta {
@@ -58,13 +58,13 @@ struct list<FirstType, Types...>
     typedef FirstType head;
     typedef list<Types...> tail;
 
-    static const std::size_t size = tail::size + 1;
+    static std::size_t const size = tail::size + 1;
 };
 
 template <> struct list<>
 {
     typedef list type;
-    static const std::size_t size = 0;
+    static std::size_t const size = 0;
 };
 
 template <std::size_t Size> struct list_tag;
@@ -78,8 +78,7 @@ template <typename... Types> struct range_tag<list<Types...>>
 template <class Range> struct as_list
 : meta::fold_reverse<
       meta::list_direction, meta::push<meta::list_direction, mpl::_1, mpl::_2>,
-      meta::list<>, Range>
-{};
+      meta::list<>, Range> {};
 
 /**
 A meta-list similar to "list", but with an invalid default direction.
@@ -95,12 +94,12 @@ struct weird_list<FirstType, Types...>
     typedef FirstType head;
     typedef weird_list<Types...> tail;
 
-    static const std::size_t size = tail::size + 1;
+    static std::size_t const size = tail::size + 1;
 };
 template <> struct weird_list<>
 {
     typedef weird_list type;
-    static const std::size_t size = 0;
+    static std::size_t const size = 0;
 };
 
 template <typename... Types> struct range_tag<weird_list<Types...>>
@@ -133,20 +132,17 @@ namespace operation {
     // empty
     template <std::size_t Size> struct empty<list_tag<Size>, list_direction>
     {
-        template <typename List> struct apply : mpl::false_
-        {};
+        template <typename List> struct apply : mpl::false_ {};
     };
     template <> struct empty<list_tag<0>, list_direction>
     {
-        template <typename List> struct apply : mpl::true_
-        {};
+        template <typename List> struct apply : mpl::true_ {};
     };
 
     // size
     template <std::size_t Size> struct size<list_tag<Size>, list_direction>
     {
-        template <typename List> struct apply : mpl::size_t<Size>
-        {};
+        template <typename List> struct apply : mpl::size_t<Size> {};
     };
 
     // first
@@ -158,8 +154,7 @@ namespace operation {
         };
     };
     // Not implementable
-    template <> struct first<list_tag<0>, list_direction>
-    {};
+    template <> struct first<list_tag<0>, list_direction> {};
 
     // drop_one
     template <std::size_t Size> struct drop_one<list_tag<Size>, list_direction>
@@ -170,8 +165,7 @@ namespace operation {
         };
     };
     // Not implementable
-    template <> struct drop_one<list_tag<0>, list_direction>
-    {};
+    template <> struct drop_one<list_tag<0>, list_direction> {};
 
     // push
     template <std::size_t Size> struct push<list_tag<Size>, list_direction>

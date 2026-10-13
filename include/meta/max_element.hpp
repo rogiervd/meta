@@ -26,8 +26,7 @@ namespace meta {
 template <typename Direction, typename Range = void> struct max_element;
 
 template <typename Range> struct max_element<Range>
-: max_element<typename default_direction<Range>::type, Range>
-{};
+: max_element<typename default_direction<Range>::type, Range> {};
 
 namespace max_element_detail {
     struct max_of_two
@@ -41,17 +40,14 @@ namespace max_element_detail {
         struct apply;
 
         template <typename First, typename Second>
-        struct apply<First, Second, true> : Second
-        {};
+        struct apply<First, Second, true> : Second {};
         template <typename First, typename Second>
-        struct apply<First, Second, false> : First
-        {};
+        struct apply<First, Second, false> : First {};
     };
 }  // namespace max_element_detail
 
 template <typename Direction, typename Range> struct max_element
-: fold<Direction, max_element_detail::max_of_two, Range>
-{};
+: fold<Direction, max_element_detail::max_of_two, Range> {};
 
 }  // namespace meta
 

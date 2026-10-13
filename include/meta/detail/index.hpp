@@ -35,8 +35,7 @@ namespace meta { namespace index_detail {
     template <class Key, class Value> struct key_value;
     template <class Key, class Index> struct contains;
 
-    struct not_found
-    {};
+    struct not_found {};
 
     template <class Key> struct pass_key
     {
@@ -67,8 +66,7 @@ namespace meta { namespace index_detail {
 
         /// Return the index without the entry with key \a Key
         template <class Key, class... PreviousEntries> struct remove
-        : rest_index::template remove<Key, PreviousEntries..., Entry>
-        {};
+        : rest_index::template remove<Key, PreviousEntries..., Entry> {};
 
         template <class... PreviousEntries>
         struct remove<entry_key, PreviousEntries...>
@@ -89,8 +87,7 @@ namespace meta { namespace index_detail {
     */
     template <class Key, class Index> struct contains
     : boost::mpl::not_<
-          std::is_same<typename find_entry<Key, Index>::type, not_found>>
-    {};
+          std::is_same<typename find_entry<Key, Index>::type, not_found>> {};
 
     /** \brief
     Return the index with the entry with key \a Key removed.
@@ -99,8 +96,7 @@ namespace meta { namespace index_detail {
     in the index.
     */
     template <class Key, class Index> struct remove
-    : Index::template remove<Key>
-    {};
+    : Index::template remove<Key> {};
 
     /** \brief
     Add entry \a Entry to index \a Index.
@@ -122,13 +118,11 @@ namespace meta { namespace index_detail {
 
     /* insert. */
     template <class Entry, class Index, bool key_exists>
-    struct insert_implementation : push_front<Entry, Index>
-    {};
+    struct insert_implementation : push_front<Entry, Index> {};
 
     template <class Entry, class Index>
     struct insert_implementation<Entry, Index, true>
-    : push_front<Entry, typename remove<typename Entry::key, Index>::type>
-    {};
+    : push_front<Entry, typename remove<typename Entry::key, Index>::type> {};
 
     /**
     Add entry \a Entry to \a Index, replacing any old entry with the same key.
@@ -138,8 +132,7 @@ namespace meta { namespace index_detail {
     */
     template <class Entry, class Index> struct insert
     : insert_implementation<
-          Entry, Index, contains<typename Entry::key, Index>::value>
-    {};
+          Entry, Index, contains<typename Entry::key, Index>::value> {};
 
 }}  // namespace meta::index_detail
 

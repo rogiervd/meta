@@ -147,15 +147,12 @@ namespace operation {
     {
         template <typename Range, typename Void = void> struct apply;
 
-        template <typename Void> struct apply<vector<>, Void> : mpl::true_
-        {};
+        template <typename Void> struct apply<vector<>, Void> : mpl::true_ {};
         template <typename... Types, typename Void>
-        struct apply<vector<Types...>, Void> : mpl::false_
-        {};
+        struct apply<vector<Types...>, Void> : mpl::false_ {};
     };
 
-    template <> struct empty<vector_tag, back> : empty<vector_tag, front>
-    {};
+    template <> struct empty<vector_tag, back> : empty<vector_tag, front> {};
 
     // size
     template <> struct size<vector_tag, front>
@@ -163,12 +160,10 @@ namespace operation {
         template <typename Range> struct apply;
 
         template <typename... Types> struct apply<vector<Types...>>
-        : mpl::size_t<sizeof...(Types)>
-        {};
+        : mpl::size_t<sizeof...(Types)> {};
     };
 
-    template <> struct size<vector_tag, back> : size<vector_tag, front>
-    {};
+    template <> struct size<vector_tag, back> : size<vector_tag, front> {};
 
     // first
     template <> struct first<vector_tag, front>
@@ -225,8 +220,8 @@ namespace operation {
         // Peel initial types off recursively
         template <typename FirstType, typename... Types>
         struct apply<vector<FirstType, Types...>>
-        : meta::push<front, FirstType, typename apply<vector<Types...>>::type>
-        {};
+        : meta::push<front, FirstType, typename apply<vector<Types...>>::type> {
+        };
     };
 
     // push
@@ -282,8 +277,7 @@ namespace operation {
         struct apply<Function, State, vector<Type1, OtherTypes...>>
         : apply<
               Function, typename mpl::apply<Function, State, Type1>::type,
-              vector<OtherTypes...>>
-        {};
+              vector<OtherTypes...>> {};
 
 #if !defined(__INTEL_COMPILER) || __INTEL_COMPILER > 1400
         // Optimisation that confuses the Intel compiler.
@@ -296,8 +290,7 @@ namespace operation {
               typename mpl::apply<
                   Function, typename mpl::apply<Function, State, Type1>::type,
                   Type2>::type,
-              vector<OtherTypes...>>
-        {};
+              vector<OtherTypes...>> {};
 
         template <
             typename Function, typename State, typename Type1, typename Type2,
@@ -313,8 +306,7 @@ namespace operation {
                       typename mpl::apply<Function, State, Type1>::type,
                       Type2>::type,
                   Type3>::type,
-              vector<OtherTypes...>>
-        {};
+              vector<OtherTypes...>> {};
 #endif
     };
 
@@ -324,15 +316,14 @@ namespace operation {
 template <typename Position, typename Vector> struct vector_iterator
 {
     typedef boost::mpl::random_access_iterator_tag category;
-    static const std::size_t index = Position::value;
+    static std::size_t const index = Position::value;
 };
 
 template <typename Vector, typename Iterator> struct matching_iterator
-: mpl::false_
-{};
+: mpl::false_ {};
 template <typename Vector, typename Position>
-struct matching_iterator<Vector, vector_iterator<Position, Vector>> : mpl::true_
-{};
+struct matching_iterator<Vector, vector_iterator<Position, Vector>>
+: mpl::true_ {};
 
 /**
 Turn any range into a vector.
@@ -341,12 +332,10 @@ Applied to "transform" on a vector, it uses C++11 instrinsics to compute
 the transform, which is likely much faster than the explicit version.
 */
 template <typename Direction, typename Sequence = void> struct as_vector
-: fold_reverse<Direction, push<front, mpl::_1, mpl::_2>, vector<>, Sequence>
-{};
+: fold_reverse<Direction, push<front, mpl::_1, mpl::_2>, vector<>, Sequence> {};
 
 template <typename Sequence> struct as_vector<Sequence>
-: as_vector<typename default_direction<Sequence>::type, Sequence>
-{};
+: as_vector<typename default_direction<Sequence>::type, Sequence> {};
 
 template <typename... Types> struct as_vector<front, vector<Types...>>
 {
@@ -465,27 +454,22 @@ namespace boost { namespace mpl {
     };
 
     template <> struct empty_impl<meta::vector_tag>
-    : meta::operation::empty<meta::vector_tag, meta::front>
-    {};
+    : meta::operation::empty<meta::vector_tag, meta::front> {};
 
     template <> struct size_impl<meta::vector_tag>
-    : meta::operation::size<meta::vector_tag, meta::front>
-    {};
+    : meta::operation::size<meta::vector_tag, meta::front> {};
 
     template <> struct front_impl<meta::vector_tag>
-    : meta::operation::first<meta::vector_tag, meta::front>
-    {};
+    : meta::operation::first<meta::vector_tag, meta::front> {};
 
     template <> struct push_front_impl<meta::vector_tag>
     {
         template <typename Vector, typename NewType> struct apply
-        : meta::push<meta::front, NewType, Vector>
-        {};
+        : meta::push<meta::front, NewType, Vector> {};
     };
 
     template <> struct pop_front_impl<meta::vector_tag>
-    : meta::operation::drop_one<meta::vector_tag, meta::front>
-    {};
+    : meta::operation::drop_one<meta::vector_tag, meta::front> {};
 
     template <> struct clear_impl<meta::vector_tag>
     {
@@ -496,27 +480,23 @@ namespace boost { namespace mpl {
     };
 
     template <> struct back_impl<meta::vector_tag>
-    : meta::operation::first<meta::vector_tag, meta::back>
-    {};
+    : meta::operation::first<meta::vector_tag, meta::back> {};
 
     template <> struct push_back_impl<meta::vector_tag>
     {
         template <typename Vector, typename NewType> struct apply
-        : meta::push<meta::back, NewType, Vector>
-        {};
+        : meta::push<meta::back, NewType, Vector> {};
     };
 
     template <> struct pop_back_impl<meta::vector_tag>
-    : meta::operation::drop_one<meta::vector_tag, meta::back>
-    {};
+    : meta::operation::drop_one<meta::vector_tag, meta::back> {};
 
     template <> struct at_impl<meta::vector_tag>
     {
         template <typename Vector, typename Position> struct apply
         : meta::first<
               meta::front,
-              typename meta::drop<meta::front, Position, Vector>::type>
-        {};
+              typename meta::drop<meta::front, Position, Vector>::type> {};
     };
 
     template <> struct erase_impl<meta::vector_tag>
@@ -562,8 +542,7 @@ namespace boost { namespace mpl {
         struct apply_one_c<meta::vector<FirstType, Types...>, first>
         : meta::push<
               meta::front, FirstType,
-              typename apply_one_c<meta::vector<Types...>, first - 1>::type>
-        {};
+              typename apply_one_c<meta::vector<Types...>, first - 1>::type> {};
 
         // Erase a range
         template <typename... Types>
@@ -583,8 +562,7 @@ namespace boost { namespace mpl {
 
         template <typename FirstType, typename... Types, std::size_t last>
         struct apply_range_c<meta::vector<FirstType, Types...>, 0, last>
-        : apply_range_c<meta::vector<Types...>, 0, last - 1>
-        {};
+        : apply_range_c<meta::vector<Types...>, 0, last - 1> {};
 
         template <
             typename FirstType, typename... Types, std::size_t first,
@@ -593,8 +571,7 @@ namespace boost { namespace mpl {
         : meta::push<
               meta::front, FirstType,
               typename apply_range_c<
-                  meta::vector<Types...>, first - 1, last - 1>::type>
-        {};
+                  meta::vector<Types...>, first - 1, last - 1>::type> {};
     };
 
     template <> struct insert_impl<meta::vector_tag>
@@ -614,15 +591,14 @@ namespace boost { namespace mpl {
 
         template <typename... Types, typename NewType>
         struct apply_c<meta::vector<Types...>, 0, NewType>
-        : meta::push<meta::front, NewType, meta::vector<Types...>>
-        {};
+        : meta::push<meta::front, NewType, meta::vector<Types...>> {};
 
 #if !defined(__INTEL_COMPILER) || __INTEL_COMPILER > 1400
         // Resolve specialisations (this confuses the Intel compiler).
         template <typename FirstType, typename... Types, typename NewType>
         struct apply_c<meta::vector<FirstType, Types...>, 0, NewType>
-        : meta::push<meta::front, NewType, meta::vector<FirstType, Types...>>
-        {};
+        : meta::push<meta::front, NewType, meta::vector<FirstType, Types...>> {
+        };
 #endif
 
         template <
@@ -632,8 +608,7 @@ namespace boost { namespace mpl {
         : meta::push<
               meta::front, FirstType,
               typename apply_c<
-                  meta::vector<Types...>, index - 1, NewType>::type>
-        {};
+                  meta::vector<Types...>, index - 1, NewType>::type> {};
     };
 
     template <> struct insert_range_impl<meta::vector_tag>
@@ -666,20 +641,17 @@ namespace boost { namespace mpl {
               meta::front, typename mpl::front<NewTypes>::type,
               typename push_front_range<
                   Vector,
-                  typename meta::drop<meta::front, NewTypes>::type>::type>
-        {};
+                  typename meta::drop<meta::front, NewTypes>::type>::type> {};
 
         template <typename... Types, typename NewTypes>
         struct apply_c<meta::vector<Types...>, 0, NewTypes>
-        : push_front_range<meta::vector<Types...>, NewTypes>
-        {};
+        : push_front_range<meta::vector<Types...>, NewTypes> {};
 
 #if !defined(__INTEL_COMPILER) || __INTEL_COMPILER > 1400
         // Resolve specialisations (this confuses the Intel compiler).
         template <typename FirstType, typename... Types, typename NewTypes>
         struct apply_c<meta::vector<FirstType, Types...>, 0, NewTypes>
-        : push_front_range<meta::vector<FirstType, Types...>, NewTypes>
-        {};
+        : push_front_range<meta::vector<FirstType, Types...>, NewTypes> {};
 #endif
 
         template <
@@ -689,8 +661,7 @@ namespace boost { namespace mpl {
         : meta::push<
               meta::front, FirstType,
               typename apply_c<
-                  meta::vector<Types...>, index - 1, NewTypes>::type>
-        {};
+                  meta::vector<Types...>, index - 1, NewTypes>::type> {};
     };
 
     /**** vector_iterator ****/
@@ -715,8 +686,7 @@ namespace boost { namespace mpl {
 
     template <typename Position, typename Vector>
     struct deref<meta::vector_iterator<Position, Vector>>
-    : boost::mpl::at<Vector, Position>
-    {};
+    : boost::mpl::at<Vector, Position> {};
 
     template <typename Position, typename Vector>
     struct next<meta::vector_iterator<Position, Vector>>
@@ -756,8 +726,8 @@ namespace boost { namespace mpl {
     template <typename Position1, typename Position2, typename Vector>
     struct distance<
         meta::vector_iterator<Position1, Vector>,
-        meta::vector_iterator<Position2, Vector>> : minus<Position2, Position1>
-    {};
+        meta::vector_iterator<Position2, Vector>>
+    : minus<Position2, Position1> {};
 
 }}  // namespace boost::mpl
 

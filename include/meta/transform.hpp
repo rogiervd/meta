@@ -40,8 +40,8 @@ struct range_tag<transform<Function, Range>>
 };
 
 template <typename Function, typename Range>
-struct default_direction<transform<Function, Range>> : default_direction<Range>
-{};
+struct default_direction<transform<Function, Range>>
+: default_direction<Range> {};
 
 namespace operation {
 
@@ -49,16 +49,16 @@ namespace operation {
     {
         template <typename Range> struct apply;
         template <typename Function, typename Range>
-        struct apply<transform<Function, Range>> : meta::empty<Direction, Range>
-        {};
+        struct apply<transform<Function, Range>>
+        : meta::empty<Direction, Range> {};
     };
 
     template <typename Direction> struct size<transform_tag, Direction>
     {
         template <typename Range> struct apply;
         template <typename Function, typename Range>
-        struct apply<transform<Function, Range>> : meta::size<Direction, Range>
-        {};
+        struct apply<transform<Function, Range>>
+        : meta::size<Direction, Range> {};
     };
 
     template <typename Direction> struct first<transform_tag, Direction>
@@ -66,8 +66,7 @@ namespace operation {
         template <typename Range> struct apply;
         template <typename Function, typename Range>
         struct apply<transform<Function, Range>>
-        : mpl::apply<Function, typename meta::first<Direction, Range>::type>
-        {};
+        : mpl::apply<Function, typename meta::first<Direction, Range>::type> {};
     };
 
     template <typename Direction, typename Number>

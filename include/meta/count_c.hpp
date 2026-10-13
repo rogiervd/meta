@@ -51,12 +51,10 @@ namespace count_c_detail {
     */
     template <std::size_t operand> struct highest_bit_index
     : std::integral_constant<
-          std::size_t, highest_bit_index<(operand / 2)>::value + 1>
-    {};
+          std::size_t, highest_bit_index<(operand / 2)>::value + 1> {};
 
     template <> struct highest_bit_index<0>
-    : std::integral_constant<std::size_t, 0>
-    {};
+    : std::integral_constant<std::size_t, 0> {};
 
     /**
     Contains a type <c>size_t_vector\<0, ..., 2**operand - 1></c>.
@@ -80,8 +78,7 @@ namespace count_c_detail {
     };
 
     template <std::size_t operand> struct count_pow_2
-    : count_pow_2_impl<typename count_pow_2<(operand - 1)>::type>
-    {};
+    : count_pow_2_impl<typename count_pow_2<(operand - 1)>::type> {};
 
     /**
     Concatenate size_t_vector types that contain counts from 0...N into a
@@ -115,8 +112,7 @@ namespace count_c_detail {
     template <class Counts1, class... CountsRest>
     struct concatenate_counts<Counts1, CountsRest...>
     : concatenate_counts<
-          Counts1, typename concatenate_counts<CountsRest...>::type>
-    {};
+          Counts1, typename concatenate_counts<CountsRest...>::type> {};
 
     /**
     Contain a type <c>size_t_vector\<0, ..., end - 1></c>.
@@ -145,8 +141,8 @@ namespace count_c_detail {
 
     template <std::size_t end> struct count_from_zero
     : count_from_zero_impl<
-          end, typename count_from_zero<highest_bit_index<end>::value>::type>
-    {};
+          end, typename count_from_zero<highest_bit_index<end>::value>::type> {
+    };
 
     template <> struct count_from_zero<0>
     {
@@ -195,16 +191,14 @@ namespace count_c_detail {
 
 template <std::size_t end> struct count_c<end>
 : count_c_detail::check_length<
-      typename count_c_detail::count_from_zero<end>::type, end>
-{};
+      typename count_c_detail::count_from_zero<end>::type, end> {};
 
 template <std::size_t begin, std::size_t end> struct count_c<begin, end>
 : count_c_detail::check_length<
       typename count_c_detail::add_offset<
           typename count_c_detail::count_from_zero<(end - begin)>::type,
           begin>::type,
-      (end - begin)>
-{};
+      (end - begin)> {};
 
 }  // namespace meta
 

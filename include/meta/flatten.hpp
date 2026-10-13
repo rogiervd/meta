@@ -30,8 +30,7 @@ namespace meta {
 template <typename Direction, typename Sequences = void> struct flatten;
 
 template <typename Sequences> struct flatten<Sequences>
-: flatten<typename default_direction<Sequences>::type, Sequences>
-{};
+: flatten<typename default_direction<Sequences>::type, Sequences> {};
 
 namespace flatten_detail {
 
@@ -49,14 +48,12 @@ namespace flatten_detail {
 
     template <typename Direction, typename Sequences>
     struct flatten<Direction, Sequences, false>
-    : fold<Direction, meta::concatenate<mpl::_, mpl::_>, Sequences>
-    {};
+    : fold<Direction, meta::concatenate<mpl::_, mpl::_>, Sequences> {};
 
 }  // namespace flatten_detail
 
 template <typename Direction, typename Sequences> struct flatten
-: flatten_detail::flatten<Direction, Sequences>
-{};
+: flatten_detail::flatten<Direction, Sequences> {};
 
 }  // namespace meta
 

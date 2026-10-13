@@ -70,11 +70,9 @@ namespace operation {
     {
         template <class Range, class Void = void> struct apply;
 
-        template <class Void> struct apply<set<>, Void> : mpl::true_
-        {};
+        template <class Void> struct apply<set<>, Void> : mpl::true_ {};
         template <class... Types, class Void> struct apply<set<Types...>, Void>
-        : mpl::false_
-        {};
+        : mpl::false_ {};
     };
 
     // size.
@@ -83,8 +81,7 @@ namespace operation {
         template <class Range> struct apply;
 
         template <class... Types> struct apply<set<Types...>>
-        : mpl::size_t<sizeof...(Types)>
-        {};
+        : mpl::size_t<sizeof...(Types)> {};
     };
 
     // first.
@@ -127,15 +124,12 @@ namespace operation {
     struct find_in_set
     {
         template <class Element, class Set> struct apply
-        : index_detail::contains<Element, typename Set::index>
-        {};
+        : index_detail::contains<Element, typename Set::index> {};
     };
 
     // contains.
-    template <> struct contains<set_tag, front> : find_in_set
-    {};
-    template <> struct has_key<set_tag> : find_in_set
-    {};
+    template <> struct contains<set_tag, front> : find_in_set {};
+    template <> struct has_key<set_tag> : find_in_set {};
 
     // insert.
     template <> struct insert<set_tag, front>
@@ -143,8 +137,7 @@ namespace operation {
         template <class NewElement, class Set> struct apply
         : mpl::eval_if<
               meta::contains<front, NewElement, Set>, mpl::identity<Set>,
-              meta::push<front, NewElement, Set>>
-        {};
+              meta::push<front, NewElement, Set>> {};
     };
 
     // remove.
@@ -174,12 +167,10 @@ Turn any range into a set.
 The resulting set contains duplicate elements only once.
 */
 template <typename Direction, typename Sequence = void> struct as_set
-: fold_reverse<Direction, insert<front, mpl::_1, mpl::_2>, set<>, Sequence>
-{};
+: fold_reverse<Direction, insert<front, mpl::_1, mpl::_2>, set<>, Sequence> {};
 
 template <typename Sequence> struct as_set<Sequence>
-: as_set<typename default_direction<Sequence>::type, Sequence>
-{};
+: as_set<typename default_direction<Sequence>::type, Sequence> {};
 
 // A set can be straightforwardly converted; but a vector, for example,
 // must go through the normal route to remove duplicates.
@@ -198,8 +189,7 @@ template <class Subset, class Superset> struct is_subset;
 
 template <class... Elements, class Superset>
 struct is_subset<set<Elements...>, Superset>
-: all_of_c<contains<Elements, Superset>::value...>
-{};
+: all_of_c<contains<Elements, Superset>::value...> {};
 
 }  // namespace meta
 

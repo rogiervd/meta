@@ -55,21 +55,18 @@ struct sort;
 // Only direction: insert mpl::less <...>.
 template <class Direction, class Range> struct sort<
     Direction, Range, typename boost::enable_if<is_direction<Direction>>::type>
-: sort<Direction, mpl::less<mpl::_1, mpl::_2>, Range>
-{};
+: sort<Direction, mpl::less<mpl::_1, mpl::_2>, Range> {};
 
 // Only Compare: insert default direction.
 template <class Compare, class Range> struct sort<
     Compare, Range,
     typename boost::disable_if<boost::mpl::or_<
         is_direction<Compare>, std::is_same<Range, void>>>::type>
-: sort<typename default_direction<Range>::type, Compare, Range>
-{};
+: sort<typename default_direction<Range>::type, Compare, Range> {};
 
 // No parameters: insert default direction.
 template <class Range> struct sort<Range>
-: sort<typename default_direction<Range>::type, Range>
-{};
+: sort<typename default_direction<Range>::type, Range> {};
 
 namespace sort_detail {
 
@@ -179,8 +176,7 @@ namespace sort_detail {
           sort_at_least_with<
               Direction, Compare, 1,
               single_view<Direction, typename first<Direction, Range>::type>,
-              typename drop<Direction, Range>::type>>
-    {};
+              typename drop<Direction, Range>::type>> {};
 
 }  // namespace sort_detail
 
@@ -188,8 +184,7 @@ namespace sort_detail {
 template <class Direction, class Compare, class Range> struct sort
 : mpl::eval_if<
       empty<Direction, Range>, mpl::identity<Range>,
-      sort_detail::sort_non_empty<Direction, Compare, Range>>
-{};
+      sort_detail::sort_non_empty<Direction, Compare, Range>> {};
 
 }  // namespace meta
 

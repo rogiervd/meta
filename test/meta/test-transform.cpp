@@ -20,8 +20,7 @@ limitations under the License.
 #include "list.hpp"
 #include "meta/transform.hpp"
 
-template <typename Type> struct type_wrapper
-{};
+template <typename Type> struct type_wrapper {};
 
 #include <boost/mpl/placeholders.hpp>
 #include "meta/equal.hpp"

@@ -45,22 +45,20 @@ template <
     typename Range = void>
 struct fold_reverse
 : operation::fold_reverse<typename range_tag<Range>::type, Direction>::
-      template apply<Function, State, Range>
-{};
+      template apply<Function, State, Range> {};
 
 // Without Direction: forward to implementation with default_direction.
 template <typename Function, typename Range> struct fold_reverse<
     Function, Range, void,
     typename boost::disable_if<is_direction<Function>>::type>
-: fold_reverse<typename default_direction<Range>::type, Function, Range>
-{};
+: fold_reverse<typename default_direction<Range>::type, Function, Range> {};
 
 template <typename Function, typename State, typename Range>
 struct fold_reverse<
     Function, State, Range,
     typename boost::disable_if<is_direction<Function>>::type>
-: fold_reverse<typename default_direction<Range>::type, Function, State, Range>
-{};
+: fold_reverse<
+      typename default_direction<Range>::type, Function, State, Range> {};
 
 // Without State: use the last element as state.
 // Forward to operation::fold_reverse_1.
@@ -69,8 +67,7 @@ struct fold_reverse<
     Direction, Function, Range,
     typename boost::enable_if<is_direction<Direction>>::type>
 : operation::fold_reverse_1<typename range_tag<Range>::type, Direction>::
-      template apply<Function, Range>
-{};
+      template apply<Function, Range> {};
 
 namespace operation {
 
@@ -97,8 +94,7 @@ namespace operation {
               Function, typename meta::first<Direction, Range>::type,
               typename apply<
                   Function, State,
-                  typename meta::drop<Direction, Range>::type>::type>
-        {};
+                  typename meta::drop<Direction, Range>::type>::type> {};
     };
 
     /**
@@ -114,16 +110,15 @@ namespace operation {
         struct apply;
 
         template <typename Function, typename Range>
-        struct apply<Function, Range, true> : meta::first<Direction, Range>
-        {};
+        struct apply<Function, Range, true> : meta::first<Direction, Range> {};
 
         template <typename Function, typename Range>
         struct apply<Function, Range, false>
         : mpl::apply<
               Function, typename meta::first<Direction, Range>::type,
               typename apply<
-                  Function, typename meta::drop<Direction, Range>::type>::type>
-        {};
+                  Function,
+                  typename meta::drop<Direction, Range>::type>::type> {};
     };
 
 }  // namespace operation

@@ -56,8 +56,7 @@ private:
 // Without Direction
 template <class Limit, class Underlying> struct take<
     Limit, Underlying, typename boost::disable_if<is_direction<Limit>>::type>
-: take<typename default_direction<Underlying>::type, Limit, Underlying>
-{};
+: take<typename default_direction<Underlying>::type, Limit, Underlying> {};
 
 template <class Direction, class Limit, class Underlying>
 struct range_tag<take<Direction, Limit, Underlying>>
@@ -86,8 +85,7 @@ namespace operation {
         template <class Range> struct apply
         : mpl::or_<
               mpl::equal_to<typename Range::limit, mpl::size_t<0>>,
-              meta::empty<Direction, typename Range::underlying>>
-        {};
+              meta::empty<Direction, typename Range::underlying>> {};
     };
 
     // size.
@@ -97,8 +95,7 @@ namespace operation {
         template <class Range> struct apply
         : mpl::min<
               typename Range::limit,
-              meta::size<Direction, typename Range::underlying>>::type
-        {};
+              meta::size<Direction, typename Range::underlying>>::type {};
     };
 
     // first.
@@ -106,8 +103,7 @@ namespace operation {
     struct first<take_tag<Direction, UnderlyingTag>, Direction>
     {
         template <class Range> struct apply
-        : meta::first<Direction, typename Range::underlying>
-        {};
+        : meta::first<Direction, typename Range::underlying> {};
     };
 
     // drop.

@@ -32,22 +32,20 @@ Direction can be left out.
 template <typename Direction, typename Range = void> struct any_of;
 
 template <typename Range> struct any_of<Range>
-: any_of<typename default_direction<Range>::type, Range>
-{};
+: any_of<typename default_direction<Range>::type, Range> {};
 
 namespace implementation {
     template <typename Direction, typename Range> struct any_of_non_empty
     : mpl::if_<
           typename first<Direction, Range>::type, mpl::true_,
-          meta::any_of<Direction, typename drop<Direction, Range>::type>>::type
-    {};
+          meta::any_of<Direction, typename drop<Direction, Range>::type>>::
+          type {};
 }  // namespace implementation
 
 template <typename Direction, typename Range> struct any_of
 : mpl::if_<
       empty<Direction, Range>, mpl::false_,
-      implementation::any_of_non_empty<Direction, Range>>::type
-{};
+      implementation::any_of_non_empty<Direction, Range>>::type {};
 
 /*
 Specialisation for vector.
@@ -61,43 +59,34 @@ namespace implementation {
     template <bool first, class... Types> struct any_of_vector;
 
     template <class... Types> struct any_of_vector<true, Types...>
-    : boost::mpl::true_
-    {};
+    : boost::mpl::true_ {};
 
-    template <> struct any_of_vector<false> : boost::mpl::false_
-    {};
+    template <> struct any_of_vector<false> : boost::mpl::false_ {};
 
     template <class Next, class... Types>
     struct any_of_vector<false, Next, Types...>
-    : any_of_vector<Next::value, Types...>
-    {};
+    : any_of_vector<Next::value, Types...> {};
 
 }  // namespace implementation
 
 // Without direction.
 
-template <> struct any_of<vector<>> : mpl::false_
-{};
+template <> struct any_of<vector<>> : mpl::false_ {};
 
-template <class Type1> struct any_of<vector<Type1>> : Type1
-{};
+template <class Type1> struct any_of<vector<Type1>> : Type1 {};
 
 template <class Type1, class... Types> struct any_of<vector<Type1, Types...>>
-: implementation::any_of_vector<Type1::value, Types...>
-{};
+: implementation::any_of_vector<Type1::value, Types...> {};
 
 // With direction.
 
-template <> struct any_of<front, vector<>> : mpl::false_
-{};
+template <> struct any_of<front, vector<>> : mpl::false_ {};
 
-template <class Type1> struct any_of<front, vector<Type1>> : Type1
-{};
+template <class Type1> struct any_of<front, vector<Type1>> : Type1 {};
 
 template <class Type1, class... Types>
 struct any_of<front, vector<Type1, Types...>>
-: implementation::any_of_vector<Type1::value, Types...>
-{};
+: implementation::any_of_vector<Type1::value, Types...> {};
 
 }  // namespace meta
 

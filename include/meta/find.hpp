@@ -29,8 +29,7 @@ template <typename Direction, typename Predicate, typename Range = void>
 struct find;
 
 template <typename Predicate, typename Range> struct find<Predicate, Range>
-: find<typename default_direction<Range>::type, Predicate, Range>
-{};
+: find<typename default_direction<Range>::type, Predicate, Range> {};
 
 namespace operation {
 
@@ -57,16 +56,14 @@ namespace operation {
               mpl::identity<Range>,
               meta::find<
                   Direction, Predicate,
-                  typename meta::drop<Direction, Range>::type>>
-        {};
+                  typename meta::drop<Direction, Range>::type>> {};
     };
 
 }  // namespace operation
 
 template <typename Direction, typename Predicate, typename Range> struct find
 : operation::find<typename range_tag<Range>::type, Direction>::template apply<
-      Predicate, Range>::type
-{};
+      Predicate, Range>::type {};
 
 }  // namespace meta
 

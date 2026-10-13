@@ -69,8 +69,7 @@ template <typename Direction> struct empty_scan
 template <typename Function, typename State, typename Range> struct scan<
     Function, State, Range,
     typename boost::disable_if<is_direction<Function>>::type>
-: scan<typename default_direction<Range>::type, Function, State, Range>
-{};
+: scan<typename default_direction<Range>::type, Function, State, Range> {};
 
 // Without State.
 template <typename Direction, typename Function, typename Range> struct scan<
@@ -80,8 +79,7 @@ template <typename Direction, typename Function, typename Range> struct scan<
       Direction, Function,
       // First element of the list becomes the state.
       typename first<Direction, Range>::type,
-      typename drop<Direction, Range>::type>
-{};
+      typename drop<Direction, Range>::type> {};
 
 template <typename Direction, typename Function, typename State, typename Range>
 struct range_tag<scan<Direction, Function, State, Range>>
@@ -114,30 +112,27 @@ namespace operation {
     // empty.
     template <typename Direction> struct empty<scan_tag<Direction>, Direction>
     {
-        template <typename Range> struct apply : mpl::false_
-        {};
+        template <typename Range> struct apply : mpl::false_ {};
     };
 
     template <typename Direction>
     struct empty<empty_scan_tag<Direction>, Direction>
     {
-        template <typename Range> struct apply : mpl::true_
-        {};
+        template <typename Range> struct apply : mpl::true_ {};
     };
 
     // size.
     template <typename Direction> struct size<scan_tag<Direction>, Direction>
     {
         template <typename Scan> struct apply
-        : mpl::next<typename meta::size<Direction, typename Scan::range>>::type
-        {};
+        : mpl::next<
+              typename meta::size<Direction, typename Scan::range>>::type {};
     };
 
     template <typename Direction>
     struct size<empty_scan_tag<Direction>, Direction>
     {
-        template <class Range> struct apply : mpl::size_t<0>
-        {};
+        template <class Range> struct apply : mpl::size_t<0> {};
     };
 
     // first: return State.
@@ -179,8 +174,7 @@ namespace operation {
         template <typename Scan> struct apply
         : boost::mpl::if_<
               meta::empty<Direction, typename Scan::range>, apply_empty<Scan>,
-              apply_not_empty<Scan>>::type
-        {};
+              apply_not_empty<Scan>>::type {};
     };
 
 }  // namespace operation

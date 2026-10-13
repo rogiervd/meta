@@ -42,8 +42,7 @@ template <class Direction, class Element> struct single_view<Direction, Element>
 };
 
 template <class Element> struct single_view<Element>
-: single_view<front, Element>
-{};
+: single_view<front, Element> {};
 
 template <class Direction> struct single_view_tag;
 
@@ -66,15 +65,13 @@ namespace operation {
     template <class Direction>
     struct empty<single_view_tag<Direction>, Direction>
     {
-        template <class Range> struct apply : mpl::false_
-        {};
+        template <class Range> struct apply : mpl::false_ {};
     };
 
     template <class Direction>
     struct size<single_view_tag<Direction>, Direction>
     {
-        template <class Range> struct apply : mpl::size_t<1>
-        {};
+        template <class Range> struct apply : mpl::size_t<1> {};
     };
 
     template <class Direction>

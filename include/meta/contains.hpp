@@ -36,13 +36,12 @@ This may be optimised for a specific container type.
 template <class Direction, class Type, class Range = void> struct contains;
 
 template <class Type, class Range> struct contains<Type, Range>
-: contains<typename default_direction<Range>::type, Type, Range>
-{};
+: contains<typename default_direction<Range>::type, Type, Range> {};
 
 template <class Direction, class Type, class Range> struct contains
 : operation::contains<
-      typename range_tag<Range>::type, Direction>::template apply<Type, Range>
-{};
+      typename range_tag<Range>::type, Direction>::template apply<Type, Range> {
+};
 
 namespace operation {
 
@@ -52,8 +51,7 @@ namespace operation {
         : mpl::not_<meta::empty<
               Direction,
               typename meta::find<
-                  Direction, std::is_same<Type, mpl::_>, Range>::type>>
-        {};
+                  Direction, std::is_same<Type, mpl::_>, Range>::type>> {};
     };
 
 }  // namespace operation
