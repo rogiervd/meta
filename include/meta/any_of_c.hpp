@@ -31,32 +31,27 @@ and memory use.
 */
 template <bool...> struct any_of_c;
 
-template <> struct any_of_c<> : std::false_type
-{};
+template <> struct any_of_c<> : std::false_type {};
 
 template <bool value1> struct any_of_c<value1>
-: std::integral_constant<bool, value1>
-{};
+: std::integral_constant<bool, value1> {};
 
 template <bool value1, bool value2> struct any_of_c<value1, value2>
-: std::integral_constant<bool, value1 || value2>
-{};
+: std::integral_constant<bool, value1 || value2> {};
 
 template <bool value1, bool value2, bool value3>
 struct any_of_c<value1, value2, value3>
-: std::integral_constant<bool, value1 || value2 || value3>
-{};
+: std::integral_constant<bool, value1 || value2 || value3> {};
 
 template <bool value1, bool value2, bool value3, bool value4>
 struct any_of_c<value1, value2, value3, value4>
-: std::integral_constant<bool, value1 || value2 || value3 || value4>
-{};
+: std::integral_constant<bool, value1 || value2 || value3 || value4> {};
 
 template <bool value1, bool value2, bool value3, bool value4, bool... rest>
 struct any_of_c<value1, value2, value3, value4, rest...>
 : std::integral_constant<
-      bool, value1 || value2 || value3 || value4 || any_of_c<rest...>::value>
-{};
+      bool, value1 || value2 || value3 || value4 || any_of_c<rest...>::value> {
+};
 
 }  // namespace meta
 

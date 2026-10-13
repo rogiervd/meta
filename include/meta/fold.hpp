@@ -39,21 +39,18 @@ template <
     typename Range = void>
 struct fold
 : operation::fold<typename range_tag<Range>::type, Direction>::template apply<
-      Function, State, Range>
-{};
+      Function, State, Range> {};
 
 // Without Direction
 template <typename Function, typename Range> struct fold<
     Function, Range, void,
     typename boost::disable_if<is_direction<Function>>::type>
-: fold<typename default_direction<Range>::type, Function, Range>
-{};
+: fold<typename default_direction<Range>::type, Function, Range> {};
 
 template <typename Function, typename State, typename Range> struct fold<
     Function, State, Range,
     typename boost::disable_if<is_direction<Function>>::type>
-: fold<typename default_direction<Range>::type, Function, State, Range>
-{};
+: fold<typename default_direction<Range>::type, Function, State, Range> {};
 
 // Without State: use the first element as state.
 template <typename Direction, typename Function, typename Range> struct fold<
@@ -61,8 +58,7 @@ template <typename Direction, typename Function, typename Range> struct fold<
     typename boost::enable_if<is_direction<Direction>>::type>
 : fold<
       Direction, Function, typename first<Direction, Range>::type,
-      typename drop<Direction, Range>::type>
-{};
+      typename drop<Direction, Range>::type> {};
 
 namespace operation {
     /**
@@ -88,8 +84,7 @@ namespace operation {
               typename mpl::apply<
                   Function, State,
                   typename meta::first<Direction, Range>::type>::type,
-              typename meta::drop<Direction, Range>::type>
-        {};
+              typename meta::drop<Direction, Range>::type> {};
     };
 }  // namespace operation
 

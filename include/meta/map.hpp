@@ -73,11 +73,9 @@ namespace operation {
     {
         template <class Range, class Void = void> struct apply;
 
-        template <class Void> struct apply<map<>, Void> : mpl::true_
-        {};
+        template <class Void> struct apply<map<>, Void> : mpl::true_ {};
         template <class... Types, class Void> struct apply<map<Types...>, Void>
-        : mpl::false_
-        {};
+        : mpl::false_ {};
     };
 
     // size.
@@ -86,8 +84,7 @@ namespace operation {
         template <class Range> struct apply;
 
         template <class... Types> struct apply<map<Types...>>
-        : mpl::size_t<sizeof...(Types)>
-        {};
+        : mpl::size_t<sizeof...(Types)> {};
     };
 
     // first.
@@ -131,8 +128,7 @@ namespace operation {
     template <> struct has_key<map_tag>
     {
         template <class Key, class Map> struct apply
-        : index_detail::contains<Key, typename Map::index>
-        {};
+        : index_detail::contains<Key, typename Map::index> {};
     };
 
     // at.
@@ -158,8 +154,7 @@ namespace operation {
     {
         template <class NewElement, class Map> struct apply
         : index_to_map<typename index_detail::insert<
-              NewElement, typename Map::index>::type>
-        {};
+              NewElement, typename Map::index>::type> {};
     };
 
     // remove.
@@ -167,8 +162,7 @@ namespace operation {
     {
         template <class Key, class Map> struct apply
         : index_to_map<
-              typename index_detail::remove<Key, typename Map::index>::type>
-        {};
+              typename index_detail::remove<Key, typename Map::index>::type> {};
     };
 
 }  // namespace operation

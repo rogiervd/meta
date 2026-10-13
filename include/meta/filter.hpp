@@ -40,8 +40,8 @@ struct range_tag<filter<Predicate, Range>>
 };
 
 template <typename Predicate, typename Range>
-struct default_direction<filter<Predicate, Range>> : default_direction<Range>
-{};
+struct default_direction<filter<Predicate, Range>> : default_direction<Range> {
+};
 
 namespace operation {
 
@@ -85,8 +85,7 @@ namespace operation {
               // otherwise, recursively forward to filter_traits.
               filter_traits<
                   Direction, Predicate,
-                  typename meta::drop<Direction, Range>::type>>::type
-        {};
+                  typename meta::drop<Direction, Range>::type>>::type {};
 
     }  // namespace detail
 
@@ -96,8 +95,7 @@ namespace operation {
 
         template <class Predicate, class Range>
         struct apply<meta::filter<Predicate, Range>>
-        : detail::filter_traits<Direction, Predicate, Range>::empty
-        {};
+        : detail::filter_traits<Direction, Predicate, Range>::empty {};
     };
 
     template <class Direction> struct first<filter_tag, Direction>
@@ -106,8 +104,7 @@ namespace operation {
 
         template <class Predicate, class Range>
         struct apply<meta::filter<Predicate, Range>>
-        : detail::filter_traits<Direction, Predicate, Range>::first
-        {};
+        : detail::filter_traits<Direction, Predicate, Range>::first {};
     };
 
     template <class Direction> struct drop_one<filter_tag, Direction>

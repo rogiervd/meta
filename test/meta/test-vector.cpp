@@ -109,8 +109,7 @@ BOOST_AUTO_TEST_CASE(test_meta_vector)
 
 // Algorithm specialisation for vector
 
-template <typename Type> struct type_wrapper
-{};
+template <typename Type> struct type_wrapper {};
 
 BOOST_AUTO_TEST_CASE(test_meta_transform_vector)
 {

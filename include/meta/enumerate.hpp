@@ -31,8 +31,7 @@ namespace meta {
 template <typename Direction, typename Range = void> struct enumerate;
 
 template <typename Range> struct enumerate<Range>
-: enumerate<typename default_direction<Range>::type, Range>
-{};
+: enumerate<typename default_direction<Range>::type, Range> {};
 
 template <typename Direction, typename Range> struct enumerate
 {

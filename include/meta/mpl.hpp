@@ -76,45 +76,37 @@ namespace operation {
     // empty
     template <> struct empty<mpl_sequence_tag, meta::front>
     {
-        template <typename Range> struct apply : mpl::empty<Range>
-        {};
+        template <typename Range> struct apply : mpl::empty<Range> {};
     };
     template <> struct empty<mpl_sequence_tag, meta::back>
-    : empty<mpl_sequence_tag, meta::front>
-    {};
+    : empty<mpl_sequence_tag, meta::front> {};
 
     // size
     template <> struct size<mpl_sequence_tag, meta::front>
     {
-        template <typename Range> struct apply : mpl::size<Range>
-        {};
+        template <typename Range> struct apply : mpl::size<Range> {};
     };
     template <> struct size<mpl_sequence_tag, meta::back>
-    : size<mpl_sequence_tag, meta::front>
-    {};
+    : size<mpl_sequence_tag, meta::front> {};
 
     // first
     template <> struct first<mpl_sequence_tag, meta::front>
     {
-        template <typename Range> struct apply : mpl::front<Range>
-        {};
+        template <typename Range> struct apply : mpl::front<Range> {};
     };
     template <> struct first<mpl_sequence_tag, meta::back>
     {
-        template <typename Range> struct apply : mpl::back<Range>
-        {};
+        template <typename Range> struct apply : mpl::back<Range> {};
     };
 
     // drop_one
     template <> struct drop_one<mpl_sequence_tag, meta::front>
     {
-        template <typename Range> struct apply : mpl::pop_front<Range>
-        {};
+        template <typename Range> struct apply : mpl::pop_front<Range> {};
     };
     template <> struct drop_one<mpl_sequence_tag, meta::back>
     {
-        template <typename Range> struct apply : mpl::pop_back<Range>
-        {};
+        template <typename Range> struct apply : mpl::pop_back<Range> {};
     };
 
     // drop
@@ -150,28 +142,24 @@ namespace operation {
     template <> struct push<mpl_sequence_tag, meta::front>
     {
         template <typename NewElement, typename Range> struct apply
-        : mpl::push_front<Range, NewElement>
-        {};
+        : mpl::push_front<Range, NewElement> {};
     };
     template <> struct push<mpl_sequence_tag, meta::back>
     {
         template <typename NewElement, typename Range> struct apply
-        : mpl::push_back<Range, NewElement>
-        {};
+        : mpl::push_back<Range, NewElement> {};
     };
 
     // fold
     template <> struct fold<mpl_sequence_tag, meta::front>
     {
         template <typename Function, typename State, typename Range>
-        struct apply : mpl::fold<Range, State, Function>
-        {};
+        struct apply : mpl::fold<Range, State, Function> {};
     };
     template <> struct fold<mpl_sequence_tag, meta::back>
     {
         template <typename Function, typename State, typename Range>
-        struct apply : mpl::reverse_fold<Range, State, Function>
-        {};
+        struct apply : mpl::reverse_fold<Range, State, Function> {};
     };
 
 }  // namespace operation

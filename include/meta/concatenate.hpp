@@ -32,12 +32,10 @@ template <typename Direction, typename Range1, typename Range2 = void>
 struct concatenate
 : operation::concatenate<
       typename range_tag<Range1>::type, typename range_tag<Range2>::type,
-      Direction>::template apply<Range1, Range2>
-{};
+      Direction>::template apply<Range1, Range2> {};
 
 template <typename Range1, typename Range2> struct concatenate<Range1, Range2>
-: concatenate<typename default_direction<Range2>::type, Range1, Range2>
-{};
+: concatenate<typename default_direction<Range2>::type, Range1, Range2> {};
 
 namespace operation {
     /**
@@ -63,8 +61,7 @@ namespace operation {
               Direction, typename meta::first<Direction, Range1>::type,
               typename meta::concatenate<
                   Direction, typename meta::drop<Direction, Range1>::type,
-                  Range2>::type>
-        {};
+                  Range2>::type> {};
     };
 }  // namespace operation
 

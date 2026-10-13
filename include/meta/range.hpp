@@ -31,24 +31,20 @@ limitations under the License.
 namespace meta {
 
 template <typename Range> struct range_tag
-: operation::range_tag_back_off<Range>
-{};
+: operation::range_tag_back_off<Range> {};
 
 namespace operation {
 
-    struct undefined
-    {};
+    struct undefined {};
 
     // By default this does not contain a type "type".
     template <typename Range, typename Enable /*= void*/>
-    struct range_tag_back_off : undefined
-    {};
+    struct range_tag_back_off : undefined {};
 
 }  // namespace operation
 
 template <typename Range> struct is_range
-: mpl::not_<std::is_base_of<operation::undefined, range_tag<Range>>>
-{};
+: mpl::not_<std::is_base_of<operation::undefined, range_tag<Range>>> {};
 
 // Re-using direction tags of normal ranges makes meta ranges and normal
 // ranges more easily compatible.
@@ -58,8 +54,7 @@ using ::direction::is_direction;
 
 template <typename Range> struct default_direction
 : operation::default_direction<typename range_tag<Range>::type>::template apply<
-      Range>
-{};
+      Range> {};
 
 /* Operations */
 
@@ -72,14 +67,12 @@ template <typename DirectionOrRange, typename Range = void> struct empty;
 // Forward to default direction.
 template <typename Range>
 struct empty<Range, typename boost::disable_if<is_direction<Range>>::type>
-: empty<typename default_direction<Range>::type, Range>
-{};
+: empty<typename default_direction<Range>::type, Range> {};
 
 // Forward to operation
 template <typename Direction, typename Range> struct empty
 : operation::empty<typename range_tag<Range>::type, Direction>::template apply<
-      Range>
-{};
+      Range> {};
 
 /**
 \return The size of the Range.
@@ -89,14 +82,12 @@ template <typename DirectionOrRange, typename Range = void> struct size;
 // Forward to default direction.
 template <typename Range>
 struct size<Range, typename boost::enable_if<is_range<Range>>::type>
-: size<typename default_direction<Range>::type, Range>
-{};
+: size<typename default_direction<Range>::type, Range> {};
 
 // Forward to operation
 template <typename Direction, typename Range> struct size
 : operation::size<typename range_tag<Range>::type, Direction>::template apply<
-      Range>
-{};
+      Range> {};
 
 /**
 \return The first element in the Range from direction Direction.
@@ -106,14 +97,12 @@ template <typename DirectionOrRange, typename Range = void> struct first;
 // Forward to default direction.
 template <typename Range>
 struct first<Range, typename boost::disable_if<is_direction<Range>>::type>
-: first<typename default_direction<Range>::type, Range>
-{};
+: first<typename default_direction<Range>::type, Range> {};
 
 // Forward to operation
 template <typename Direction, typename Range> struct first
 : operation::first<typename range_tag<Range>::type, Direction>::template apply<
-      Range>
-{};
+      Range> {};
 
 /**
 \return The range Range without the first Number elements from direction
@@ -126,27 +115,23 @@ struct drop;
 
 template <typename Range>
 struct drop<Range, typename boost::enable_if<is_range<Range>>::type>
-: drop<typename default_direction<Range>::type, mpl::size_t<1>, Range>
-{};
+: drop<typename default_direction<Range>::type, mpl::size_t<1>, Range> {};
 
 template <typename Direction, typename Range> struct drop<
     Direction, Range,
     typename boost::enable_if<
         mpl::and_<is_direction<Direction>, is_range<Range>>>::type>
-: drop<Direction, mpl::size_t<1>, Range>
-{};
+: drop<Direction, mpl::size_t<1>, Range> {};
 
 template <typename Number, typename Range> struct drop<
     Number, Range,
     typename boost::enable_if<
         mpl::and_<mpl::not_<is_direction<Number>>, is_range<Range>>>::type>
-: drop<typename default_direction<Range>::type, Number, Range>
-{};
+: drop<typename default_direction<Range>::type, Number, Range> {};
 
 template <typename Direction, typename Number, typename Range> struct drop
-: operation::drop<
-      typename range_tag<Range>::type, Direction, Number>::template apply<Range>
-{};
+: operation::drop<typename range_tag<Range>::type, Direction, Number>::
+      template apply<Range> {};
 
 /**
 Return the range with an extra element added at the end.
@@ -155,13 +140,11 @@ template <typename Direction, typename NewElement, typename Range = void>
 struct push;
 
 template <typename NewElement, typename Range> struct push<NewElement, Range>
-: push<typename default_direction<Range>::type, NewElement, Range>
-{};
+: push<typename default_direction<Range>::type, NewElement, Range> {};
 
 template <typename Direction, typename NewElement, typename Range> struct push
 : operation::push<typename range_tag<Range>::type, Direction>::template apply<
-      NewElement, Range>
-{};
+      NewElement, Range> {};
 
 /**
 Return the range with an extra element inserted in an undefined position.
@@ -169,35 +152,31 @@ Return the range with an extra element inserted in an undefined position.
 template <class Direction, class NewElement, class Range = void> struct insert;
 
 template <class NewElement, class Range> struct insert<NewElement, Range>
-: insert<typename default_direction<Range>::type, NewElement, Range>
-{};
+: insert<typename default_direction<Range>::type, NewElement, Range> {};
 
 template <class Direction, class NewElement, class Range> struct insert
 : operation::insert<typename range_tag<Range>::type, Direction>::template apply<
-      NewElement, Range>
-{};
+      NewElement, Range> {};
 
 /**
 Return whether a key is in the range.
 */
 template <class Key, class Range> struct has_key
 : operation::has_key<typename range_tag<Range>::type>::template apply<
-      Key, Range>
-{};
+      Key, Range> {};
 
 /**
 Return the element at a key.
 */
 template <class Key, class Range> struct at
-: operation::at<typename range_tag<Range>::type>::template apply<Key, Range>
-{};
+: operation::at<typename range_tag<Range>::type>::template apply<Key, Range> {};
 
 /**
 Remove the element at a key.
 */
 template <class Key, class Range> struct remove
-: operation::remove<typename range_tag<Range>::type>::template apply<Key, Range>
-{};
+: operation::remove<typename range_tag<Range>::type>::template apply<
+      Key, Range> {};
 
 // Default implementation for drop/drop_one
 namespace operation {
@@ -215,8 +194,7 @@ namespace operation {
     };
 
     template <typename Tag, typename Direction>
-    struct drop_general<Tag, Direction, 1> : drop_one<Tag, Direction>
-    {};
+    struct drop_general<Tag, Direction, 1> : drop_one<Tag, Direction> {};
 
     // Apply drop_one repeatedly
     template <typename Tag, typename Direction, std::size_t number>
@@ -231,8 +209,7 @@ namespace operation {
         : meta::drop<
               Direction,
               typename drop_general<Tag, Direction, number - 1>::template apply<
-                  Range>::type>
-        {};
+                  Range>::type> {};
         /*: drop_general <Tag, Direction, number - 1>::template
             apply <typename meta::drop <Direction, Range>::type> {};*/
     };
@@ -241,15 +218,13 @@ namespace operation {
     Default implementation: try to forward to drop_one.
     */
     template <typename Tag, typename Direction, typename Number> struct drop
-    : drop_general<Tag, Direction, Number::value>
-    {};
+    : drop_general<Tag, Direction, Number::value> {};
 
     /**
     Default implementation: try to forward to drop.
     */
     template <typename Tag, typename Direction> struct drop_one
-    : drop<Tag, Direction, mpl::size_t<1>>
-    {};
+    : drop<Tag, Direction, mpl::size_t<1>> {};
 
 }  // namespace operation
 

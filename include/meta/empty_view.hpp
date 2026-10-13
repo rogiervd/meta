@@ -29,8 +29,7 @@ The direction of traversal can be specified; if not, it is "front".
 \tparam Direction The direction of traversal.
     If left out, front is used.
 */
-template <class Direction = front> struct empty_view
-{};
+template <class Direction = front> struct empty_view {};
 
 template <class Direction> struct empty_view_tag;
 
@@ -53,14 +52,12 @@ namespace operation {
     template <class Direction>
     struct empty<empty_view_tag<Direction>, Direction>
     {
-        template <class Range> struct apply : mpl::true_
-        {};
+        template <class Range> struct apply : mpl::true_ {};
     };
 
     template <class Direction> struct size<empty_view_tag<Direction>, Direction>
     {
-        template <class Range> struct apply : mpl::size_t<0>
-        {};
+        template <class Range> struct apply : mpl::size_t<0> {};
     };
 
 }  // namespace operation

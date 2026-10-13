@@ -55,21 +55,18 @@ struct merge;
 template <class Direction, class Left, class Right> struct merge<
     Direction, Left, Right,
     typename boost::enable_if<is_direction<Direction>>::type>
-: merge<Direction, mpl::less<mpl::_1, mpl::_2>, Left, Right>
-{};
+: merge<Direction, mpl::less<mpl::_1, mpl::_2>, Left, Right> {};
 
 // Only Compare: insert default direction.
 template <class Compare, class Left, class Right> struct merge<
     Compare, Left, Right,
     typename boost::disable_if<boost::mpl::or_<
         is_direction<Compare>, std::is_same<Right, void>>>::type>
-: merge<typename default_direction<Left>::type, Compare, Left, Right>
-{};
+: merge<typename default_direction<Left>::type, Compare, Left, Right> {};
 
 // No parameters: insert default direction.
 template <class Left, class Right> struct merge<Left, Right>
-: merge<typename default_direction<Left>::type, Left, Right>
-{};
+: merge<typename default_direction<Left>::type, Left, Right> {};
 
 namespace merge_detail {
 
@@ -85,8 +82,7 @@ namespace merge_detail {
     struct left_first
     : mpl::apply<
           Compare, typename meta::first<Direction, Left>::type,
-          typename meta::first<Direction, Right>::type>::type
-    {};
+          typename meta::first<Direction, Right>::type>::type {};
 
     // Is the left range first?
     // Assumes either Left or Right is non-empty.
@@ -96,8 +92,7 @@ namespace merge_detail {
           empty<Direction, Left>, mpl::false_,
           mpl::eval_if<
               empty<Direction, Right>, mpl::true_,
-              left_first<Direction, Compare, Left, Right>>>::type
-    {};
+              left_first<Direction, Compare, Left, Right>>>::type {};
 
     // Base class for if at least one of the ranges is non-empty.
     template <class Direction, class Compare, class Left, class Right>
@@ -153,8 +148,7 @@ namespace operation {
     // empty.
     template <class Direction> struct empty<merge_tag<Direction>, Direction>
     {
-        template <class Range> struct apply : Range::empty
-        {};
+        template <class Range> struct apply : Range::empty {};
     };
 
     // size: not implemented.
@@ -166,8 +160,7 @@ namespace operation {
         : mpl::eval_if<
               typename Range::left_bound,
               meta::first<typename Range::direction, typename Range::left>,
-              meta::first<typename Range::direction, typename Range::right>>
-        {};
+              meta::first<typename Range::direction, typename Range::right>> {};
     };
 
     // drop_one.
