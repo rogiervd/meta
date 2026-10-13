@@ -17,7 +17,8 @@ This is less generic than \ref all_of, which works on all types of ranges,
 but it causes fewer template instantiations, so it improves compile speed
 and memory use.
 */
-template <bool...> struct all_of_c;
+template <bool...>
+struct all_of_c;
 
 template <> struct all_of_c<> : std::true_type {};
 
