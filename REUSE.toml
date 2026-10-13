@@ -1,8 +1,7 @@
 version = 1
 
-# Code (C++, Python, Bazel, YAML) is licensed under Apache-2.0, and
-# documentation (reStructuredText, Markdown) under CC-BY-4.0.
-# Both carry SPDX headers in the file itself.
+# Code (C++, Python, Bazel, YAML) is licensed under Apache-2.0, and carries
+# SPDX headers in the file itself.
 
 # Configuration files are dedicated to the public domain with CC0-1.0, which
 # REUSE recommends for files that are not meaningfully copyrightable.
