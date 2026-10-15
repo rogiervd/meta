@@ -40,12 +40,14 @@ build:windows --features=external_include_paths
 # (@@<repository>+//...) of files in dependencies.
 build:windows --per_file_copt=.*,-^external/,-[+]//@/W4,/WX
 
-# GCC Configuration
+# Compiler selection.
+# These use the C++ toolchain that rules_cc auto-configures from the compiler
+# found on the system.
+#   bazel ... --config=gcc
+#   bazel ... --config=clang
 build:gcc --repo_env=CC=gcc
 
-# Clang Configuration using your custom suite
-build:clang --crosstool_top=//toolchain:clang_suite
-build:clang --compiler=clang
+build:clang --repo_env=CC=clang
 
 # On Windows:
 #   bazel ... --config=msvc
