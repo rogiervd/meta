@@ -228,7 +228,7 @@ void call_with(Function && function, Tuple arguments)
 
 BOOST_AUTO_TEST_CASE(test_meta_count_call_example)
 {
-    std::tuple<float, char const *, int> t(4.5, "Hello", 123);
+    std::tuple<float, char const *, int> t(4.5f, "Hello", 123);
     call_with(callee, t);
 }
 
