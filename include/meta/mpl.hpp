@@ -29,15 +29,12 @@ It uses the same direction::front and direction::back types that ranges use.
 #include <boost/mpl/size.hpp>
 
 #include <boost/mpl/advance.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/begin.hpp>
-#include <boost/mpl/end.hpp>
+#include <boost/mpl/begin_end.hpp>
 #include <boost/mpl/erase.hpp>
-#include <boost/mpl/int.hpp>
 #include <boost/mpl/is_sequence.hpp>
 #include <boost/mpl/negate.hpp>
 
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
 
 namespace meta {
 

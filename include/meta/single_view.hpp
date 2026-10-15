@@ -5,6 +5,9 @@
 #ifndef META_SINGLE_VIEW_HPP_INCLUDED
 #define META_SINGLE_VIEW_HPP_INCLUDED
 
+#include <boost/mpl/bool.hpp>    // IWYU pragma: keep
+#include <boost/mpl/size_t.hpp>  // IWYU pragma: keep
+
 #include "meta/empty_view.hpp"
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"

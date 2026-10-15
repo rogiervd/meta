@@ -5,6 +5,7 @@
 #ifndef META_ANY_OF_HPP_INCLUDED
 #define META_ANY_OF_HPP_INCLUDED
 
+#include <boost/mpl/bool.hpp>  // IWYU pragma: keep
 #include <boost/mpl/if.hpp>
 
 #include "meta/fwd.hpp"

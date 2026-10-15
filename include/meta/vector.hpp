@@ -11,16 +11,18 @@ which makes it possible to pattern-match on it.
 #ifndef META_VECTOR_HPP_INCLUDED
 #define META_VECTOR_HPP_INCLUDED
 
+#include <cstddef>
+
 #include <boost/mpl/at_fwd.hpp>
 #include <boost/mpl/back_fwd.hpp>
-#include <boost/mpl/begin.hpp>
+#include <boost/mpl/begin_end_fwd.hpp>
 #include <boost/mpl/empty_fwd.hpp>
-#include <boost/mpl/end.hpp>
 #include <boost/mpl/front_fwd.hpp>
 #include <boost/mpl/pop_back_fwd.hpp>
 #include <boost/mpl/pop_front_fwd.hpp>
 #include <boost/mpl/push_back_fwd.hpp>
 #include <boost/mpl/push_front_fwd.hpp>
+#include <boost/mpl/sequence_tag_fwd.hpp>
 #include <boost/mpl/size_fwd.hpp>
 
 #include <boost/mpl/clear_fwd.hpp>
@@ -34,26 +36,21 @@ which makes it possible to pattern-match on it.
 #include <boost/mpl/iterator_tags.hpp>
 #include <boost/mpl/next_prior.hpp>
 
+#include <boost/mpl/apply.hpp>
 #include <boost/mpl/at.hpp>
+#include <boost/mpl/bool.hpp>  // IWYU pragma: keep
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/greater_equal.hpp>
-#include <boost/mpl/identity.hpp>
 #include <boost/mpl/less_equal.hpp>
-#include <boost/mpl/min_max.hpp>
 #include <boost/mpl/minus.hpp>
-#include <boost/mpl/next.hpp>
+#include <boost/mpl/placeholders.hpp>
 #include <boost/mpl/plus.hpp>
-#include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/size.hpp>
-#include <boost/mpl/size_t.hpp>
+#include <boost/mpl/size_t.hpp>  // IWYU pragma: keep
 
-#include <boost/mpl/back_inserter.hpp>
-#include <boost/mpl/copy.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
-#include <boost/mpl/push_front.hpp>
+#include <boost/mpl/aux_/na_fwd.hpp>
 
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
 
 #include "meta/fold_reverse.hpp"
 #include "meta/fwd.hpp"

@@ -5,10 +5,9 @@
 #ifndef META_FOLD_HPP_INCLUDED
 #define META_FOLD_HPP_INCLUDED
 
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/eval_if.hpp>
 
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"

@@ -5,12 +5,14 @@
 #ifndef META_ENUMERATE_HPP_INCLUDED
 #define META_ENUMERATE_HPP_INCLUDED
 
-#include <boost/mpl/next.hpp>
+#include <cstddef>
+
+#include <boost/mpl/next_prior.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/placeholders.hpp>
-#include <boost/mpl/size_t.hpp>
+#include <boost/mpl/size_t.hpp>  // IWYU pragma: keep
 
-#include "meta/fwd.hpp"
+#include "meta/fwd.hpp"  // IWYU pragma: keep
 #include "meta/range.hpp"
 #include "meta/scan.hpp"
 

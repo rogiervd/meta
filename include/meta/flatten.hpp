@@ -7,9 +7,8 @@
 
 #include "meta/concatenate.hpp"
 #include "meta/fold.hpp"
-#include "meta/fwd.hpp"
+#include "meta/fwd.hpp"  // IWYU pragma: keep
 #include "meta/range.hpp"
-#include "meta/vector.hpp"
 
 #include <boost/mpl/placeholders.hpp>
 

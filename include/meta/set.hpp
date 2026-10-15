@@ -9,9 +9,10 @@ Define meta::set, an MPL sequence that can only contain one value of each type.
 #ifndef META_SET_HPP_INCLUDED
 #define META_SET_HPP_INCLUDED
 
-#include <boost/mpl/pair.hpp>
-
-#include <boost/utility/enable_if.hpp>
+#include <boost/mpl/bool.hpp>  // IWYU pragma: keep
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/size_t.hpp>  // IWYU pragma: keep
 
 #include "meta/all_of_c.hpp"
 #include "meta/contains.hpp"

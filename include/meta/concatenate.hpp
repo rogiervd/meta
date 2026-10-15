@@ -8,8 +8,6 @@
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
-#include <boost/mpl/not.hpp>
-
 namespace meta {
 
 /**

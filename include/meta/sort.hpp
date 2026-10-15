@@ -7,12 +7,16 @@
 
 #include <type_traits>
 
+#include <boost/core/enable_if.hpp>
+
+#include <boost/mpl/assert.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/less.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/pair.hpp>
 
-#include "meta/fwd.hpp"
+#include "meta/fwd.hpp"  // IWYU pragma: keep
 #include "meta/merge.hpp"
 #include "meta/range.hpp"
 #include "meta/single_view.hpp"

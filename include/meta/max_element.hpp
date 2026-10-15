@@ -6,7 +6,7 @@
 #define META_MAX_ELEMENT_HPP
 
 #include "meta/fold.hpp"
-#include "meta/fwd.hpp"
+#include "meta/fwd.hpp"  // IWYU pragma: keep
 #include "meta/range.hpp"
 
 namespace meta {

@@ -7,13 +7,14 @@
 
 #include <type_traits>
 
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
 
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool.hpp>  // IWYU pragma: keep
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/if.hpp>
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/or.hpp>
