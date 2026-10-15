@@ -20,8 +20,6 @@ BOOST_AUTO_TEST_SUITE(test_meta_contains)
 
 BOOST_AUTO_TEST_CASE(test_meta_contains)
 {
-    namespace mpl = boost::mpl;
-
     BOOST_MPL_ASSERT_NOT((meta::contains<int, meta::list<>>) );
 
     BOOST_MPL_ASSERT_NOT((meta::contains<int, meta::list<float, double>>) );

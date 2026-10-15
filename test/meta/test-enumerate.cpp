@@ -7,6 +7,7 @@
 
 #include "list.hpp"
 #include "meta/enumerate.hpp"
+#include "meta/range.hpp"
 
 typedef meta::list<> list0;
 typedef meta::list<int, bool, float, double> list4;
@@ -15,6 +16,8 @@ typedef meta::weird_list<int, bool, float, double> weird_list4;
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/pair.hpp>
 
 #include "meta/equal.hpp"
 

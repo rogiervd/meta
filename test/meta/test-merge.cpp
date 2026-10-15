@@ -9,10 +9,13 @@
 
 #include <type_traits>
 
+#include <boost/mpl/assert.hpp>
+#include <boost/mpl/for_each.hpp>
 #include <boost/mpl/greater.hpp>
+#include <boost/mpl/int.hpp>  // IWYU pragma: keep
 
 #include "list.hpp"
-#include "meta/fold.hpp"
+#include "meta/range.hpp"
 #include "meta/vector.hpp"
 
 namespace mpl = boost::mpl;

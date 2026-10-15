@@ -12,10 +12,10 @@ Queries cost O(1) instantiations.
 #ifndef META_DETAIL_INDEX_HPP_INCLUDED
 #define META_DETAIL_INDEX_HPP_INCLUDED
 
-#include <boost/mpl/pair.hpp>
-#include <boost/mpl/placeholders.hpp>
+#include <type_traits>
 
-#include "../vector.hpp"
+#include <boost/mpl/not.hpp>
+#include <boost/mpl/placeholders.hpp>
 
 namespace meta { namespace index_detail {
 

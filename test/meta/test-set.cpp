@@ -5,9 +5,13 @@
 #define BOOST_TEST_MODULE set
 #include <boost/test/unit_test.hpp>
 
+#include <type_traits>
+
+#include "meta/contains.hpp"
 #include "meta/range.hpp"
 #include "meta/set.hpp"
 
+#include <boost/mpl/assert.hpp>
 #include <boost/mpl/equal.hpp>
 #include "meta/vector.hpp"
 

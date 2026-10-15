@@ -7,9 +7,14 @@
 
 #include "meta/count_c.hpp"
 
+#include <cstddef>
+#include <string>
+#include <tuple>
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
+
+#include "meta/vector_c.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_count_c)
 
@@ -178,7 +183,7 @@ BOOST_AUTO_TEST_CASE(test_meta_count_c_big)
 {
     // Generating a count of this size should be possible without the compiler
     // batting an eyelid.
-    meta::count_c<1543>::type v;
+    meta::count_c<1543>::type const v {};
     (void) v;
 }
 
@@ -228,7 +233,7 @@ void call_with(Function && function, Tuple arguments)
 
 BOOST_AUTO_TEST_CASE(test_meta_count_call_example)
 {
-    std::tuple<float, char const *, int> t(4.5, "Hello", 123);
+    std::tuple<float, char const *, int> const t(4.5, "Hello", 123);
     call_with(callee, t);
 }
 

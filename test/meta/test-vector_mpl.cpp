@@ -10,7 +10,13 @@
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/begin_end.hpp>
+#include <boost/mpl/empty.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/int.hpp>  // IWYU pragma: keep
+#include <boost/mpl/push_back.hpp>
+#include <boost/mpl/push_front.hpp>
+#include <boost/mpl/size.hpp>
 
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/back.hpp>
@@ -21,10 +27,6 @@
 #include <boost/mpl/erase.hpp>
 #include <boost/mpl/insert.hpp>
 #include <boost/mpl/insert_range.hpp>
-
-#include <boost/mpl/advance.hpp>
-#include <boost/mpl/deref.hpp>
-#include <boost/mpl/distance.hpp>
 
 #include <boost/mpl/copy_if.hpp>
 #include <boost/mpl/placeholders.hpp>

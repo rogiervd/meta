@@ -8,14 +8,17 @@
 #include "list.hpp"
 #include "meta/fold.hpp"
 #include "meta/fold_reverse.hpp"
+#include "meta/range.hpp"
 
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/int.hpp>  // IWYU pragma: keep
 #include <boost/mpl/placeholders.hpp>
 #include <boost/mpl/plus.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 BOOST_AUTO_TEST_SUITE(test_meta_fold)
 

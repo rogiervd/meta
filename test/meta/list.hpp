@@ -9,12 +9,15 @@ Provide a simple forward list for testing the Meta-programming library.
 #ifndef META_TEST_LIST_HPP_INCLUDED
 #define META_TEST_LIST_HPP_INCLUDED
 
+#include <cstddef>
+
 #include "direction/tag.hpp"
 #include "meta/fold_reverse.hpp"
 #include "meta/fwd.hpp"
+#include "meta/range.hpp"
 
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/size_t.hpp>
+#include <boost/mpl/bool.hpp>    // IWYU pragma: keep
+#include <boost/mpl/size_t.hpp>  // IWYU pragma: keep
 
 namespace meta {
 struct list_direction;

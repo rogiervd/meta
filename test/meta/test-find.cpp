@@ -17,6 +17,7 @@ typedef meta::weird_list<int, bool, float, double> weird_list4;
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/for_each.hpp>
 
 BOOST_AUTO_TEST_SUITE(test_meta_range)
 

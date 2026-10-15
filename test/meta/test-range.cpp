@@ -19,12 +19,11 @@ typedef meta::weird_list<int, bool, float, double> weird_list4;
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
-#include <boost/mpl/size_t.hpp>
+#include <boost/mpl/int.hpp>     // IWYU pragma: keep
+#include <boost/mpl/size_t.hpp>  // IWYU pragma: keep
 
-#include <boost/mpl/divides.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/placeholders.hpp>
-#include <boost/mpl/plus.hpp>
 
 BOOST_AUTO_TEST_SUITE(test_meta_range)
 

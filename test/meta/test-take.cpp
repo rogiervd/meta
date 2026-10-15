@@ -9,7 +9,12 @@
 
 #include <type_traits>
 
+#include <boost/mpl/assert.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/int.hpp>  // IWYU pragma: keep
+
 #include "list.hpp"
+#include "meta/range.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_take)
 

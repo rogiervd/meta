@@ -5,6 +5,7 @@
 #define BOOST_TEST_MODULE test_meta_vector
 #include <boost/test/unit_test.hpp>
 
+#include "meta/fwd.hpp"
 #include "meta/range.hpp"
 #include "meta/vector.hpp"
 

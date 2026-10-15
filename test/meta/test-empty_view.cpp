@@ -10,8 +10,10 @@
 #include <type_traits>
 
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 #include "list.hpp"
+#include "meta/range.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_empty_view)
 

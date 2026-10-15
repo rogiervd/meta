@@ -6,6 +6,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "list.hpp"
+#include "meta/range.hpp"
 #include "meta/scan.hpp"
 
 typedef meta::list<> list0;

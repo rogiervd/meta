@@ -7,8 +7,10 @@
 
 #include "meta/any_of.hpp"
 
-#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool.hpp>  // IWYU pragma: keep
 #include "list.hpp"
+
+#include "meta/fwd.hpp"
 
 namespace mpl = boost::mpl;
 

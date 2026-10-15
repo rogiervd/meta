@@ -8,10 +8,11 @@
 #include "list.hpp"
 #include "meta/equal.hpp"
 
+#include <boost/mpl/assert.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/int.hpp>
+#include <boost/mpl/int.hpp>  // IWYU pragma: keep
 #include <boost/mpl/placeholders.hpp>
-#include <boost/mpl/size_t.hpp>
+#include <boost/mpl/size_t.hpp>  // IWYU pragma: keep
 
 BOOST_AUTO_TEST_SUITE(test_meta_range)
 

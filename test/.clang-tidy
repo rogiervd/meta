@@ -1,0 +1,9 @@
+InheritParentConfig: true
+Checks: >
+  -misc-use-internal-linkage,
+
+CheckOptions:
+  # Boost.Test macros are provided through the umbrella header unit_test.hpp.
+  # This replaces the setting in ../.clang-tidy, so repeat that.
+  misc-include-cleaner.IgnoreHeaders: >-
+    boost/test/.*;boost/mpl/(bool|int|size_t)_fwd\.hpp

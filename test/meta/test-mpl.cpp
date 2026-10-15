@@ -9,10 +9,14 @@
 
 #include <type_traits>
 
+#include <boost/mpl/assert.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/for_each.hpp>
+#include <boost/mpl/int.hpp>  // IWYU pragma: keep
 #include <boost/mpl/vector.hpp>
 
 #include "meta/fold.hpp"
+#include "meta/range.hpp"
 
 #include "meta/equal.hpp"
 #include "meta/vector.hpp"

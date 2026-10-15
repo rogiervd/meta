@@ -6,12 +6,16 @@
 #include <boost/test/unit_test.hpp>
 
 #include "list.hpp"
+#include "meta/range.hpp"
 #include "meta/sort.hpp"
 
 #include <type_traits>
 #include "meta/vector.hpp"
 
+#include <boost/mpl/assert.hpp>
+#include <boost/mpl/for_each.hpp>
 #include <boost/mpl/greater.hpp>
+#include <boost/mpl/int.hpp>  // IWYU pragma: keep
 #include <boost/mpl/less.hpp>
 
 BOOST_AUTO_TEST_SUITE(test_meta_sort)

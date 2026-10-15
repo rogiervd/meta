@@ -9,7 +9,6 @@
 
 #include "list.hpp"
 #include "meta/flatten.hpp"
-#include "meta/mpl.hpp"
 
 #include <boost/mpl/assert.hpp>
 
@@ -18,7 +17,6 @@ BOOST_AUTO_TEST_SUITE(test_meta_flatten)
 // \todo weird_list?
 BOOST_AUTO_TEST_CASE(test_meta_flatten)
 {
-    namespace mpl = boost::mpl;
     using meta::list;
     using std::is_same;
 

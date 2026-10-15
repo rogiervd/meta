@@ -18,6 +18,7 @@ path = [
   ".yamllint.yaml",
   "MODULE.bazel.lock",
   "renovate.json",
+  "test/.clang-tidy",
   "documentation/conf.py",
   "documentation/requirements.in",
   "documentation/requirements.txt",

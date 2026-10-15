@@ -5,11 +5,13 @@
 #define BOOST_TEST_MODULE map
 #include <boost/test/unit_test.hpp>
 
+#include <type_traits>
 #include "meta/map.hpp"
+
 #include "meta/range.hpp"
 
+#include <boost/mpl/assert.hpp>
 #include <boost/mpl/equal.hpp>
-#include "meta/vector.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_map)
 

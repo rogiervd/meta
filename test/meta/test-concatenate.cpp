@@ -7,13 +7,14 @@
 
 #include <type_traits>
 #include "list.hpp"
+
+#include <boost/mpl/assert.hpp>
 #include "meta/concatenate.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_concatenate)
 
 BOOST_AUTO_TEST_CASE(test_meta_concatenate)
 {
-    namespace mpl = boost::mpl;
     using meta::list;
     using meta::weird_list;
     using std::is_same;

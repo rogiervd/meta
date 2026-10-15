@@ -5,15 +5,15 @@
 #define BOOST_TEST_MODULE test_meta_transform
 #include <boost/test/unit_test.hpp>
 
-#include "list.hpp"
 #include "meta/transform.hpp"
 
-template <typename Type> struct type_wrapper {};
-
+#include <boost/mpl/assert.hpp>
 #include <boost/mpl/placeholders.hpp>
+
+#include "list.hpp"
 #include "meta/equal.hpp"
 
-namespace mpl = boost::mpl;
+template <typename Type> struct type_wrapper {};
 
 BOOST_AUTO_TEST_SUITE(test_meta_transform)
 
