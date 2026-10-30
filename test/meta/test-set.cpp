@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #define BOOST_TEST_MODULE set
-#include <boost/test/unit_test.hpp>
+#include "boost/test/unit_test.hpp"
 
 #include "meta/range.hpp"
 #include "meta/set.hpp"
 
-#include <boost/mpl/equal.hpp>
+#include "boost/mpl/equal.hpp"
 #include "meta/vector.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_set)

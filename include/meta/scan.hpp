@@ -9,9 +9,9 @@ Fold operation that returns the results at each step.
 #ifndef META_SCAN_HPP_INCLUDED
 #define META_SCAN_HPP_INCLUDED
 
-#include <boost/mpl/apply.hpp>
-#include <boost/mpl/if.hpp>
-#include <boost/utility/enable_if.hpp>
+#include "boost/mpl/apply.hpp"
+#include "boost/mpl/if.hpp"
+#include "boost/utility/enable_if.hpp"
 
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"

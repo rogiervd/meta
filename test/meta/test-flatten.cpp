@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #define BOOST_TEST_MODULE test_meta_flatten
-#include <boost/test/unit_test.hpp>
+#include "boost/test/unit_test.hpp"
 
 #include <type_traits>
 
@@ -11,7 +11,7 @@
 #include "meta/flatten.hpp"
 #include "meta/mpl.hpp"
 
-#include <boost/mpl/assert.hpp>
+#include "boost/mpl/assert.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_flatten)
 

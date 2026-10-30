@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #define BOOST_TEST_MODULE test_meta_contains
-#include <boost/test/unit_test.hpp>
+#include "boost/test/unit_test.hpp"
 
 #include "list.hpp"
 #include "meta/contains.hpp"
@@ -14,7 +14,7 @@ typedef meta::list<int, bool, float, double> list4;
 typedef meta::weird_list<> weird_list0;
 typedef meta::weird_list<int, bool, float, double> weird_list4;
 
-#include <boost/mpl/assert.hpp>
+#include "boost/mpl/assert.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_contains)
 

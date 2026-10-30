@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #define BOOST_TEST_MODULE test_meta_merge
-#include <boost/test/unit_test.hpp>
+#include "boost/test/unit_test.hpp"
 
 #include "meta/merge.hpp"
 
 #include <type_traits>
 
-#include <boost/mpl/greater.hpp>
+#include "boost/mpl/greater.hpp"
 
 #include "list.hpp"
 #include "meta/fold.hpp"

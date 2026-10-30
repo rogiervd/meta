@@ -13,8 +13,8 @@ Provide a simple forward list for testing the Meta-programming library.
 #include "meta/fold_reverse.hpp"
 #include "meta/fwd.hpp"
 
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/size_t.hpp>
+#include "boost/mpl/bool.hpp"
+#include "boost/mpl/size_t.hpp"
 
 namespace meta {
 struct list_direction;

@@ -3,14 +3,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #define BOOST_TEST_MODULE test_meta_mpl
-#include <boost/test/unit_test.hpp>
+#include "boost/test/unit_test.hpp"
 
 #include "meta/mpl.hpp"
 
 #include <type_traits>
 
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/vector.hpp>
+#include "boost/mpl/equal_to.hpp"
+#include "boost/mpl/vector.hpp"
 
 #include "meta/fold.hpp"
 

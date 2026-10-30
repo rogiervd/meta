@@ -15,7 +15,7 @@ In ../range/direction.hpp, this is extended to run-time sequences.
 
 #include <type_traits>
 
-#include <boost/mpl/bool.hpp>
+#include "boost/mpl/bool.hpp"
 
 namespace direction {
 

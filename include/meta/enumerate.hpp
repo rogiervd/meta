@@ -5,10 +5,10 @@
 #ifndef META_ENUMERATE_HPP_INCLUDED
 #define META_ENUMERATE_HPP_INCLUDED
 
-#include <boost/mpl/next.hpp>
-#include <boost/mpl/pair.hpp>
-#include <boost/mpl/placeholders.hpp>
-#include <boost/mpl/size_t.hpp>
+#include "boost/mpl/next.hpp"
+#include "boost/mpl/pair.hpp"
+#include "boost/mpl/placeholders.hpp"
+#include "boost/mpl/size_t.hpp"
 
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"

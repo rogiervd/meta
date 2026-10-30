@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #define BOOST_TEST_MODULE test_meta_vector
-#include <boost/test/unit_test.hpp>
+#include "boost/test/unit_test.hpp"
 
 #include "meta/range.hpp"
 #include "meta/vector.hpp"
@@ -15,10 +15,10 @@ typedef meta::vector<int, bool, float, double> vector4;
 
 #include <type_traits>
 
-#include <boost/mpl/assert.hpp>
-#include <boost/mpl/equal_to.hpp>
+#include "boost/mpl/assert.hpp"
+#include "boost/mpl/equal_to.hpp"
 
-#include <boost/mpl/placeholders.hpp>
+#include "boost/mpl/placeholders.hpp"
 
 #include "meta/concatenate.hpp"
 
