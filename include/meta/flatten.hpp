@@ -11,7 +11,7 @@
 #include "meta/range.hpp"
 #include "meta/vector.hpp"
 
-#include <boost/mpl/placeholders.hpp>
+#include "boost/mpl/placeholders.hpp"
 
 namespace meta {
 

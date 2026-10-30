@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #define BOOST_TEST_MODULE test_meta_sort
-#include <boost/test/unit_test.hpp>
+#include "boost/test/unit_test.hpp"
 
 #include "list.hpp"
 #include "meta/sort.hpp"
@@ -11,8 +11,8 @@
 #include <type_traits>
 #include "meta/vector.hpp"
 
-#include <boost/mpl/greater.hpp>
-#include <boost/mpl/less.hpp>
+#include "boost/mpl/greater.hpp"
+#include "boost/mpl/less.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_sort)
 

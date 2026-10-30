@@ -9,7 +9,7 @@ Forward definitions for the meta namespace.
 #define META_FWD_HPP_INCLUDED
 
 // Include a simple header to declare boost::mpl.
-#include <boost/mpl/void_fwd.hpp>
+#include "boost/mpl/void_fwd.hpp"
 
 namespace meta {
 

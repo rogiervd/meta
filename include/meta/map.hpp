@@ -9,9 +9,9 @@ Define meta::map, an MPL sequence that maps types to other types.
 #ifndef META_MAP_HPP_INCLUDED
 #define META_MAP_HPP_INCLUDED
 
-#include <boost/mpl/pair.hpp>
+#include "boost/mpl/pair.hpp"
 
-#include <boost/utility/enable_if.hpp>
+#include "boost/utility/enable_if.hpp"
 
 #include "meta/contains.hpp"
 #include "meta/fold_reverse.hpp"

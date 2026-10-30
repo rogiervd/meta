@@ -6,8 +6,8 @@
 #define META_CONTAINS_HPP_INCLUDED
 
 #include <type_traits>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/placeholders.hpp>
+#include "boost/mpl/not.hpp"
+#include "boost/mpl/placeholders.hpp"
 
 #include "meta/find.hpp"
 #include "meta/range.hpp"
