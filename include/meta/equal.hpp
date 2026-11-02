@@ -41,7 +41,7 @@ struct equal_impl : mpl::eval_if<
                         equal<
                             Direction, typename drop<Direction, Range1>::type,
                             typename drop<Direction, Range2>::type>,
-                        mpl::false_> {};
+                        mpl::false_>::type {};
 
 template <
     typename Direction, typename Predicate, typename Range1, typename Range2>
@@ -53,7 +53,8 @@ struct equal
       mpl::eval_if<
           mpl::or_<empty<Direction, Range1>, empty<Direction, Range2>>,
           // One empty
-          mpl::false_, equal_impl<Direction, Predicate, Range1, Range2>>> {};
+          mpl::false_,
+          equal_impl<Direction, Predicate, Range1, Range2>>>::type {};
 
 }  // namespace meta
 
