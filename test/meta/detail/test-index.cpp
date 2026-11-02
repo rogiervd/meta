@@ -30,24 +30,24 @@ BOOST_AUTO_TEST_CASE(test_meta_index_contains)
     {
         typedef index<> i;
 
-        static_assert(!contains<void, i>::value, "");
-        static_assert(!contains<int, i>::value, "");
-        static_assert(!contains<float, i>::value, "");
+        static_assert(!contains<void, i>::value);
+        static_assert(!contains<int, i>::value);
+        static_assert(!contains<float, i>::value);
     }
     {
         typedef index<key_entry<int>> i;
 
-        static_assert(!contains<void, i>::value, "");
-        static_assert(contains<int, i>::value, "");
-        static_assert(!contains<float, i>::value, "");
+        static_assert(!contains<void, i>::value);
+        static_assert(contains<int, i>::value);
+        static_assert(!contains<float, i>::value);
     }
     {
         typedef index<key_entry<int>, key_entry<double>> i;
 
-        static_assert(!contains<void, i>::value, "");
-        static_assert(contains<int, i>::value, "");
-        static_assert(!contains<float, i>::value, "");
-        static_assert(contains<double, i>::value, "");
+        static_assert(!contains<void, i>::value);
+        static_assert(contains<int, i>::value);
+        static_assert(!contains<float, i>::value);
+        static_assert(contains<double, i>::value);
     }
     {
         typedef index<
@@ -55,11 +55,11 @@ BOOST_AUTO_TEST_CASE(test_meta_index_contains)
             key_entry<short>>
             i;
 
-        static_assert(contains<void, i>::value, "");
-        static_assert(contains<int, i>::value, "");
-        static_assert(!contains<float, i>::value, "");
-        static_assert(contains<double, i>::value, "");
-        static_assert(contains<short, i>::value, "");
+        static_assert(contains<void, i>::value);
+        static_assert(contains<int, i>::value);
+        static_assert(!contains<float, i>::value);
+        static_assert(contains<double, i>::value);
+        static_assert(contains<short, i>::value);
     }
     // This fails because it contains key "int" twice.
     /*{
@@ -77,17 +77,15 @@ BOOST_AUTO_TEST_CASE(test_meta_index_remove)
     {
         typedef index<key_entry<int>> i;
 
-        static_assert(std::is_same<remove<int, i>::type, index<>>::value, "");
+        static_assert(std::is_same_v<remove<int, i>::type, index<>>);
     }
     {
         typedef index<key_entry<int>, key_entry<double>> i;
 
         static_assert(
-            std::is_same<remove<int, i>::type, index<key_entry<double>>>::value,
-            "");
+            std::is_same_v<remove<int, i>::type, index<key_entry<double>>>);
         static_assert(
-            std::is_same<remove<double, i>::type, index<key_entry<int>>>::value,
-            "");
+            std::is_same_v<remove<double, i>::type, index<key_entry<int>>>);
     }
     {
         typedef index<
@@ -96,29 +94,21 @@ BOOST_AUTO_TEST_CASE(test_meta_index_remove)
             i;
 
         static_assert(
-            std::is_same<
+            std::is_same_v<
                 remove<int, i>::type,
-                index<key_entry<double>, key_entry<void>, key_entry<short>>>::
-                value,
-            "");
+                index<key_entry<double>, key_entry<void>, key_entry<short>>>);
         static_assert(
-            std::is_same<
+            std::is_same_v<
                 remove<double, i>::type,
-                index<key_entry<int>, key_entry<void>, key_entry<short>>>::
-                value,
-            "");
+                index<key_entry<int>, key_entry<void>, key_entry<short>>>);
         static_assert(
-            std::is_same<
+            std::is_same_v<
                 remove<void, i>::type,
-                index<key_entry<int>, key_entry<double>, key_entry<short>>>::
-                value,
-            "");
+                index<key_entry<int>, key_entry<double>, key_entry<short>>>);
         static_assert(
-            std::is_same<
+            std::is_same_v<
                 remove<short, i>::type,
-                index<key_entry<int>, key_entry<double>, key_entry<void>>>::
-                value,
-            "");
+                index<key_entry<int>, key_entry<double>, key_entry<void>>>);
     }
 }
 
@@ -131,46 +121,36 @@ BOOST_AUTO_TEST_CASE(test_meta_index_insert)
     {
         typedef index<> i;
 
-        static_assert(
-            std::is_same<
-                insert<key_value<int, bool>, i>::type,
-                index<key_value<int, bool>>>::value,
-            "");
+        static_assert(std::is_same_v<
+                      insert<key_value<int, bool>, i>::type,
+                      index<key_value<int, bool>>>);
     }
     {
         typedef index<key_entry<bool>, key_entry<void>> i;
 
         static_assert(
-            std::is_same<
+            std::is_same_v<
                 insert<key_value<int, bool>, i>::type,
-                index<key_value<int, bool>, key_entry<bool>, key_entry<void>>>::
-                value,
-            "");
+                index<key_value<int, bool>, key_entry<bool>, key_entry<void>>>);
     }
 
     // Already in the index: remove and push_front.
     {
         typedef index<key_entry<int>> i;
 
-        static_assert(
-            std::is_same<
-                insert<key_value<int, bool>, i>::type,
-                index<key_value<int, bool>>>::value,
-            "");
+        static_assert(std::is_same_v<
+                      insert<key_value<int, bool>, i>::type,
+                      index<key_value<int, bool>>>);
     }
     {
         typedef index<key_entry<int>, key_entry<double>> i;
 
-        static_assert(
-            std::is_same<
-                insert<key_value<int, void>, i>::type,
-                index<key_value<int, void>, key_entry<double>>>::value,
-            "");
-        static_assert(
-            std::is_same<
-                insert<key_value<double, void>, i>::type,
-                index<key_value<double, void>, key_entry<int>>>::value,
-            "");
+        static_assert(std::is_same_v<
+                      insert<key_value<int, void>, i>::type,
+                      index<key_value<int, void>, key_entry<double>>>);
+        static_assert(std::is_same_v<
+                      insert<key_value<double, void>, i>::type,
+                      index<key_value<double, void>, key_entry<int>>>);
     }
     {
         typedef index<
@@ -178,34 +158,26 @@ BOOST_AUTO_TEST_CASE(test_meta_index_insert)
             key_entry<short>>
             i;
 
-        static_assert(
-            std::is_same<
-                insert<key_value<int, char>, i>::type,
-                index<
-                    key_value<int, char>, key_entry<double>, key_entry<void>,
-                    key_entry<short>>>::value,
-            "");
-        static_assert(
-            std::is_same<
-                insert<key_value<double, char>, i>::type,
-                index<
-                    key_value<double, char>, key_entry<int>, key_entry<void>,
-                    key_entry<short>>>::value,
-            "");
-        static_assert(
-            std::is_same<
-                insert<key_value<void, char>, i>::type,
-                index<
-                    key_value<void, char>, key_entry<int>, key_entry<double>,
-                    key_entry<short>>>::value,
-            "");
-        static_assert(
-            std::is_same<
-                insert<key_value<short, char>, i>::type,
-                index<
-                    key_value<short, char>, key_entry<int>, key_entry<double>,
-                    key_entry<void>>>::value,
-            "");
+        static_assert(std::is_same_v<
+                      insert<key_value<int, char>, i>::type,
+                      index<
+                          key_value<int, char>, key_entry<double>,
+                          key_entry<void>, key_entry<short>>>);
+        static_assert(std::is_same_v<
+                      insert<key_value<double, char>, i>::type,
+                      index<
+                          key_value<double, char>, key_entry<int>,
+                          key_entry<void>, key_entry<short>>>);
+        static_assert(std::is_same_v<
+                      insert<key_value<void, char>, i>::type,
+                      index<
+                          key_value<void, char>, key_entry<int>,
+                          key_entry<double>, key_entry<short>>>);
+        static_assert(std::is_same_v<
+                      insert<key_value<short, char>, i>::type,
+                      index<
+                          key_value<short, char>, key_entry<int>,
+                          key_entry<double>, key_entry<void>>>);
     }
 }
 

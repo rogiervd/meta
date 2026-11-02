@@ -16,7 +16,6 @@ typedef meta::weird_list<int, bool, float, double> weird_list4;
 
 #include <type_traits>
 
-#include "boost/mpl/assert.hpp"
 
 #include "meta/equal.hpp"
 
@@ -26,41 +25,40 @@ BOOST_AUTO_TEST_CASE(test_meta_filter)
 {
     namespace mpl = boost::mpl;
 
-    BOOST_MPL_ASSERT(
-        (meta::equal<
-            meta::filter<std::is_floating_point<mpl::_>, meta::list<>>,
-            meta::list<>>) );
+    static_assert(meta::equal<
+                  meta::filter<std::is_floating_point<mpl::_>, meta::list<>>,
+                  meta::list<>>::value);
 
-    BOOST_MPL_ASSERT((meta::equal<
-                      meta::filter<std::is_floating_point<mpl::_>, list4>::type,
-                      meta::list<float, double>>) );
+    static_assert(meta::equal<
+                  meta::filter<std::is_floating_point<mpl::_>, list4>::type,
+                  meta::list<float, double>>::value);
 
-    BOOST_MPL_ASSERT(
-        (meta::equal<meta::filter<std::is_pod<mpl::_>, list4>, list4>) );
+    static_assert(
+        meta::equal<meta::filter<std::is_pod<mpl::_>, list4>, list4>::value);
 
-    BOOST_MPL_ASSERT(
-        (meta::equal<
-            meta::filter<std::is_unsigned<mpl::_>, list4>, meta::list<bool>>) );
+    static_assert(meta::equal<
+                  meta::filter<std::is_unsigned<mpl::_>, list4>,
+                  meta::list<bool>>::value);
 
-    BOOST_MPL_ASSERT(
-        (meta::equal<
-            meta::filter<std::is_class<mpl::_>, list4>, meta::list<>>) );
+    static_assert(
+        meta::equal<
+            meta::filter<std::is_class<mpl::_>, list4>, meta::list<>>::value);
 
-    BOOST_MPL_ASSERT(
-        (meta::equal<
+    static_assert(
+        meta::equal<
             meta::list_direction,
             meta::filter<std::is_floating_point<mpl::_>, meta::weird_list<>>,
-            meta::weird_list<>>) );
+            meta::weird_list<>>::value);
 
-    BOOST_MPL_ASSERT((meta::equal<
-                      meta::list_direction,
-                      meta::filter<std::is_floating_point<mpl::_>, weird_list4>,
-                      meta::weird_list<float, double>>) );
+    static_assert(meta::equal<
+                  meta::list_direction,
+                  meta::filter<std::is_floating_point<mpl::_>, weird_list4>,
+                  meta::weird_list<float, double>>::value);
 
-    BOOST_MPL_ASSERT((meta::equal<
-                      meta::list_direction,
-                      meta::filter<std::is_class<mpl::_>, weird_list4>,
-                      meta::weird_list<>>) );
+    static_assert(meta::equal<
+                  meta::list_direction,
+                  meta::filter<std::is_class<mpl::_>, weird_list4>,
+                  meta::weird_list<>>::value);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
