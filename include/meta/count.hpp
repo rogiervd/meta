@@ -5,10 +5,11 @@
 #ifndef META_COUNT_HPP_INCLUDED
 #define META_COUNT_HPP_INCLUDED
 
+#include <cstddef>
 #include <type_traits>
 
-#include "meta/range.hpp"
 #include "meta/vector.hpp"
+#include "meta/vector_c.hpp"
 
 #include "count_c.hpp"
 

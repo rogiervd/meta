@@ -5,6 +5,9 @@
 #define BOOST_TEST_MODULE set
 #include "boost/test/unit_test.hpp"
 
+#include <type_traits>
+
+#include "meta/contains.hpp"
 #include "meta/range.hpp"
 #include "meta/set.hpp"
 

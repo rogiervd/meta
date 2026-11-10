@@ -9,6 +9,10 @@
 
 #include <type_traits>
 
+#include "boost/mpl/equal_to.hpp"
+
+#include "meta/empty_view.hpp"
+#include "meta/range.hpp"
 
 #include "list.hpp"
 

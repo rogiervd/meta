@@ -5,6 +5,8 @@
 #define BOOST_TEST_MODULE test_meta_range
 #include "boost/test/unit_test.hpp"
 
+#include "boost/mpl/for_each.hpp"
+
 #include "list.hpp"
 #include "meta/filter.hpp"
 
@@ -15,7 +17,6 @@ typedef meta::weird_list<> weird_list0;
 typedef meta::weird_list<int, bool, float, double> weird_list4;
 
 #include <type_traits>
-
 
 #include "meta/equal.hpp"
 
