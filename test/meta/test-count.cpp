@@ -7,12 +7,13 @@
 
 #include "meta/count.hpp"
 
+#include <cstddef>
 #include <string>
 #include <tuple>
 #include <type_traits>
 
+#include "meta/vector.hpp"
 
-#include "list.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_count)
 

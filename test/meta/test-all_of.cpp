@@ -10,6 +10,8 @@
 #include "boost/mpl/bool.hpp"
 #include "list.hpp"
 
+#include "meta/fwd.hpp"
+
 namespace mpl = boost::mpl;
 
 BOOST_AUTO_TEST_SUITE(test_meta_all_of)

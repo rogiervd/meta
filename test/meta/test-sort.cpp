@@ -6,11 +6,13 @@
 #include "boost/test/unit_test.hpp"
 
 #include "list.hpp"
+#include "meta/range.hpp"
 #include "meta/sort.hpp"
 
 #include <type_traits>
 #include "meta/vector.hpp"
 
+#include "boost/mpl/for_each.hpp"
 #include "boost/mpl/greater.hpp"
 #include "boost/mpl/less.hpp"
 

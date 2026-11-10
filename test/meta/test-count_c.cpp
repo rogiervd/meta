@@ -7,7 +7,12 @@
 
 #include "meta/count_c.hpp"
 
+#include <cstddef>
+#include <string>
+#include <tuple>
 #include <type_traits>
+
+#include "meta/vector_c.hpp"
 
 
 BOOST_AUTO_TEST_SUITE(test_meta_count_c)

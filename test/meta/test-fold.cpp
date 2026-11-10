@@ -8,6 +8,7 @@
 #include "list.hpp"
 #include "meta/fold.hpp"
 #include "meta/fold_reverse.hpp"
+#include "meta/range.hpp"
 
 #include <type_traits>
 

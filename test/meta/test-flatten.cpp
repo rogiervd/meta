@@ -9,7 +9,6 @@
 
 #include "list.hpp"
 #include "meta/flatten.hpp"
-#include "meta/mpl.hpp"
 
 
 BOOST_AUTO_TEST_SUITE(test_meta_flatten)

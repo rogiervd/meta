@@ -11,16 +11,19 @@ which makes it possible to pattern-match on it.
 #ifndef META_VECTOR_HPP_INCLUDED
 #define META_VECTOR_HPP_INCLUDED
 
+#include <cstddef>
+
+#include "boost/core/enable_if.hpp"
 #include "boost/mpl/at_fwd.hpp"
 #include "boost/mpl/back_fwd.hpp"
-#include "boost/mpl/begin.hpp"
 #include "boost/mpl/empty_fwd.hpp"
-#include "boost/mpl/end.hpp"
 #include "boost/mpl/front_fwd.hpp"
+#include "boost/mpl/lambda.hpp"
 #include "boost/mpl/pop_back_fwd.hpp"
 #include "boost/mpl/pop_front_fwd.hpp"
 #include "boost/mpl/push_back_fwd.hpp"
 #include "boost/mpl/push_front_fwd.hpp"
+#include "boost/mpl/sequence_tag.hpp"
 #include "boost/mpl/size_fwd.hpp"
 
 #include "boost/mpl/clear_fwd.hpp"
@@ -37,23 +40,11 @@ which makes it possible to pattern-match on it.
 #include "boost/mpl/at.hpp"
 #include "boost/mpl/empty.hpp"
 #include "boost/mpl/greater_equal.hpp"
-#include "boost/mpl/identity.hpp"
 #include "boost/mpl/less_equal.hpp"
-#include "boost/mpl/min_max.hpp"
 #include "boost/mpl/minus.hpp"
-#include "boost/mpl/next.hpp"
 #include "boost/mpl/plus.hpp"
-#include "boost/mpl/pop_front.hpp"
 #include "boost/mpl/size.hpp"
 #include "boost/mpl/size_t.hpp"
-
-#include "boost/mpl/back_inserter.hpp"
-#include "boost/mpl/copy.hpp"
-#include "boost/mpl/eval_if.hpp"
-#include "boost/mpl/identity.hpp"
-#include "boost/mpl/push_front.hpp"
-
-#include "boost/utility/enable_if.hpp"
 
 #include "meta/fold_reverse.hpp"
 #include "meta/fwd.hpp"

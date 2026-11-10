@@ -6,7 +6,6 @@
 #define META_MAX_ELEMENT_HPP
 
 #include "meta/fold.hpp"
-#include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
 namespace meta {

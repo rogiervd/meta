@@ -9,10 +9,11 @@
 
 #include <type_traits>
 
+#include "boost/mpl/for_each.hpp"
 #include "boost/mpl/greater.hpp"
 
 #include "list.hpp"
-#include "meta/fold.hpp"
+#include "meta/range.hpp"
 #include "meta/vector.hpp"
 
 namespace mpl = boost::mpl;

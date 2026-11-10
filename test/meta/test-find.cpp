@@ -5,6 +5,8 @@
 #define BOOST_TEST_MODULE test_meta_find
 #include "boost/test/unit_test.hpp"
 
+#include "boost/mpl/for_each.hpp"
+
 #include "list.hpp"
 #include "meta/find.hpp"
 
