@@ -9,8 +9,7 @@
 #include "meta/range.hpp"
 
 #include "boost/mpl/apply.hpp"
-#include "boost/mpl/eval_if.hpp"
-#include "boost/mpl/identity.hpp"
+#include "boost/mpl/if.hpp"
 
 namespace meta {
 

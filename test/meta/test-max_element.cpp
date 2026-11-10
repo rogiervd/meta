@@ -10,7 +10,6 @@
 
 #include <type_traits>
 
-#include "boost/mpl/assert.hpp"
 #include "boost/mpl/equal_to.hpp"
 #include "boost/mpl/int.hpp"
 
@@ -22,36 +21,35 @@ BOOST_AUTO_TEST_CASE(test_meta_max_element)
     using meta::list;
     using mpl::int_;
 
-    BOOST_MPL_ASSERT(
-        (mpl::equal_to<meta::max_element<list<int_<4>>>::type, int_<4>>) );
-    BOOST_MPL_ASSERT(
-        (mpl::equal_to<
-            meta::max_element<list<int_<4>, int_<5>>>::type, int_<5>>) );
-    BOOST_MPL_ASSERT(
-        (mpl::equal_to<
-            meta::max_element<list<int_<5>, int_<4>>>::type, int_<5>>) );
-    BOOST_MPL_ASSERT((mpl::equal_to<
-                      meta::max_element<list<int_<5>, int_<4>, int_<7>>>::type,
-                      int_<7>>) );
+    static_assert(
+        mpl::equal_to<meta::max_element<list<int_<4>>>::type, int_<4>>::value);
+    static_assert(
+        mpl::equal_to<
+            meta::max_element<list<int_<4>, int_<5>>>::type, int_<5>>::value);
+    static_assert(
+        mpl::equal_to<
+            meta::max_element<list<int_<5>, int_<4>>>::type, int_<5>>::value);
+    static_assert(mpl::equal_to<
+                  meta::max_element<list<int_<5>, int_<4>, int_<7>>>::type,
+                  int_<7>>::value);
 
     // Use std::integral_constant
     static_assert(
         meta::max_element<list<
-                std::integral_constant<int, 5>, std::integral_constant<int, 4>,
-                std::integral_constant<int, 7>>>::type::value
-            == 7,
-        "");
+            std::integral_constant<int, 5>, std::integral_constant<int, 4>,
+            std::integral_constant<int, 7>>>::type::value
+        == 7);
 
-    BOOST_MPL_ASSERT(
-        (mpl::equal_to<
+    static_assert(
+        mpl::equal_to<
             meta::max_element<
                 meta::list_direction, list<int_<5>, int_<4>, int_<7>>>::type,
-            int_<7>>) );
-    BOOST_MPL_ASSERT((mpl::equal_to<
-                      meta::max_element<
-                          meta::list_direction,
-                          meta::weird_list<int_<5>, int_<4>, int_<7>>>::type,
-                      int_<7>>) );
+            int_<7>>::value);
+    static_assert(mpl::equal_to<
+                  meta::max_element<
+                      meta::list_direction,
+                      meta::weird_list<int_<5>, int_<4>, int_<7>>>::type,
+                  int_<7>>::value);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

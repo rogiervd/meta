@@ -7,9 +7,10 @@
 
 #include <type_traits>
 
-#include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
+#include "boost/core/enable_if.hpp"
+#include "boost/mpl/and.hpp"
 #include "boost/mpl/apply.hpp"
 #include "boost/mpl/eval_if.hpp"
 #include "boost/mpl/or.hpp"

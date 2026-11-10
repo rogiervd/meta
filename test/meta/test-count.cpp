@@ -7,72 +7,72 @@
 
 #include "meta/count.hpp"
 
+#include <cstddef>
 #include <string>
 #include <tuple>
 #include <type_traits>
 
-#include "boost/mpl/assert.hpp"
+#include "meta/vector.hpp"
 
-#include "list.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_count)
 
 BOOST_AUTO_TEST_CASE(test_meta_count)
 {
     // Without start.
-    BOOST_MPL_ASSERT((std::is_same<meta::count<0>::type, meta::vector<>>) );
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<1>::type,
-                      meta::vector<std::integral_constant<std::size_t, 0>>>) );
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<2>::type,
-                      meta::vector<
-                          std::integral_constant<std::size_t, 0>,
-                          std::integral_constant<std::size_t, 1>>>) );
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<4>::type,
-                      meta::vector<
-                          std::integral_constant<std::size_t, 0>,
-                          std::integral_constant<std::size_t, 1>,
-                          std::integral_constant<std::size_t, 2>,
-                          std::integral_constant<std::size_t, 3>>>) );
+    static_assert(std::is_same_v<meta::count<0>::type, meta::vector<>>);
+    static_assert(std::is_same_v<
+                  meta::count<1>::type,
+                  meta::vector<std::integral_constant<std::size_t, 0>>>);
+    static_assert(std::is_same_v<
+                  meta::count<2>::type,
+                  meta::vector<
+                      std::integral_constant<std::size_t, 0>,
+                      std::integral_constant<std::size_t, 1>>>);
+    static_assert(std::is_same_v<
+                  meta::count<4>::type,
+                  meta::vector<
+                      std::integral_constant<std::size_t, 0>,
+                      std::integral_constant<std::size_t, 1>,
+                      std::integral_constant<std::size_t, 2>,
+                      std::integral_constant<std::size_t, 3>>>);
 
     // With start.
-    BOOST_MPL_ASSERT((std::is_same<meta::count<0, 0>::type, meta::vector<>>) );
-    BOOST_MPL_ASSERT((std::is_same<meta::count<3, 3>::type, meta::vector<>>) );
+    static_assert(std::is_same_v<meta::count<0, 0>::type, meta::vector<>>);
+    static_assert(std::is_same_v<meta::count<3, 3>::type, meta::vector<>>);
 
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<0, 1>::type,
-                      meta::vector<std::integral_constant<std::size_t, 0>>>) );
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<7, 8>::type,
-                      meta::vector<std::integral_constant<std::size_t, 7>>>) );
+    static_assert(std::is_same_v<
+                  meta::count<0, 1>::type,
+                  meta::vector<std::integral_constant<std::size_t, 0>>>);
+    static_assert(std::is_same_v<
+                  meta::count<7, 8>::type,
+                  meta::vector<std::integral_constant<std::size_t, 7>>>);
 
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<0, 2>::type,
-                      meta::vector<
-                          std::integral_constant<std::size_t, 0>,
-                          std::integral_constant<std::size_t, 1>>>) );
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<10, 12>::type,
-                      meta::vector<
-                          std::integral_constant<std::size_t, 10>,
-                          std::integral_constant<std::size_t, 11>>>) );
+    static_assert(std::is_same_v<
+                  meta::count<0, 2>::type,
+                  meta::vector<
+                      std::integral_constant<std::size_t, 0>,
+                      std::integral_constant<std::size_t, 1>>>);
+    static_assert(std::is_same_v<
+                  meta::count<10, 12>::type,
+                  meta::vector<
+                      std::integral_constant<std::size_t, 10>,
+                      std::integral_constant<std::size_t, 11>>>);
 
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<0, 4>::type,
-                      meta::vector<
-                          std::integral_constant<std::size_t, 0>,
-                          std::integral_constant<std::size_t, 1>,
-                          std::integral_constant<std::size_t, 2>,
-                          std::integral_constant<std::size_t, 3>>>) );
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::count<17, 21>::type,
-                      meta::vector<
-                          std::integral_constant<std::size_t, 17>,
-                          std::integral_constant<std::size_t, 18>,
-                          std::integral_constant<std::size_t, 19>,
-                          std::integral_constant<std::size_t, 20>>>) );
+    static_assert(std::is_same_v<
+                  meta::count<0, 4>::type,
+                  meta::vector<
+                      std::integral_constant<std::size_t, 0>,
+                      std::integral_constant<std::size_t, 1>,
+                      std::integral_constant<std::size_t, 2>,
+                      std::integral_constant<std::size_t, 3>>>);
+    static_assert(std::is_same_v<
+                  meta::count<17, 21>::type,
+                  meta::vector<
+                      std::integral_constant<std::size_t, 17>,
+                      std::integral_constant<std::size_t, 18>,
+                      std::integral_constant<std::size_t, 19>,
+                      std::integral_constant<std::size_t, 20>>>);
 }
 
 BOOST_AUTO_TEST_CASE(test_meta_count_big)

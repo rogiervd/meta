@@ -7,12 +7,13 @@
 
 #include <type_traits>
 
+#include "boost/core/enable_if.hpp"
 #include "boost/mpl/eval_if.hpp"
 #include "boost/mpl/identity.hpp"
+#include "boost/mpl/less.hpp"
 #include "boost/mpl/or.hpp"
 #include "boost/mpl/pair.hpp"
 
-#include "meta/fwd.hpp"
 #include "meta/merge.hpp"
 #include "meta/range.hpp"
 #include "meta/single_view.hpp"
@@ -82,7 +83,7 @@ namespace sort_detail {
     template <class Direction, class Compare, class Rest>
     class sort_part<Direction, Compare, 0, Rest>
     {
-        BOOST_MPL_ASSERT_NOT((meta::empty<Direction, Rest>) );
+        static_assert(!meta::empty<Direction, Rest>::value);
         typedef typename first<Direction, Rest>::type head;
 
     public:
@@ -95,8 +96,8 @@ namespace sort_detail {
     template <class Direction, class Compare, int Depth, class Rest>
     class sort_part
     {
-        BOOST_MPL_ASSERT_NOT((meta::empty<Direction, Rest>) );
-        static_assert(Depth > 0, "");
+        static_assert(!meta::empty<Direction, Rest>::value);
+        static_assert(Depth > 0);
 
         // Find the first half.
         typedef typename sort_part<Direction, Compare, Depth - 1, Rest>::type
@@ -120,7 +121,7 @@ namespace sort_detail {
         class Direction, class Compare, int Depth, class First, class Rest>
     class sort_part_with
     {
-        static_assert(Depth >= 1, "");
+        static_assert(Depth >= 1);
 
         // Sort second part.
         typedef typename sort_part<Direction, Compare, Depth - 1, Rest>::type
@@ -141,8 +142,8 @@ namespace sort_detail {
         class Direction, class Compare, int Depth, class First, class Rest>
     class sort_at_least_with
     {
-        static_assert(Depth >= 1, "");
-        BOOST_MPL_ASSERT_NOT((empty<Direction, Rest>) );
+        static_assert(Depth >= 1);
+        static_assert(!meta::empty<Direction, Rest>::value);
 
         typedef typename sort_part_with<
             Direction, Compare, Depth, First, Rest>::type current;

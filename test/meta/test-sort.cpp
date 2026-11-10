@@ -6,11 +6,13 @@
 #include "boost/test/unit_test.hpp"
 
 #include "list.hpp"
+#include "meta/range.hpp"
 #include "meta/sort.hpp"
 
 #include <type_traits>
 #include "meta/vector.hpp"
 
+#include "boost/mpl/for_each.hpp"
 #include "boost/mpl/greater.hpp"
 #include "boost/mpl/less.hpp"
 
@@ -30,50 +32,49 @@ BOOST_AUTO_TEST_CASE(test_meta_sort)
     The order is likely to be correct if "merge" has been tested properly.
     */
 
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::as_vector<
-                          meta::sort<meta::front, meta::vector<>>::type>::type,
-                      meta::vector<>>) );
+    static_assert(std::is_same_v<
+                  meta::as_vector<
+                      meta::sort<meta::front, meta::vector<>>::type>::type,
+                  meta::vector<>>);
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<
+    static_assert(
+        std::is_same_v<
             meta::as_vector<meta::sort<
                 meta::front, compare, meta::vector<mpl::int_<2>>>::type>::type,
-            meta::vector<mpl::int_<2>>>) );
+            meta::vector<mpl::int_<2>>>);
 
     // Result
-    BOOST_MPL_ASSERT(
-        (std::is_same<
-            meta::as_vector<meta::sort<
-                meta::vector<mpl::int_<2>, mpl::int_<3>>>::type>::type,
-            meta::vector<mpl::int_<2>, mpl::int_<3>>>) );
+    static_assert(std::is_same_v<
+                  meta::as_vector<meta::sort<
+                      meta::vector<mpl::int_<2>, mpl::int_<3>>>::type>::type,
+                  meta::vector<mpl::int_<2>, mpl::int_<3>>>);
 
-    BOOST_MPL_ASSERT((std::is_same<
-                      meta::as_list<meta::sort<
-                          meta::list_direction, compare,
-                          meta::list<mpl::int_<3>, mpl::int_<2>>>::type>::type,
-                      meta::list<mpl::int_<2>, mpl::int_<3>>>) );
+    static_assert(std::is_same_v<
+                  meta::as_list<meta::sort<
+                      meta::list_direction, compare,
+                      meta::list<mpl::int_<3>, mpl::int_<2>>>::type>::type,
+                  meta::list<mpl::int_<2>, mpl::int_<3>>>);
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<
+    static_assert(
+        std::is_same_v<
             meta::as_vector<meta::sort<
                 greater,
                 meta::vector<mpl::int_<3>, mpl::int_<2>, mpl::int_<7>>>::type>::
                 type,
-            meta::vector<mpl::int_<7>, mpl::int_<3>, mpl::int_<2>>>) );
+            meta::vector<mpl::int_<7>, mpl::int_<3>, mpl::int_<2>>>);
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<
+    static_assert(
+        std::is_same_v<
             meta::as_list<meta::sort<
                 meta::list_direction, greater,
                 meta::list<
                     mpl::int_<3>, mpl::int_<2>, mpl::int_<7>,
                     mpl::int_<-1>>>::type>::type,
             meta::list<
-                mpl::int_<7>, mpl::int_<3>, mpl::int_<2>, mpl::int_<-1>>>) );
+                mpl::int_<7>, mpl::int_<3>, mpl::int_<2>, mpl::int_<-1>>>);
 
-    BOOST_MPL_ASSERT(
-        (std::is_same<
+    static_assert(
+        std::is_same_v<
             meta::as_vector<meta::sort<
                 meta::front, compare,
                 meta::vector<
@@ -81,7 +82,7 @@ BOOST_AUTO_TEST_CASE(test_meta_sort)
                     mpl::int_<-3>, mpl::int_<4>, mpl::int_<27>>>::type>::type,
             meta::vector<
                 mpl::int_<-3>, mpl::int_<-1>, mpl::int_<2>, mpl::int_<3>,
-                mpl::int_<4>, mpl::int_<7>, mpl::int_<27>>>) );
+                mpl::int_<4>, mpl::int_<7>, mpl::int_<27>>>);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

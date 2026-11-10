@@ -5,8 +5,9 @@
 #ifndef META_TAKE_HPP_INCLUDED
 #define META_TAKE_HPP_INCLUDED
 
+#include "boost/core/enable_if.hpp"
 #include "boost/mpl/equal_to.hpp"
-#include "boost/mpl/min.hpp"
+#include "boost/mpl/min_max.hpp"
 #include "boost/mpl/or.hpp"
 #include "boost/mpl/size_t.hpp"
 

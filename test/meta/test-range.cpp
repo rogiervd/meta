@@ -18,13 +18,10 @@ typedef meta::weird_list<int, bool, float, double> weird_list4;
 
 #include <type_traits>
 
-#include "boost/mpl/assert.hpp"
 #include "boost/mpl/size_t.hpp"
 
-#include "boost/mpl/divides.hpp"
 #include "boost/mpl/equal_to.hpp"
 #include "boost/mpl/placeholders.hpp"
-#include "boost/mpl/plus.hpp"
 
 BOOST_AUTO_TEST_SUITE(test_meta_range)
 
@@ -32,7 +29,7 @@ BOOST_AUTO_TEST_CASE(test_meta_range)
 {
     namespace mpl = boost::mpl;
     using mpl::equal_to;
-    using std::is_same;
+    using std::is_same_v;
     typedef meta::list_direction dir;
 
     using meta::drop;
@@ -41,106 +38,103 @@ BOOST_AUTO_TEST_CASE(test_meta_range)
     using meta::push;
     using meta::size;
 
-    BOOST_MPL_ASSERT((meta::is_range<list0>) );
-    BOOST_MPL_ASSERT((meta::is_range<list1>) );
-    BOOST_MPL_ASSERT((meta::is_range<list4>) );
-    BOOST_MPL_ASSERT_NOT((meta::is_range<int>) );
-    BOOST_MPL_ASSERT_NOT((meta::is_range<bool>) );
+    static_assert(meta::is_range<list0>::value);
+    static_assert(meta::is_range<list1>::value);
+    static_assert(meta::is_range<list4>::value);
+    static_assert(!meta::is_range<int>::value);
+    static_assert(!meta::is_range<bool>::value);
 
     // empty
-    BOOST_MPL_ASSERT((empty<list0>) );
-    BOOST_MPL_ASSERT_NOT((empty<list1>) );
-    BOOST_MPL_ASSERT_NOT((empty<list4>) );
+    static_assert(empty<list0>::value);
+    static_assert(!empty<list1>::value);
+    static_assert(!empty<list4>::value);
 
-    BOOST_MPL_ASSERT((empty<dir, list0>) );
-    BOOST_MPL_ASSERT_NOT((empty<dir, list1>) );
-    BOOST_MPL_ASSERT_NOT((empty<dir, list4>) );
+    static_assert(empty<dir, list0>::value);
+    static_assert(!empty<dir, list1>::value);
+    static_assert(!empty<dir, list4>::value);
 
-    BOOST_MPL_ASSERT((empty<dir, weird_list0>) );
-    BOOST_MPL_ASSERT_NOT((empty<dir, weird_list1>) );
-    BOOST_MPL_ASSERT_NOT((empty<dir, weird_list4>) );
+    static_assert(empty<dir, weird_list0>::value);
+    static_assert(!empty<dir, weird_list1>::value);
+    static_assert(!empty<dir, weird_list4>::value);
 
     // size
-    BOOST_MPL_ASSERT((equal_to<size<list0>, mpl::size_t<0>>) );
-    BOOST_MPL_ASSERT((equal_to<size<list1>, mpl::size_t<1>>) );
-    BOOST_MPL_ASSERT((equal_to<size<list4>, mpl::size_t<4>>) );
+    static_assert(equal_to<size<list0>, mpl::size_t<0>>::value);
+    static_assert(equal_to<size<list1>, mpl::size_t<1>>::value);
+    static_assert(equal_to<size<list4>, mpl::size_t<4>>::value);
 
-    BOOST_MPL_ASSERT((equal_to<size<dir, list0>, mpl::size_t<0>>) );
-    BOOST_MPL_ASSERT((equal_to<size<dir, list1>, mpl::size_t<1>>) );
-    BOOST_MPL_ASSERT((equal_to<size<dir, list4>, mpl::size_t<4>>) );
+    static_assert(equal_to<size<dir, list0>, mpl::size_t<0>>::value);
+    static_assert(equal_to<size<dir, list1>, mpl::size_t<1>>::value);
+    static_assert(equal_to<size<dir, list4>, mpl::size_t<4>>::value);
 
-    BOOST_MPL_ASSERT((equal_to<size<dir, weird_list0>, mpl::size_t<0>>) );
-    BOOST_MPL_ASSERT((equal_to<size<dir, weird_list1>, mpl::size_t<1>>) );
-    BOOST_MPL_ASSERT((equal_to<size<dir, weird_list4>, mpl::size_t<4>>) );
+    static_assert(equal_to<size<dir, weird_list0>, mpl::size_t<0>>::value);
+    static_assert(equal_to<size<dir, weird_list1>, mpl::size_t<1>>::value);
+    static_assert(equal_to<size<dir, weird_list4>, mpl::size_t<4>>::value);
 
     // first
-    BOOST_MPL_ASSERT((is_same<first<list1>::type, int>) );
-    BOOST_MPL_ASSERT((is_same<first<list4>::type, int>) );
+    static_assert(is_same_v<first<list1>::type, int>);
+    static_assert(is_same_v<first<list4>::type, int>);
 
-    BOOST_MPL_ASSERT((is_same<first<dir, list1>::type, int>) );
-    BOOST_MPL_ASSERT((is_same<first<dir, list4>::type, int>) );
+    static_assert(is_same_v<first<dir, list1>::type, int>);
+    static_assert(is_same_v<first<dir, list4>::type, int>);
 
-    BOOST_MPL_ASSERT((is_same<first<dir, weird_list1>::type, int>) );
-    BOOST_MPL_ASSERT((is_same<first<dir, weird_list4>::type, int>) );
+    static_assert(is_same_v<first<dir, weird_list1>::type, int>);
+    static_assert(is_same_v<first<dir, weird_list4>::type, int>);
 
     // drop one
-    BOOST_MPL_ASSERT((is_same<drop<list1>::type, meta::list<>>) );
-    BOOST_MPL_ASSERT(
-        (is_same<drop<list4>::type, meta::list<bool, float, double>>) );
+    static_assert(is_same_v<drop<list1>::type, meta::list<>>);
+    static_assert(
+        is_same_v<drop<list4>::type, meta::list<bool, float, double>>);
 
-    BOOST_MPL_ASSERT((is_same<drop<dir, list1>::type, meta::list<>>) );
-    BOOST_MPL_ASSERT(
-        (is_same<drop<dir, list4>::type, meta::list<bool, float, double>>) );
+    static_assert(is_same_v<drop<dir, list1>::type, meta::list<>>);
+    static_assert(
+        is_same_v<drop<dir, list4>::type, meta::list<bool, float, double>>);
 
-    BOOST_MPL_ASSERT(
-        (is_same<drop<dir, weird_list1>::type, meta::weird_list<>>) );
-    BOOST_MPL_ASSERT((is_same<
-                      drop<dir, weird_list4>::type,
-                      meta::weird_list<bool, float, double>>) );
+    static_assert(is_same_v<drop<dir, weird_list1>::type, meta::weird_list<>>);
+    static_assert(is_same_v<
+                  drop<dir, weird_list4>::type,
+                  meta::weird_list<bool, float, double>>);
 
     // drop
-    BOOST_MPL_ASSERT(
-        (is_same<
-            drop<mpl::size_t<2>, list4>::type, meta::list<float, double>>) );
-    BOOST_MPL_ASSERT((is_same<drop<mpl::int_<4>, list4>::type, meta::list<>>) );
+    static_assert(
+        is_same_v<
+            drop<mpl::size_t<2>, list4>::type, meta::list<float, double>>);
+    static_assert(is_same_v<drop<mpl::int_<4>, list4>::type, meta::list<>>);
 
-    BOOST_MPL_ASSERT((is_same<
-                      drop<dir, mpl::size_t<2>, list4>::type,
-                      meta::list<float, double>>) );
-    BOOST_MPL_ASSERT(
-        (is_same<drop<dir, mpl::int_<4>, list4>::type, meta::list<>>) );
+    static_assert(
+        is_same_v<
+            drop<dir, mpl::size_t<2>, list4>::type, meta::list<float, double>>);
+    static_assert(
+        is_same_v<drop<dir, mpl::int_<4>, list4>::type, meta::list<>>);
 
-    BOOST_MPL_ASSERT((is_same<
-                      drop<dir, mpl::size_t<2>, weird_list4>::type,
-                      meta::weird_list<float, double>>) );
-    BOOST_MPL_ASSERT(
-        (is_same<
-            drop<dir, mpl::int_<4>, weird_list4>::type, meta::weird_list<>>) );
+    static_assert(is_same_v<
+                  drop<dir, mpl::size_t<2>, weird_list4>::type,
+                  meta::weird_list<float, double>>);
+    static_assert(
+        is_same_v<
+            drop<dir, mpl::int_<4>, weird_list4>::type, meta::weird_list<>>);
 
     // push
-    BOOST_MPL_ASSERT((is_same<push<long, list0>::type, meta::list<long>>) );
-    BOOST_MPL_ASSERT(
-        (is_same<push<long, list1>::type, meta::list<long, int>>) );
-    BOOST_MPL_ASSERT((is_same<
-                      push<long, list4>::type,
-                      meta::list<long, int, bool, float, double>>) );
+    static_assert(is_same_v<push<long, list0>::type, meta::list<long>>);
+    static_assert(is_same_v<push<long, list1>::type, meta::list<long, int>>);
+    static_assert(is_same_v<
+                  push<long, list4>::type,
+                  meta::list<long, int, bool, float, double>>);
 
-    BOOST_MPL_ASSERT(
-        (is_same<push<dir, long, list0>::type, meta::list<long>>) );
-    BOOST_MPL_ASSERT(
-        (is_same<push<dir, long, list1>::type, meta::list<long, int>>) );
-    BOOST_MPL_ASSERT((is_same<
-                      push<dir, long, list4>::type,
-                      meta::list<long, int, bool, float, double>>) );
+    static_assert(is_same_v<push<dir, long, list0>::type, meta::list<long>>);
+    static_assert(
+        is_same_v<push<dir, long, list1>::type, meta::list<long, int>>);
+    static_assert(is_same_v<
+                  push<dir, long, list4>::type,
+                  meta::list<long, int, bool, float, double>>);
 
-    BOOST_MPL_ASSERT(
-        (is_same<push<dir, long, weird_list0>::type, meta::weird_list<long>>) );
-    BOOST_MPL_ASSERT(
-        (is_same<
-            push<dir, long, weird_list1>::type, meta::weird_list<long, int>>) );
-    BOOST_MPL_ASSERT((is_same<
-                      push<dir, long, weird_list4>::type,
-                      meta::weird_list<long, int, bool, float, double>>) );
+    static_assert(
+        is_same_v<push<dir, long, weird_list0>::type, meta::weird_list<long>>);
+    static_assert(
+        is_same_v<
+            push<dir, long, weird_list1>::type, meta::weird_list<long, int>>);
+    static_assert(is_same_v<
+                  push<dir, long, weird_list4>::type,
+                  meta::weird_list<long, int, bool, float, double>>);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

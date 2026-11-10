@@ -9,7 +9,9 @@
 
 #include <type_traits>
 
-#include "boost/mpl/assert.hpp"
+#include "boost/mpl/equal_to.hpp"
+
+#include "meta/range.hpp"
 
 #include "list.hpp"
 
@@ -21,33 +23,33 @@ BOOST_AUTO_TEST_CASE(test_meta_empty_view)
     {
         typedef meta::empty_view<meta::list_direction> v;
 
-        BOOST_MPL_ASSERT(
-            (std::is_same<
-                meta::default_direction<v>::type, meta::list_direction>) );
+        static_assert(std::is_same_v<
+                      meta::default_direction<v>::type, meta::list_direction>);
 
-        BOOST_MPL_ASSERT((meta::empty<v>) );
-        BOOST_MPL_ASSERT((meta::empty<meta::list_direction, v>) );
+        static_assert(meta::empty<v>::value);
+        static_assert(meta::empty<meta::list_direction, v>::value);
 
-        BOOST_MPL_ASSERT(
-            (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>) );
-        BOOST_MPL_ASSERT(
-            (boost::mpl::equal_to<
-                meta::size<meta::list_direction, v>, boost::mpl::size_t<0>>) );
+        static_assert(
+            boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>::value);
+        static_assert(boost::mpl::equal_to<
+                      meta::size<meta::list_direction, v>,
+                      boost::mpl::size_t<0>>::value);
     }
     // Don't specify direction: should be "front".
     {
         typedef meta::empty_view<> v;
 
-        BOOST_MPL_ASSERT(
-            (std::is_same<meta::default_direction<v>::type, meta::front>) );
+        static_assert(
+            std::is_same_v<meta::default_direction<v>::type, meta::front>);
 
-        BOOST_MPL_ASSERT((meta::empty<v>) );
-        BOOST_MPL_ASSERT((meta::empty<meta::front, v>) );
+        static_assert(meta::empty<v>::value);
+        static_assert(meta::empty<meta::front, v>::value);
 
-        BOOST_MPL_ASSERT(
-            (boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>) );
-        BOOST_MPL_ASSERT((boost::mpl::equal_to<
-                          meta::size<meta::front, v>, boost::mpl::size_t<0>>) );
+        static_assert(
+            boost::mpl::equal_to<meta::size<v>, boost::mpl::size_t<0>>::value);
+        static_assert(
+            boost::mpl::equal_to<
+                meta::size<meta::front, v>, boost::mpl::size_t<0>>::value);
     }
 }
 

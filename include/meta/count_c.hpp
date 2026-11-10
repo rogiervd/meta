@@ -5,6 +5,7 @@
 #ifndef META_COUNT_C_HPP_INCLUDED
 #define META_COUNT_C_HPP_INCLUDED
 
+#include <cstddef>
 #include <type_traits>
 
 #include "vector_c.hpp"
