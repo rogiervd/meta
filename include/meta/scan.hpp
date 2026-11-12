@@ -9,7 +9,8 @@ Fold operation that returns the results at each step.
 #ifndef META_SCAN_HPP_INCLUDED
 #define META_SCAN_HPP_INCLUDED
 
-#include "boost/core/enable_if.hpp"
+#include <type_traits>
+
 #include "boost/mpl/apply.hpp"
 #include "boost/mpl/if.hpp"
 #include "boost/mpl/next_prior.hpp"
@@ -56,14 +57,13 @@ template <typename Direction> struct empty_scan
 
 // This should catch 2 and 3 parameters as long as Direction is not given.
 template <typename Function, typename State, typename Range> struct scan<
-    Function, State, Range,
-    typename boost::disable_if<is_direction<Function>>::type>
+    Function, State, Range, std::enable_if_t<!is_direction<Function>::value>>
 : scan<typename default_direction<Range>::type, Function, State, Range> {};
 
 // Without State.
 template <typename Direction, typename Function, typename Range> struct scan<
     Direction, Function, Range,
-    typename boost::enable_if<is_direction<Direction>>::type>
+    std::enable_if_t<is_direction<Direction>::value>>
 : scan<
       Direction, Function,
       // First element of the list becomes the state.
