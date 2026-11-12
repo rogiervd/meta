@@ -9,7 +9,6 @@
 
 #include "meta/range.hpp"
 
-#include "boost/core/enable_if.hpp"
 #include "boost/mpl/and.hpp"
 #include "boost/mpl/apply.hpp"
 #include "boost/mpl/eval_if.hpp"
@@ -25,12 +24,11 @@ struct equal;
 
 template <typename Predicate, typename Range1, typename Range2> struct equal<
     Predicate, Range1, Range2,
-    typename boost::disable_if<is_direction<Predicate>>::type>
+    std::enable_if_t<!is_direction<Predicate>::value>>
 : equal<typename default_direction<Range1>::type, Predicate, Range1, Range2> {};
 
 template <typename Direction, typename Range1, typename Range2> struct equal<
-    Direction, Range1, Range2,
-    typename boost::enable_if<is_direction<Direction>>::type>
+    Direction, Range1, Range2, std::enable_if_t<is_direction<Direction>::value>>
 : equal<Direction, std::is_same<mpl::_, mpl::_>, Range1, Range2> {};
 
 template <

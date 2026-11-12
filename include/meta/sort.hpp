@@ -7,7 +7,6 @@
 
 #include <type_traits>
 
-#include "boost/core/enable_if.hpp"
 #include "boost/mpl/eval_if.hpp"
 #include "boost/mpl/identity.hpp"
 #include "boost/mpl/less.hpp"
@@ -42,15 +41,15 @@ template <class Direction, class Compare = void, class Range = void>
 struct sort;
 
 // Only direction: insert mpl::less <...>.
-template <class Direction, class Range> struct sort<
-    Direction, Range, typename boost::enable_if<is_direction<Direction>>::type>
+template <class Direction, class Range>
+struct sort<Direction, Range, std::enable_if_t<is_direction<Direction>::value>>
 : sort<Direction, mpl::less<mpl::_1, mpl::_2>, Range> {};
 
 // Only Compare: insert default direction.
 template <class Compare, class Range> struct sort<
     Compare, Range,
-    typename boost::disable_if<boost::mpl::or_<
-        is_direction<Compare>, std::is_same<Range, void>>>::type>
+    std::enable_if_t<!boost::mpl::or_<
+        is_direction<Compare>, std::is_same<Range, void>>::value>>
 : sort<typename default_direction<Range>::type, Compare, Range> {};
 
 // No parameters: insert default direction.

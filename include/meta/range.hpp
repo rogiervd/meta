@@ -8,7 +8,6 @@
 #include <cstddef>
 #include <type_traits>
 
-#include "boost/core/enable_if.hpp"
 #include "boost/mpl/and.hpp"
 #include "boost/mpl/bool.hpp"
 #include "boost/mpl/not.hpp"
@@ -55,7 +54,7 @@ template <typename DirectionOrRange, typename Range = void> struct empty;
 
 // Forward to default direction.
 template <typename Range>
-struct empty<Range, typename boost::disable_if<is_direction<Range>>::type>
+struct empty<Range, std::enable_if_t<!is_direction<Range>::value>>
 : empty<typename default_direction<Range>::type, Range> {};
 
 // Forward to operation
@@ -70,7 +69,7 @@ template <typename DirectionOrRange, typename Range = void> struct size;
 
 // Forward to default direction.
 template <typename Range>
-struct size<Range, typename boost::enable_if<is_range<Range>>::type>
+struct size<Range, std::enable_if_t<is_range<Range>::value>>
 : size<typename default_direction<Range>::type, Range> {};
 
 // Forward to operation
@@ -85,7 +84,7 @@ template <typename DirectionOrRange, typename Range = void> struct first;
 
 // Forward to default direction.
 template <typename Range>
-struct first<Range, typename boost::disable_if<is_direction<Range>>::type>
+struct first<Range, std::enable_if_t<!is_direction<Range>::value>>
 : first<typename default_direction<Range>::type, Range> {};
 
 // Forward to operation
@@ -103,19 +102,19 @@ template <
 struct drop;
 
 template <typename Range>
-struct drop<Range, typename boost::enable_if<is_range<Range>>::type>
+struct drop<Range, std::enable_if_t<is_range<Range>::value>>
 : drop<typename default_direction<Range>::type, mpl::size_t<1>, Range> {};
 
 template <typename Direction, typename Range> struct drop<
     Direction, Range,
-    typename boost::enable_if<
-        mpl::and_<is_direction<Direction>, is_range<Range>>>::type>
+    std::enable_if_t<
+        mpl::and_<is_direction<Direction>, is_range<Range>>::value>>
 : drop<Direction, mpl::size_t<1>, Range> {};
 
 template <typename Number, typename Range> struct drop<
     Number, Range,
-    typename boost::enable_if<
-        mpl::and_<mpl::not_<is_direction<Number>>, is_range<Range>>>::type>
+    std::enable_if_t<
+        mpl::and_<mpl::not_<is_direction<Number>>, is_range<Range>>::value>>
 : drop<typename default_direction<Range>::type, Number, Range> {};
 
 template <typename Direction, typename Number, typename Range> struct drop

@@ -5,7 +5,8 @@
 #ifndef META_FOLD_REVERSE_HPP_INCLUDED
 #define META_FOLD_REVERSE_HPP_INCLUDED
 
-#include "boost/core/enable_if.hpp"
+#include <type_traits>
+
 #include "boost/mpl/apply.hpp"
 
 #include "meta/fwd.hpp"
@@ -35,14 +36,12 @@ struct fold_reverse
 
 // Without Direction: forward to implementation with default_direction.
 template <typename Function, typename Range> struct fold_reverse<
-    Function, Range, void,
-    typename boost::disable_if<is_direction<Function>>::type>
+    Function, Range, void, std::enable_if_t<!is_direction<Function>::value>>
 : fold_reverse<typename default_direction<Range>::type, Function, Range> {};
 
 template <typename Function, typename State, typename Range>
 struct fold_reverse<
-    Function, State, Range,
-    typename boost::disable_if<is_direction<Function>>::type>
+    Function, State, Range, std::enable_if_t<!is_direction<Function>::value>>
 : fold_reverse<
       typename default_direction<Range>::type, Function, State, Range> {};
 
@@ -51,7 +50,7 @@ struct fold_reverse<
 template <typename Direction, typename Function, typename Range>
 struct fold_reverse<
     Direction, Function, Range,
-    typename boost::enable_if<is_direction<Direction>>::type>
+    std::enable_if_t<is_direction<Direction>::value>>
 : operation::fold_reverse_1<typename range_tag<Range>::type, Direction>::
       template apply<Function, Range> {};
 
