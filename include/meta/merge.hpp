@@ -7,7 +7,6 @@
 
 #include <type_traits>
 
-#include "boost/core/enable_if.hpp"
 #include "boost/mpl/and.hpp"
 #include "boost/mpl/apply.hpp"
 #include "boost/mpl/bool.hpp"
@@ -41,15 +40,14 @@ struct merge;
 
 // Only direction: insert mpl::less <...>.
 template <class Direction, class Left, class Right> struct merge<
-    Direction, Left, Right,
-    typename boost::enable_if<is_direction<Direction>>::type>
+    Direction, Left, Right, std::enable_if_t<is_direction<Direction>::value>>
 : merge<Direction, mpl::less<mpl::_1, mpl::_2>, Left, Right> {};
 
 // Only Compare: insert default direction.
 template <class Compare, class Left, class Right> struct merge<
     Compare, Left, Right,
-    typename boost::disable_if<boost::mpl::or_<
-        is_direction<Compare>, std::is_same<Right, void>>>::type>
+    std::enable_if_t<!boost::mpl::or_<
+        is_direction<Compare>, std::is_same<Right, void>>::value>>
 : merge<typename default_direction<Left>::type, Compare, Left, Right> {};
 
 // No parameters: insert default direction.

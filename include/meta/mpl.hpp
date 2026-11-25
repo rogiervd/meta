@@ -14,10 +14,11 @@ It uses the same direction::front and direction::back types that ranges use.
 #ifndef RANGE_META_MPL_HPP_INCLUDED
 #define RANGE_META_MPL_HPP_INCLUDED
 
+#include <type_traits>
+
 #include "meta/fwd.hpp"
 #include "meta/range.hpp"
 
-#include "boost/core/enable_if.hpp"
 #include "boost/mpl/back.hpp"
 #include "boost/mpl/begin_end.hpp"
 #include "boost/mpl/empty.hpp"
@@ -46,7 +47,7 @@ namespace operation {
     // Allow partial specialisation of meta::range_tag for things that
     // also are MPL sequences.
     template <typename Range> struct range_tag_back_off<
-        Range, typename boost::enable_if<mpl::is_sequence<Range>>::type>
+        Range, std::enable_if_t<mpl::is_sequence<Range>::value>>
     {
         typedef mpl_sequence_tag type;
     };

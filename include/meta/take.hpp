@@ -5,7 +5,8 @@
 #ifndef META_TAKE_HPP_INCLUDED
 #define META_TAKE_HPP_INCLUDED
 
-#include "boost/core/enable_if.hpp"
+#include <type_traits>
+
 #include "boost/mpl/equal_to.hpp"
 #include "boost/mpl/min_max.hpp"
 #include "boost/mpl/or.hpp"
@@ -43,8 +44,8 @@ private:
 };
 
 // Without Direction
-template <class Limit, class Underlying> struct take<
-    Limit, Underlying, typename boost::disable_if<is_direction<Limit>>::type>
+template <class Limit, class Underlying>
+struct take<Limit, Underlying, std::enable_if_t<!is_direction<Limit>::value>>
 : take<typename default_direction<Underlying>::type, Limit, Underlying> {};
 
 template <class Direction, class Limit, class Underlying>

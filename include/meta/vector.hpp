@@ -11,9 +11,10 @@ which makes it possible to pattern-match on it.
 #ifndef META_VECTOR_HPP_INCLUDED
 #define META_VECTOR_HPP_INCLUDED
 
+#include <type_traits>
+
 #include <cstddef>
 
-#include "boost/core/enable_if.hpp"
 #include "boost/mpl/at_fwd.hpp"
 #include "boost/mpl/back_fwd.hpp"
 #include "boost/mpl/empty_fwd.hpp"
@@ -493,8 +494,8 @@ namespace boost { namespace mpl {
             // Check that the first iterator matches.
             typedef meta::matching_iterator<Vector, First> matches;
             static_assert(matches::value, "Iterator must match sequence");
-            typedef typename boost::enable_if<
-                matches, apply_one_c<Vector, First::index, Last>>::type::type
+            typedef typename std::enable_if_t<
+                matches::value, apply_one_c<Vector, First::index, Last>>::type
                 type;
         };
 
@@ -505,8 +506,8 @@ namespace boost { namespace mpl {
             // Check that the last iterator matched
             typedef meta::matching_iterator<Vector, Last> matches;
             static_assert(matches::value, "Iterator must match sequence");
-            typedef typename boost::enable_if<
-                matches, apply_range_c<Vector, first, Last::index>>::type::type
+            typedef typename std::enable_if_t<
+                matches::value, apply_range_c<Vector, first, Last::index>>::type
                 type;
         };
 
@@ -563,8 +564,8 @@ namespace boost { namespace mpl {
         {
             typedef meta::matching_iterator<Vector, Position> matches;
             static_assert(matches::value, "Iterator must match sequence");
-            typedef typename boost::enable_if<
-                matches, apply_c<Vector, Position::index, NewType>>::type::type
+            typedef typename std::enable_if_t<
+                matches::value, apply_c<Vector, Position::index, NewType>>::type
                 type;
         };
 
@@ -600,22 +601,22 @@ namespace boost { namespace mpl {
         {
             typedef meta::matching_iterator<Vector, Position> matches;
             static_assert(matches::value, "Iterator must match sequence");
-            typedef typename boost::enable_if<
-                matches, apply_c<Vector, Position::index, NewTypes>>::type::type
-                type;
+            typedef typename std::enable_if_t<
+                matches::value,
+                apply_c<Vector, Position::index, NewTypes>>::type type;
         };
 
         template <typename Vector, typename NewTypes, typename Enable = void>
         struct push_front_range;
 
         template <typename Vector, typename NewTypes> struct push_front_range<
-            Vector, NewTypes, typename boost::enable_if<empty<NewTypes>>::type>
+            Vector, NewTypes, std::enable_if_t<empty<NewTypes>::value>>
         {
             typedef Vector type;
         };
 
         template <typename Vector, typename NewTypes> struct push_front_range<
-            Vector, NewTypes, typename boost::disable_if<empty<NewTypes>>::type>
+            Vector, NewTypes, std::enable_if_t<!empty<NewTypes>::value>>
         : meta::push<
               meta::front, typename mpl::front<NewTypes>::type,
               typename push_front_range<
